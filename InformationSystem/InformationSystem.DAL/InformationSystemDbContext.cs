@@ -12,6 +12,17 @@ namespace InformationSystem.DAL {
         public DbSet<CourseEntity> Courses => Set<CourseEntity>();
         public DbSet<EvaluationEntity> Evaluations => Set<EvaluationEntity>();
         public DbSet<StudentEntity> Students => Set<StudentEntity>();
-        public DbSet<StudentCourseEntity> StudentCourseEntities => Set<StudentCourseEntity>();
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<StudentEntity>()
+                .HasMany(s => s.ChosenCourses)
+                .WithMany(c => c.Students);
+
+            modelBuilder.Entity<ActivityEntity>()
+                .HasOne(a => a.Evaluation)
+                .WithOne(e => e.Activity);
+        }
     }
 }

@@ -7,6 +7,6 @@ public class CourseEntity
     public required string Description { get; set; }
     public required string Abbreviation { get; set; }
 
-    public ICollection<StudentCourseEntity> Students { get; set; } = new List<StudentCourseEntity>();
+    public ICollection<StudentEntity> Students { get; set; } = new List<StudentEntity>();
     public ICollection<ActivityEntity> Activities { get; set; } = new List<ActivityEntity>();
 }

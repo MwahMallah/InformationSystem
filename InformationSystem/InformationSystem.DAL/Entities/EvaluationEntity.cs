@@ -1,12 +1,14 @@
-﻿namespace InformationSystem.DAL.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-public class EvaluationEntity
-{
+namespace InformationSystem.DAL.Entities;
+
+public class EvaluationEntity {
     public Guid Id { get; set; }
     public int Points { get; set; }
     public required string Description { get; set; }
 
-    public required StudentEntity Student { get; set; }
+    [ForeignKey(nameof(StudentId))]
+    public StudentEntity? Student { get; set; }
     public Guid StudentId { get; set; }
 
     public required ActivityEntity Activity { get; set; }
