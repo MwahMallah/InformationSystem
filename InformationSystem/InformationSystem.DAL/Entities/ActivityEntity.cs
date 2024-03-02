@@ -1,4 +1,6 @@
-﻿namespace InformationSystem.DAL.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace InformationSystem.DAL.Entities;
 
 public class ActivityEntity
 {
@@ -12,6 +14,7 @@ public class ActivityEntity
     public required CourseEntity Course { get; init; }
     public Guid CourseId { get; set; }
 
+    [ForeignKey(nameof(EvaluationId))]
     public required EvaluationEntity Evaluation { get; init; }
     public Guid EvaluationId { get; set; }
 }
