@@ -2,6 +2,7 @@
 
 public class EvaluationEntity
 {
+    public Guid Id { get; set; }
     public int Points { get; set; }
     public required string Description { get; set; }
 
