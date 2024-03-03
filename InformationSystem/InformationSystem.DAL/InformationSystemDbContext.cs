@@ -16,13 +16,29 @@ namespace InformationSystem.DAL {
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<StudentEntity>()
-                .HasMany(s => s.ChosenCourses)
-                .WithMany(c => c.Students);
+            modelBuilder.Entity<StudentCourseEntity>()
+                .HasKey(sc => sc.Id);
 
+            modelBuilder.Entity<StudentCourseEntity>()
+                .HasOne(sc => sc.Student)
+                .WithMany(s => s.StudentCourses)
+                .HasForeignKey(sc => sc.StudentId);
+
+            modelBuilder.Entity<StudentCourseEntity>()
+                .HasOne(sc => sc.Course)
+                .WithMany(c => c.StudentCourses)
+                .HasForeignKey(sc => sc.CourseId);
+            
             modelBuilder.Entity<ActivityEntity>()
                 .HasOne(a => a.Evaluation)
                 .WithOne(e => e.Activity);
+
+            modelBuilder.Entity<CourseEntity>()
+                .HasMany(c => c.Activities)
+                .WithOne(a => a.Course);
+
+            modelBuilder.Entity<EvaluationEntity>()
+                .HasOne(e => e.Student);
         }
     }
 }

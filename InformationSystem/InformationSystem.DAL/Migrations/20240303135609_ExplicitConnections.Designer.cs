@@ -3,6 +3,7 @@ using System;
 using InformationSystem.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,12 +11,29 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InformationSystem.DAL.Migrations
 {
     [DbContext(typeof(InformationSystemDbContext))]
-    partial class InformationSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240303135609_ExplicitConnections")]
+    partial class ExplicitConnections
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
+
+            modelBuilder.Entity("CourseEntityStudentEntity", b =>
+                {
+                    b.Property<Guid>("ChosenCoursesId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("StudentsId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ChosenCoursesId", "StudentsId");
+
+                    b.HasIndex("StudentsId");
+
+                    b.ToTable("CourseEntityStudentEntity");
+                });
 
             modelBuilder.Entity("InformationSystem.DAL.Entities.ActivityEntity", b =>
                 {
@@ -109,27 +127,6 @@ namespace InformationSystem.DAL.Migrations
                     b.ToTable("Evaluations");
                 });
 
-            modelBuilder.Entity("InformationSystem.DAL.Entities.StudentCourseEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("CourseId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("StudentId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("StudentCourseEntity");
-                });
-
             modelBuilder.Entity("InformationSystem.DAL.Entities.StudentEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -165,6 +162,21 @@ namespace InformationSystem.DAL.Migrations
                     b.ToTable("Students");
                 });
 
+            modelBuilder.Entity("CourseEntityStudentEntity", b =>
+                {
+                    b.HasOne("InformationSystem.DAL.Entities.CourseEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ChosenCoursesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("InformationSystem.DAL.Entities.StudentEntity", null)
+                        .WithMany()
+                        .HasForeignKey("StudentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("InformationSystem.DAL.Entities.ActivityEntity", b =>
                 {
                     b.HasOne("InformationSystem.DAL.Entities.CourseEntity", "Course")
@@ -195,41 +207,15 @@ namespace InformationSystem.DAL.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("InformationSystem.DAL.Entities.StudentCourseEntity", b =>
-                {
-                    b.HasOne("InformationSystem.DAL.Entities.CourseEntity", "Course")
-                        .WithMany("StudentCourses")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("InformationSystem.DAL.Entities.StudentEntity", "Student")
-                        .WithMany("StudentCourses")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("InformationSystem.DAL.Entities.CourseEntity", b =>
                 {
                     b.Navigation("Activities");
-
-                    b.Navigation("StudentCourses");
                 });
 
             modelBuilder.Entity("InformationSystem.DAL.Entities.EvaluationEntity", b =>
                 {
                     b.Navigation("Activity")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("InformationSystem.DAL.Entities.StudentEntity", b =>
-                {
-                    b.Navigation("StudentCourses");
                 });
 #pragma warning restore 612, 618
         }

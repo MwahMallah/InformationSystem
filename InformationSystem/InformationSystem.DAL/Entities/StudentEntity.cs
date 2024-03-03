@@ -15,5 +15,5 @@ public class StudentEntity
     public int CurrentYear { get; set; } 
 
     public Guid CourseId { get; set; }
-    public ICollection<CourseEntity> ChosenCourses { get; init; } = new List<CourseEntity>();
+    public ICollection<StudentCourseEntity> StudentCourses { get; init; } = new List<StudentCourseEntity>();
 }
