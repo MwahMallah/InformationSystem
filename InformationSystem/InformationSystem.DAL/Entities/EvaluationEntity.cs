@@ -11,7 +11,7 @@ public class EvaluationEntity : IEntity
     public required string Description { get; set; }
 
     [ForeignKey(nameof(StudentId))]
-    public StudentEntity? Student { get; set; }
+    public required StudentEntity Student { get; set; }
     public Guid StudentId { get; set; }
 
     public required ActivityEntity Activity { get; set; }

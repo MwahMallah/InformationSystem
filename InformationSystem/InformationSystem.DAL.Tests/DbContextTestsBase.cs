@@ -2,10 +2,11 @@
 using InformationSystem.Common.Tests;
 using Microsoft.EntityFrameworkCore;
 using Xunit.Abstractions;
+using Xunit;
 
 namespace InformationSystem.DAL.Tests;
 
-public class DbContextTestsBase
+public class DbContextTestsBase : IAsyncLifetime
 {
     protected DbContextTestsBase(ITestOutputHelper output)
     {
