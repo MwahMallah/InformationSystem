@@ -2,7 +2,7 @@
 
 namespace InformationSystem.DAL.Entities;
 
-public class StudentEntity 
+public record StudentEntity 
 {
     public Guid Id { get; set; } = Guid.NewGuid(); 
     [MaxLength(50)]

@@ -1,6 +1,6 @@
 ﻿namespace InformationSystem.DAL.Entities;
 
-public class StudentCourseEntity : IEntity
+public record StudentCourseEntity : IEntity
 {
     public Guid Id { get; set; }
     

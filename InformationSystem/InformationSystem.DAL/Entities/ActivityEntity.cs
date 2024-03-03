@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using InformationSystem.Common.Enums;
 
 namespace InformationSystem.DAL.Entities;
 
-public class ActivityEntity
+public record ActivityEntity
 {
     public Guid Id { get; set; }
     public DateTime StartTime{ get; set; }

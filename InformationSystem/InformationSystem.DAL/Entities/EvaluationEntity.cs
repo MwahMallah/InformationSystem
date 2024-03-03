@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InformationSystem.DAL.Entities;
 
-public class EvaluationEntity : IEntity 
+public record EvaluationEntity : IEntity 
 {
     public Guid Id { get; set; }
     public int Points { get; set; }
