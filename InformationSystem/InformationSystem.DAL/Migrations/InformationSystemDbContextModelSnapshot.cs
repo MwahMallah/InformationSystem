@@ -127,16 +127,13 @@ namespace InformationSystem.DAL.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("StudentCourseEntity");
+                    b.ToTable("StudentsCourses");
                 });
 
             modelBuilder.Entity("InformationSystem.DAL.Entities.StudentEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("CourseId")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("CurrentYear")

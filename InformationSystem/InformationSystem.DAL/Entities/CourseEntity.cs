@@ -4,7 +4,7 @@ namespace InformationSystem.DAL.Entities;
 
 public record CourseEntity : IEntity
 {
-    public required Guid Id { get; set; } = new Guid();
+    public Guid Id { get; set; } = Guid.NewGuid();
     [MaxLength(50)]
     public required string Name { get; set; }   
     [MaxLength(1000)]

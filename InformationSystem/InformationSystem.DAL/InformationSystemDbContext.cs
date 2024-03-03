@@ -8,18 +8,19 @@ namespace InformationSystem.DAL
         public DbSet<CourseEntity> Courses => Set<CourseEntity>();
         public DbSet<EvaluationEntity> Evaluations => Set<EvaluationEntity>();
         public DbSet<StudentEntity> Students => Set<StudentEntity>();
+        public DbSet<StudentCourseEntity> StudentsCourses => Set<StudentCourseEntity>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<StudentCourseEntity>()
                 .HasKey(sc => sc.Id);
-
+            
             modelBuilder.Entity<StudentCourseEntity>()
                 .HasOne(sc => sc.Student)
                 .WithMany(s => s.StudentCourses)
                 .HasForeignKey(sc => sc.StudentId);
-
+            
             modelBuilder.Entity<StudentCourseEntity>()
                 .HasOne(sc => sc.Course)
                 .WithMany(c => c.StudentCourses)

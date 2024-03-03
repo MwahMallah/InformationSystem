@@ -14,7 +14,6 @@ public static class StudentSeeds
         ImageUrl = default!,
         Group = default!,
         CurrentYear = default,
-        CourseId = default,
         StudentCourses = default!
     };
     
@@ -31,7 +30,7 @@ public static class StudentSeeds
     };
 
     //To ensure that no tests reuse these clones for non-idempotent operations
-    public static readonly StudentEntity StudentWithNoCourses = StudentEntity with
+    public static readonly StudentEntity StudentWithoutCourses = StudentEntity with
     {
         Id = Guid.Parse("98B7F7B6-0F51-43B3-B8C0-B5FCFFF6DC2E"), StudentCourses = Array.Empty<StudentCourseEntity>()
     };
@@ -49,7 +48,7 @@ public static class StudentSeeds
     {
         modelBuilder.Entity<StudentEntity>().HasData(
             StudentEntity with { StudentCourses = Array.Empty<StudentCourseEntity>() },
-            StudentWithNoCourses,
+            StudentWithoutCourses,
             EmptyStudentEntity
         );
     }

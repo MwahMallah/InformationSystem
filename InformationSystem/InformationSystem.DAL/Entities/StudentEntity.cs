@@ -14,6 +14,5 @@ public record StudentEntity
     public required string Group { get; set; }
     public int CurrentYear { get; set; } 
 
-    public Guid CourseId { get; set; }
-    public ICollection<StudentCourseEntity> StudentCourses { get; init; } = new List<StudentCourseEntity>();
+    public ICollection<StudentCourseEntity> StudentCourses { get; set; } = new List<StudentCourseEntity>();
 }
