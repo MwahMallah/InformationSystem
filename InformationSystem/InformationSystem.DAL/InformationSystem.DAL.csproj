@@ -18,4 +18,8 @@
     <ProjectReference Include="..\InformationSystem.Common\InformationSystem.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="InformationSystem.db" />
+  </ItemGroup>
+
 </Project>
