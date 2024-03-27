@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InformationSystem.DAL.Entities;
 
-public record EvaluationEntity : IEntity 
+public record EvaluationEntity : IEntity
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     public int Points { get; set; }
     [MaxLength(1000)]
     public required string Description { get; set; }

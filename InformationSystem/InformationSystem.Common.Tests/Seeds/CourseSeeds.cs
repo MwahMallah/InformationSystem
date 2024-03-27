@@ -9,8 +9,6 @@ public static class CourseSeeds
         Id = default, 
         Name = default!,
         Description = default!,
-        Abbreviation = default!,
-        StudentCourses = default!,
-        Activities = default!
+        Abbreviation = default!
     };
 }

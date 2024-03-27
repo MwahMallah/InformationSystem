@@ -12,7 +12,7 @@ public record StudentEntity
     public string? ImageUrl { get; set; }
     [MaxLength(5)]
     public required string Group { get; set; }
-    public int CurrentYear { get; set; } 
+    public int StartYear { get; set; } 
 
-    public ICollection<StudentCourseEntity> StudentCourses { get; set; } = new List<StudentCourseEntity>();
+    public ICollection<CourseEntity> Courses { get; set; } = new List<CourseEntity>();
 }

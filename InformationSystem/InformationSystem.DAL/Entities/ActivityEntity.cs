@@ -4,9 +4,9 @@ using InformationSystem.Common.Enums;
 
 namespace InformationSystem.DAL.Entities;
 
-public record ActivityEntity
+public record ActivityEntity : IEntity
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     public DateTime StartTime{ get; set; }
     public DateTime FinishTime { get; set; }
     public ActivityType ActivityType { get; set; }
@@ -14,7 +14,7 @@ public record ActivityEntity
     [MaxLength(1000)]
     public required string Description { get; set; }
 
-    public required CourseEntity Course { get; init; }
+    public CourseEntity? Course { get; init; }
     public Guid CourseId { get; set; }
 
     [ForeignKey(nameof(EvaluationId))]

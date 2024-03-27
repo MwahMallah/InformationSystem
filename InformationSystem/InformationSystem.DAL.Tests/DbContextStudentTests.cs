@@ -12,14 +12,11 @@ public class DbContextStudentTests(ITestOutputHelper output) : DbContextTestsBas
     [Fact]
     public async Task AddNew_StudentWithoutCourses_Persisted()
     {
-        //Arrange
-        StudentEntity entity = StudentSeeds.StudentWithoutCourses;
-
-        //Act
+        var entity = StudentSeeds.StudentWithoutCourses;
+        
         InformationSystemDbContextSUT.Students.Add(entity);
         await InformationSystemDbContextSUT.SaveChangesAsync();
-
-        //Assert
+        
         await using var dbx = await DbContextFactory.CreateDbContextAsync();
         var actualEntity = await dbx.Students
             .SingleAsync(i => i.Id == entity.Id);
@@ -29,66 +26,41 @@ public class DbContextStudentTests(ITestOutputHelper output) : DbContextTestsBas
     [Fact]
     public async Task AddNew_StudentWithCourses_Persisted()
     {
-        StudentEntity entity = new StudentEntity()
+        var entity = new StudentEntity()
         {
             Id = Guid.Parse(input: "fabde0cd-eefe-443f-baf6-3d96cc2cbf2e"),
             FirstName = "Maksim",
             LastName = "Dubrovin",
             ImageUrl = null,
             Group = "2B",
-            CurrentYear = 2,
-            // CourseId = ,
-            // StudentCourses = 
+            StartYear = 2022,
         };
-        CourseEntity course1 = CourseSeeds.EmptyCourseEntity with
+        var course1 = CourseSeeds.EmptyCourseEntity with
         {
             Name = "Operating systems",
             Abbreviation = "IOS",
             Description = ""
         };
-        CourseEntity course2 = CourseSeeds.EmptyCourseEntity with
+        var course2 = CourseSeeds.EmptyCourseEntity with
         {
             Name = "Databases",
             Abbreviation = "IDS",
             Description = ""
         };
         
-        //Act
+        entity.Courses.Add(course1);
+        entity.Courses.Add(course2);
+
         InformationSystemDbContextSUT.Students.Add(entity);
         await InformationSystemDbContextSUT.SaveChangesAsync();
-
-        InformationSystemDbContextSUT.Courses.Add(course1);
-        await InformationSystemDbContextSUT.SaveChangesAsync();
-
-        InformationSystemDbContextSUT.Courses.Add(course2);
-        await InformationSystemDbContextSUT.SaveChangesAsync();
-
-        var sc1 = StudentCourseSeeds.EmptyStudentCourseEntity with
-        {
-            Student = entity, Course = course1
-        };
         
-        var sc2 = StudentCourseSeeds.EmptyStudentCourseEntity with
-        {
-            Student = entity, Course = course2
-        };
-        
-        InformationSystemDbContextSUT.StudentsCourses.Add(sc1);
-        await InformationSystemDbContextSUT.SaveChangesAsync();
-        
-        InformationSystemDbContextSUT.StudentsCourses.Add(sc2);
-        await InformationSystemDbContextSUT.SaveChangesAsync();
-        
-        // entity.StudentCourses.Add(sc1);
-        // await InformationSystemDbContextSUT.SaveChangesAsync();
-        // entity.StudentCourses.Add(sc2);
-        // await InformationSystemDbContextSUT.SaveChangesAsync();
-
         //Assert
         await using var dbx = await DbContextFactory.CreateDbContextAsync();
-        var actualEntity = await dbx.Students
+        var actualEntity = await dbx.Students.Include(s => s.Courses)
+            .ThenInclude(c => c.Activities)
             .SingleAsync(i => i.Id == entity.Id);
         DeepAssert.Equal(entity, actualEntity);
     }
 
+    
 }    
