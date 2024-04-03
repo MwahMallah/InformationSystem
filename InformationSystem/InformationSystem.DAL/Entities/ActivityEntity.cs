@@ -13,11 +13,11 @@ public record ActivityEntity : IEntity
     public RoomType RoomType { get; set; }
     [MaxLength(1000)]
     public required string Description { get; set; }
-
-    public CourseEntity? Course { get; init; }
+    [ForeignKey(nameof(CourseId))]
+    public required CourseEntity Course { get; init; }
     public Guid CourseId { get; set; }
 
     [ForeignKey(nameof(EvaluationId))]
-    public required EvaluationEntity Evaluation { get; init; }
+    public EvaluationEntity? Evaluation { get; init; }
     public Guid EvaluationId { get; set; }
 }
