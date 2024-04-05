@@ -12,6 +12,9 @@ public record CourseEntity : IEntity
     [MaxLength(5)]
     public required string Abbreviation { get; set; }
 
+    public int Credits { get; set; }
+    public int MaxStudent { get; set; }
+    
     public ICollection<StudentEntity> Students { get; set; } = new List<StudentEntity>();
     public ICollection<ActivityEntity> Activities { get; set; } = new List<ActivityEntity>();
 }
