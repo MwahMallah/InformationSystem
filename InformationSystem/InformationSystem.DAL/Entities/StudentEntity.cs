@@ -9,7 +9,7 @@ public record StudentEntity : IEntity
     public required string FirstName { get; set; }
     [MaxLength(50)]
     public required string LastName { get; set; }
-    public string? ImageUrl { get; set; }
+    public Uri? ImageUrl { get; set; }
     [MaxLength(5)]
     public required string Group { get; set; }
     public int StartYear { get; set; } 
