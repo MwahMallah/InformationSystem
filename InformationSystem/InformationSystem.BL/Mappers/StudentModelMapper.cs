@@ -4,7 +4,7 @@ using InformationSystem.DAL.Entities;
 namespace InformationSystem.BL.Mappers;
 
 public class StudentModelMapper(
-    CourseModelMapper courseModelMapper, 
+    CourseListModelMapper courseListModelMapper, 
     ActivityModelMapper activityModelMapper,
     EvaluationModelMapper evaluationModelMapper): 
     ModelMapperBase<StudentEntity, StudentDetailModel, StudentListModel>
@@ -37,7 +37,7 @@ public class StudentModelMapper(
             Group = entity.Group,
             CurrentYear = DateTime.Now.Year - entity.StartYear,
             ImageUrl = entity.ImageUrl,
-            Courses = courseModelMapper
+            Courses = courseListModelMapper
                 .MapToListModel(courses).ToObservableCollection(),
             Activities = activityModelMapper
                 .MapToListModel(activities).ToObservableCollection(),

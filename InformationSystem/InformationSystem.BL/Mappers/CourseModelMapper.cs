@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 namespace InformationSystem.BL.Mappers;
 
 public class CourseModelMapper(ActivityModelMapper activityModelMapper,
-                                StudentModelMapper studentModelMapper): 
+                                StudentListModelMapper studentListModelMapper): 
     ModelMapperBase<CourseEntity, CourseDetailModel, CourseListModel>
 {
     public override CourseListModel MapToListModel(CourseEntity? entity)
@@ -33,7 +33,7 @@ public class CourseModelMapper(ActivityModelMapper activityModelMapper,
             Credits = entity.Credits,
             Description = entity.Description,
             Activities = activityModelMapper.MapToListModel(entity.Activities).ToObservableCollection(),
-            Students = studentModelMapper.MapToListModel(entity.Students).ToObservableCollection()
+            Students = studentListModelMapper.MapToListModel(entity.Students).ToObservableCollection()
         };
 
     public override CourseEntity MapToEntity(CourseDetailModel model)
