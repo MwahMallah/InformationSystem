@@ -91,32 +91,28 @@ namespace InformationSystem.DAL.Tests
             //Assert
             DeepAssert.Equal(CourseSeeds.CourseEntity, entity);
         }
-        //
-        // [Fact]
-        // public async Task Update_Recipe_Persisted()
-        // {
-        //     //Arrange
-        //     var baseEntity = RecipeSeeds.RecipeEntityUpdate;
-        //     var entity =
-        //         baseEntity withпош
-        //         {
-        //             Name = baseEntity.Name + "Updated",
-        //             Description = baseEntity.Description + "Updated",
-        //             Duration = default,
-        //             FoodType = FoodType.None,
-        //             ImageUrl = baseEntity.ImageUrl + "Updated",
-        //         };
-        //
-        //     //Act
-        //     CookBookDbContextSUT.Recipes.Update(entity);
-        //     await CookBookDbContextSUT.SaveChangesAsync();
-        //
-        //     //Assert
-        //     await using var dbx = await DbContextFactory.CreateDbContextAsync();
-        //     var actualEntity = await dbx.Recipes.SingleAsync(i => i.Id == entity.Id);
-        //     DeepAssert.Equal(entity, actualEntity);
-        // }
-        //
+        
+        [Fact]
+        public async Task Update_Course_Persisted()
+        {
+            //Arrange
+            var baseEntity = CourseSeeds.CourseEntity;
+            var entity =
+                baseEntity with
+                {
+                    Name = baseEntity.Name + "Updated",
+                    Description = baseEntity.Description + "Updated"
+                };
+            
+            InformationSystemDbContextSUT.Courses.Update(entity);
+            await InformationSystemDbContextSUT.SaveChangesAsync();
+        
+            //Assert
+            await using var dbx = await DbContextFactory.CreateDbContextAsync();
+            var actualEntity = await dbx.Courses.SingleAsync(i => i.Id == entity.Id);
+            DeepAssert.Equal(entity, actualEntity);
+        }
+        
         [Fact]
         public async Task Delete_CourseWithoutStudents_Deleted()
         {
@@ -128,36 +124,57 @@ namespace InformationSystem.DAL.Tests
             //Assert
             Assert.False(await InformationSystemDbContextSUT.Courses.AnyAsync(i => i.Id == baseEntity.Id));
         }
-        //
-        // [Fact]
-        // public async Task DeleteById_RecipeWithoutIngredients_Deleted()
-        // {
-        //     //Arrange
-        //     var baseEntity = RecipeSeeds.RecipeEntityDelete;
-        //
-        //     //Act
-        //     CookBookDbContextSUT.Remove(
-        //         CookBookDbContextSUT.Recipes.Single(i => i.Id == baseEntity.Id));
-        //     await CookBookDbContextSUT.SaveChangesAsync();
-        //
-        //     //Assert
-        //     Assert.False(await CookBookDbContextSUT.Recipes.AnyAsync(i => i.Id == baseEntity.Id));
-        // }
-        //
-        // [Fact]
-        // public async Task Delete_RecipeWithIngredientAmounts_Deleted()
-        // {
-        //     //Arrange
-        //     var baseEntity = RecipeSeeds.RecipeForIngredientAmountEntityDelete;
-        //
-        //     //Act
-        //     CookBookDbContextSUT.Recipes.Remove(baseEntity);
-        //     await CookBookDbContextSUT.SaveChangesAsync();
-        //
-        //     //Assert
-        //     Assert.False(await CookBookDbContextSUT.Recipes.AnyAsync(i => i.Id == baseEntity.Id));
-        //     Assert.False(await CookBookDbContextSUT.IngredientAmountEntities
-        //         .AnyAsync(i => baseEntity.Ingredients.Select(ingredientAmount => ingredientAmount.Id).Contains(i.Id)));
-        // }
+        
+        [Fact]
+        public async Task DeleteById_CourseWithoutStudents_Deleted()
+        {
+            //Arrange
+            var baseEntity = CourseSeeds.CourseWithoutStudents;
+        
+            //Act
+            InformationSystemDbContextSUT.Remove(
+                InformationSystemDbContextSUT.Courses.Single(i => i.Id == baseEntity.Id));
+            await InformationSystemDbContextSUT.SaveChangesAsync();
+        
+            //Assert
+            Assert.False(await InformationSystemDbContextSUT.Courses.AnyAsync(i => i.Id == baseEntity.Id));
+        }
+        
+        [Fact]
+        public async Task Delete_CourseWithStudents_Deleted()
+        {
+            //Arrange
+            var baseEntity = CourseSeeds.CourseEntity with
+            {
+                Name = "zaklady programovani",
+                Description = "c lang course",
+                Abbreviation = "IZP",
+                Students = new List<StudentEntity>
+                {
+                    StudentSeeds.EmptyStudentEntity with
+                    {
+                        FirstName = "Ilya",
+                        LastName = "Volkov",
+                        StartYear = 2020,
+                        Group = "1A"
+                    },
+                    StudentSeeds.EmptyStudentEntity with
+                    {
+                        FirstName = "Tomas",
+                        LastName = "Dvorak",
+                        StartYear = 2022,
+                        Group = "1B"
+                    }
+                }
+            };
+            
+            InformationSystemDbContextSUT.Courses.Remove(baseEntity);
+            await InformationSystemDbContextSUT.SaveChangesAsync();
+        
+            //Assert
+            Assert.False(await InformationSystemDbContextSUT.Courses.AnyAsync(i => i.Id == baseEntity.Id));
+            Assert.False(await InformationSystemDbContextSUT.Students
+                .AnyAsync(i => baseEntity.Students.Select(student => student.Id).Contains(i.Id)));
+        }
     }
 }
