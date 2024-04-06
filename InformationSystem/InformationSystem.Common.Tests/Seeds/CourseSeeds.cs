@@ -11,4 +11,12 @@ public static class CourseSeeds
         Description = default!,
         Abbreviation = default!
     };
+
+    public static readonly CourseEntity CourseEntity = new()
+    {
+        Id = Guid.NewGuid(),
+        Name = "Seminar C#",
+        Description = "C# course",
+        Abbreviation = "ICS"
+    };
 }
