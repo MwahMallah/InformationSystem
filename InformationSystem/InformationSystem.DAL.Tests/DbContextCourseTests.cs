@@ -65,7 +65,6 @@ namespace InformationSystem.DAL.Tests
         [Fact]
         public async Task GetAll_Courses_ContainsSeededCourse()
         {
-            //Act
             var courses = await InformationSystemDbContextSUT.Courses.ToListAsync();
 
             //Assert
@@ -75,26 +74,23 @@ namespace InformationSystem.DAL.Tests
         [Fact]
         public async Task GetById_Course()
         {
-            //Act
             var course = await InformationSystemDbContextSUT.Courses
                 .SingleAsync(i => i.Id == CourseSeeds.CourseEntity.Id);
         
             //Assert
             DeepAssert.Equal(CourseSeeds.CourseEntity with { Students = Array.Empty<StudentEntity>() }, course);
         }
-        //
-        // [Fact]
-        // public async Task GetById_IncludingIngredients_Recipe()
-        // {
-        //     //Act
-        //     var entity = await CookBookDbContextSUT.Recipes
-        //         .Include(i => i.Ingredients)
-        //         .ThenInclude(i => i.Ingredient)
-        //         .SingleAsync(i => i.Id == RecipeSeeds.RecipeEntity.Id);
-        //
-        //     //Assert
-        //     DeepAssert.Equal(RecipeSeeds.RecipeEntity, entity);
-        // }
+        
+        [Fact]
+        public async Task GetById_IncludingStudents_Recipe()
+        {
+            var entity = await InformationSystemDbContextSUT.Courses
+                .Include(i => i.Students)
+                .SingleAsync(i => i.Id == CourseSeeds.CourseEntity.Id);
+        
+            //Assert
+            DeepAssert.Equal(CourseSeeds.CourseEntity, entity);
+        }
         //
         // [Fact]
         // public async Task Update_Recipe_Persisted()
@@ -102,7 +98,7 @@ namespace InformationSystem.DAL.Tests
         //     //Arrange
         //     var baseEntity = RecipeSeeds.RecipeEntityUpdate;
         //     var entity =
-        //         baseEntity with
+        //         baseEntity withпош
         //         {
         //             Name = baseEntity.Name + "Updated",
         //             Description = baseEntity.Description + "Updated",
@@ -121,19 +117,17 @@ namespace InformationSystem.DAL.Tests
         //     DeepAssert.Equal(entity, actualEntity);
         // }
         //
-        // [Fact]
-        // public async Task Delete_RecipeWithoutIngredients_Deleted()
-        // {
-        //     //Arrange
-        //     var baseEntity = RecipeSeeds.RecipeEntityDelete;
-        //
-        //     //Act
-        //     CookBookDbContextSUT.Recipes.Remove(baseEntity);
-        //     await CookBookDbContextSUT.SaveChangesAsync();
-        //
-        //     //Assert
-        //     Assert.False(await CookBookDbContextSUT.Recipes.AnyAsync(i => i.Id == baseEntity.Id));
-        // }
+        [Fact]
+        public async Task Delete_CourseWithoutStudents_Deleted()
+        {
+            var baseEntity = CourseSeeds.CourseEntity;
+            
+            InformationSystemDbContextSUT.Courses.Remove(baseEntity);
+            await InformationSystemDbContextSUT.SaveChangesAsync();
+        
+            //Assert
+            Assert.False(await InformationSystemDbContextSUT.Courses.AnyAsync(i => i.Id == baseEntity.Id));
+        }
         //
         // [Fact]
         // public async Task DeleteById_RecipeWithoutIngredients_Deleted()
