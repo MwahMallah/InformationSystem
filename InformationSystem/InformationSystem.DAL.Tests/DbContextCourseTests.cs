@@ -26,7 +26,7 @@ namespace InformationSystem.DAL.Tests
         [Fact]
         public async Task AddNew_CourseWithStudents_Persisted()
         {
-            var course = CourseSeeds.EmptyCourseEntity with
+            var course = CourseSeeds.CourseEntity with
             {
                 Name = "zaklady programovani",
                 Description = "c lang course",

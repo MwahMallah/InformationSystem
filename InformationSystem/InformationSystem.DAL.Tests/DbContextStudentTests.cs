@@ -35,13 +35,13 @@ public class DbContextStudentTests(ITestOutputHelper output) : DbContextTestsBas
             Group = "2B",
             StartYear = 2022,
         };
-        var course1 = CourseSeeds.EmptyCourseEntity with
+        var course1 = CourseSeeds.CourseEntity with
         {
             Name = "Operating systems",
             Abbreviation = "IOS",
             Description = ""
         };
-        var course2 = CourseSeeds.EmptyCourseEntity with
+        var course2 = CourseSeeds.CourseEntity with
         {
             Name = "Databases",
             Abbreviation = "IDS",

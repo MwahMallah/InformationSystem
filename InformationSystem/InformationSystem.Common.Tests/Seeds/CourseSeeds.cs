@@ -5,13 +5,6 @@ namespace InformationSystem.Common.Tests.Seeds;
 
 public static class CourseSeeds
 {
-    public static readonly CourseEntity EmptyCourseEntity = new()
-    {
-        Id = default, 
-        Name = default!,
-        Description = default!,
-        Abbreviation = default!
-    };
 
     public static readonly CourseEntity CourseEntity = new()
     {
@@ -29,7 +22,6 @@ public static class CourseSeeds
     public static void Seed(this ModelBuilder modelBuilder) =>
         modelBuilder.Entity<CourseEntity>().HasData(
             CourseEntity,
-            EmptyCourseEntity,
             CourseWithoutStudents with{Students = Array.Empty<StudentEntity>()}
             );
 }
