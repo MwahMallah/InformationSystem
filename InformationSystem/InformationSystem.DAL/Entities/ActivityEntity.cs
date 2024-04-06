@@ -12,7 +12,7 @@ public record ActivityEntity : IEntity
     public ActivityType ActivityType { get; set; }
     public RoomType RoomType { get; set; }
     [MaxLength(1000)]
-    public required string Description { get; set; }
+    public string? Description { get; set; }
     [ForeignKey(nameof(CourseId))]
     public required CourseEntity Course { get; init; }
     public Guid CourseId { get; set; }
