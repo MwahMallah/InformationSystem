@@ -34,7 +34,14 @@ public class ActivityModelMapper:
             };
 
     public override ActivityEntity MapToEntity(ActivityDetailModel model)
-        => throw new NotImplementedException("Use other method");
+        => new ActivityEntity
+        {
+            Id = model.Id,
+            StartTime = model.StartTime,
+            FinishTime = model.FinishTime,
+            ActivityType = model.ActivityType,
+            Description = model.Description
+        };
 
     public ActivityEntity MapToEntity(ActivityDetailModel model, Guid courseId)
         => new ActivityEntity
