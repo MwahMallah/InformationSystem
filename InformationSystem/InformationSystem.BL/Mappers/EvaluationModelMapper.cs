@@ -15,9 +15,14 @@ public class EvaluationModelMapper:
         };
 
     public override EvaluationDetailModel MapToDetailModel(EvaluationEntity entity)
-    {
-        throw new NotImplementedException();
-    }
+        => new EvaluationDetailModel
+        {
+            StudentId = entity.StudentId,
+            ActivityId = entity.ActivityId,
+            Points = entity.Points,
+            Description = entity.Description
+        };
+        
 
     public override EvaluationEntity MapToEntity(EvaluationDetailModel model)
     {
