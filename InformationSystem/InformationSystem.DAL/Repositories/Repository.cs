@@ -8,11 +8,13 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, I
 {
     private readonly DbSet<TEntity> _dbSet;
     private IEntityMapper<TEntity> _entityMapper;
+    private DbContext _dbContext;
     
     public Repository(DbContext dbContext, IEntityMapper<TEntity> entityMapper)
     {
         _entityMapper = entityMapper;
         _dbSet = dbContext.Set<TEntity>();
+        _dbContext = dbContext;
     }
     
     public async Task<TEntity> InsertAsync(TEntity entity)

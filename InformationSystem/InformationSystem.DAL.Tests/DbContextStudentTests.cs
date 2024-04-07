@@ -12,7 +12,7 @@ public class DbContextStudentTests(ITestOutputHelper output) : DbContextTestsBas
     [Fact]
     public async Task AddNew_StudentWithoutCourses_Persisted()
     {
-        var entity = StudentSeeds.StudentWithoutCourses;
+        var entity = StudentSeeds.StudentIlya;
         
         InformationSystemDbContextSUT.Students.Add(entity);
         await InformationSystemDbContextSUT.SaveChangesAsync();

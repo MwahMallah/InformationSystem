@@ -65,7 +65,7 @@ public abstract class
             : ModelMapper.MapToDetailModel(entity);
     }
 
-    public async Task<TDetailModel> SaveAsync(TDetailModel model)
+    public virtual async Task<TDetailModel> SaveAsync(TDetailModel model)
     {
         TDetailModel result;
         GuardCollectionsAreNotSet(model);
