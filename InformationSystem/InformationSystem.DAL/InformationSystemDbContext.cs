@@ -14,7 +14,8 @@ namespace InformationSystem.DAL
             
             modelBuilder.Entity<ActivityEntity>()
                 .HasOne(a => a.Evaluation)
-                .WithOne(e => e.Activity);
+                .WithOne(e => e.Activity)
+                .IsRequired(false);
 
             modelBuilder.Entity<CourseEntity>()
                 .HasMany(c => c.Activities)
