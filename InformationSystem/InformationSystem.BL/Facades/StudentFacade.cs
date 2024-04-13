@@ -20,6 +20,7 @@ public class StudentFacade(
 
         IUnitOfWork uow = UnitOfWorkFactory.Create();
         var repository = uow.GetRepository<StudentEntity, StudentEntityMapper>();
+        
         var courseRepository = uow.GetRepository<CourseEntity, CourseEntityMapper>();
 
         foreach (var courseId in model.Courses.Select(c=>c.Id))
@@ -36,9 +37,12 @@ public class StudentFacade(
             }
         }
         
+        Func<IQueryable<StudentEntity>, IQueryable<StudentEntity>> include 
+            = query => query.Include(s => s.Courses);
+        
         if (await repository.ExistsAsync(entity))
         {
-            StudentEntity updatedEntity = await repository.UpdateAsync(entity);
+            StudentEntity updatedEntity = await repository.UpdateAsync(entity, include);
             result = ModelMapper.MapToDetailModel(updatedEntity);
         }
         else

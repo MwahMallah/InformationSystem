@@ -15,7 +15,8 @@ public class UnitOfWork : IUnitOfWork
     }
     
     public IRepository<TEntity> GetRepository<TEntity, TEntityMapper>() 
-        where TEntity : class, IEntity where TEntityMapper : IEntityMapper<TEntity>, new()
+        where TEntity : class, IEntity 
+        where TEntityMapper : IEntityMapper<TEntity>, new()
     {
         return new Repository<TEntity>(_dbContext, new TEntityMapper());
     }
