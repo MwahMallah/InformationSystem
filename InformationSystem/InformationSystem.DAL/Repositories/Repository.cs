@@ -8,11 +8,13 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, I
 {
     private readonly DbSet<TEntity> _dbSet;
     private IEntityMapper<TEntity> _entityMapper;
+    private DbContext _dbContext;
     
     public Repository(DbContext dbContext, IEntityMapper<TEntity> entityMapper)
     {
         _entityMapper = entityMapper;
         _dbSet = dbContext.Set<TEntity>();
+        _dbContext = dbContext;
     }
     
     public async Task<TEntity> InsertAsync(TEntity entity)
@@ -31,9 +33,17 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, I
                (await _dbSet.AnyAsync(e => e.Id == entity.Id));
     }
 
-    public async Task<TEntity> UpdateAsync(TEntity entity)
+    public async Task<TEntity> UpdateAsync(TEntity entity, 
+        Func<IQueryable<TEntity>, IQueryable<TEntity>>? include = null)
     {
-        var existingEntity = await _dbSet.SingleAsync(e => e.Id == entity.Id);
+        IQueryable<TEntity> query = _dbSet;
+        
+        if (include != null)
+        {
+            query = include(query);
+        }
+        
+        var existingEntity = await query.SingleAsync(e => e.Id == entity.Id);
         _entityMapper.MapToExistingEntity(existingEntity, entity);
         return existingEntity;
     }

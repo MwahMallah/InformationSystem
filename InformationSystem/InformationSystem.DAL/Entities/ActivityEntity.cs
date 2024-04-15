@@ -14,8 +14,8 @@ public record ActivityEntity : IEntity
     [MaxLength(1000)]
     public string? Description { get; set; }
     [ForeignKey(nameof(CourseId))]
-    public required CourseEntity Course { get; init; }
-    public Guid CourseId { get; set; }
+    public CourseEntity? Course { get; init; }
+    public Guid? CourseId { get; set; }
 
     [ForeignKey(nameof(EvaluationId))]
     public EvaluationEntity? Evaluation { get; init; }

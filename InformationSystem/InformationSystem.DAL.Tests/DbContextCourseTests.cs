@@ -12,7 +12,7 @@ namespace InformationSystem.DAL.Tests
         [Fact]
         public async Task AddNew_CourseWithoutStudents_Persisted()
         {
-            var course = CourseSeeds.CourseEntity;
+            var course = CourseSeeds.CourseICS;
 
             InformationSystemDbContextSUT.Courses.Add(course);
             await InformationSystemDbContextSUT.SaveChangesAsync();
