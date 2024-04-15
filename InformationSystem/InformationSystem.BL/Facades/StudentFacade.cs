@@ -13,6 +13,8 @@ public class StudentFacade(
     : FacadeBase<StudentEntity, StudentDetailModel, StudentListModel, StudentEntityMapper>
         (unitOfWorkFactory, modelMapper)
 {
+    protected override string IncludesNavigationPathDetail => "Courses";
+
     public override async Task<StudentDetailModel> SaveAsync(StudentDetailModel model)
     {
         StudentDetailModel result;
