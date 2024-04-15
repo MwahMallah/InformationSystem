@@ -120,6 +120,30 @@ public class StudentFacadeTests: FacadeTestBase
         Assert.Null(nonExistentStudent);
     }
 
+
+    [Fact]
+    public async Task GetById_StudentWithCourses()
+    {
+        var student = new StudentDetailModel
+        {
+            Id = Guid.NewGuid(), 
+            FirstName = "Maksim",
+            LastName = "Dubrovin",
+            Group = "123",
+            CurrentYear = 0,
+            Courses = new ObservableCollection<CourseListModel>
+            {
+                CourseModelMapper.MapToListModel(CourseSeeds.CourseDatabase),
+                CourseModelMapper.MapToListModel(CourseSeeds.CourseICS)
+            }
+        }; 
+        
+        student = await _studentFacadeSUT.SaveAsync(student);
+
+        var dbStudent = await _studentFacadeSUT.GetAsync(student.Id);
+        DeepAssert.Equal(dbStudent, student);
+    }
+
     [Fact]
     public async Task Update_StudentWithoutCourses_IlyaUpdated()
     {
@@ -266,6 +290,34 @@ public class StudentFacadeTests: FacadeTestBase
         DeepAssert.Equal(updatedStudent, StudentModelMapper.MapToDetailModel(dbStudent));
     }
 
+    [Fact]
+    public async Task Update_StudentWithCourses_CourseDeletedOutside()
+    {
+        var student = new StudentDetailModel
+        {
+            Id = Guid.NewGuid(), 
+            FirstName = "Maksim",
+            LastName = "Dubrovin",
+            Group = "123",
+            CurrentYear = 0,
+            Courses = new ObservableCollection<CourseListModel>
+            {
+                CourseModelMapper.MapToListModel(CourseSeeds.CourseDatabase),
+                CourseModelMapper.MapToListModel(CourseSeeds.CourseICS)
+            }
+        }; 
+        
+        student = await _studentFacadeSUT.SaveAsync(student);
+        
+        await using var dbxAssert = await DbContextFactory.CreateDbContextAsync();
+        dbxAssert.Courses.Remove(CourseSeeds.CourseDatabase);
+        await dbxAssert.SaveChangesAsync();
+        
+        var dbStudent = await _studentFacadeSUT.GetAsync(student.Id);
+        Assert.Contains(CourseModelMapper.MapToListModel(CourseSeeds.CourseICS), dbStudent.Courses);
+        Assert.DoesNotContain(CourseModelMapper.MapToListModel(CourseSeeds.CourseDatabase), dbStudent.Courses);
+    }
+    
     [Fact]
     public async Task DeleteById_StudentIlyaDeleted()
     {
