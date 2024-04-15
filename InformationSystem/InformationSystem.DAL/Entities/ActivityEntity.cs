@@ -19,5 +19,5 @@ public record ActivityEntity : IEntity
 
     [ForeignKey(nameof(EvaluationId))]
     public EvaluationEntity? Evaluation { get; init; }
-    public Guid EvaluationId { get; set; }
+    public Guid? EvaluationId { get; set; }
 }
