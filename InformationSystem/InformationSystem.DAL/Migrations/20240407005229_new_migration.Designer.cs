@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InformationSystem.DAL.Migrations
 {
     [DbContext(typeof(InformationSystemDbContext))]
-    [Migration("20240302205816_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240407005229_new_migration")]
+    partial class new_migration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,17 +22,17 @@ namespace InformationSystem.DAL.Migrations
 
             modelBuilder.Entity("CourseEntityStudentEntity", b =>
                 {
-                    b.Property<Guid>("ChosenCoursesId")
+                    b.Property<Guid>("CoursesId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("StudentsId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ChosenCoursesId", "StudentsId");
+                    b.HasKey("CoursesId", "StudentsId");
 
                     b.HasIndex("StudentsId");
 
-                    b.ToTable("CourseEntityStudentEntity");
+                    b.ToTable("StudentCourse", (string)null);
                 });
 
             modelBuilder.Entity("InformationSystem.DAL.Entities.ActivityEntity", b =>
@@ -48,7 +48,7 @@ namespace InformationSystem.DAL.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
-                        .IsRequired()
+                        .HasMaxLength(1000)
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("EvaluationId")
@@ -81,14 +81,22 @@ namespace InformationSystem.DAL.Migrations
 
                     b.Property<string>("Abbreviation")
                         .IsRequired()
+                        .HasMaxLength(5)
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Credits")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Description")
-                        .IsRequired()
+                        .HasMaxLength(1000)
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("MaxStudents")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -107,6 +115,7 @@ namespace InformationSystem.DAL.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasMaxLength(1000)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Points")
@@ -128,18 +137,14 @@ namespace InformationSystem.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("CourseId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("CurrentYear")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Group")
                         .IsRequired()
+                        .HasMaxLength(5)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ImageUrl")
@@ -147,7 +152,11 @@ namespace InformationSystem.DAL.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("StartYear")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -158,7 +167,7 @@ namespace InformationSystem.DAL.Migrations
                 {
                     b.HasOne("InformationSystem.DAL.Entities.CourseEntity", null)
                         .WithMany()
-                        .HasForeignKey("ChosenCoursesId")
+                        .HasForeignKey("CoursesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

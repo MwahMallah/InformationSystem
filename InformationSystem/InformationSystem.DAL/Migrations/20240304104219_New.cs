@@ -5,7 +5,7 @@
 namespace InformationSystem.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class ExplicitConnections : Migration
+    public partial class New : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

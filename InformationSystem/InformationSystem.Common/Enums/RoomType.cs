@@ -1,4 +1,4 @@
-﻿namespace InformationSystem.DAL.Entities;
+namespace InformationSystem.Common.Enums;
 
 public enum RoomType
 {

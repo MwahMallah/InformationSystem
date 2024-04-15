@@ -5,7 +5,7 @@
 namespace InformationSystem.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class AnnotatedMigration : Migration
+    public partial class new_migration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

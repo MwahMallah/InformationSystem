@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace InformationSystem.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class NewInitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,9 +16,9 @@ namespace InformationSystem.DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
-                    Abbreviation = table.Column<string>(type: "TEXT", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: false),
+                    Abbreviation = table.Column<string>(type: "TEXT", maxLength: 5, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,12 +30,11 @@ namespace InformationSystem.DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
-                    LastName = table.Column<string>(type: "TEXT", nullable: false),
+                    FirstName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     ImageUrl = table.Column<string>(type: "TEXT", nullable: true),
-                    Group = table.Column<string>(type: "TEXT", nullable: false),
-                    CurrentYear = table.Column<int>(type: "INTEGER", nullable: false),
-                    CourseId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Group = table.Column<string>(type: "TEXT", maxLength: 5, nullable: false),
+                    CurrentYear = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,15 +45,15 @@ namespace InformationSystem.DAL.Migrations
                 name: "CourseEntityStudentEntity",
                 columns: table => new
                 {
-                    ChosenCoursesId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CoursesId = table.Column<Guid>(type: "TEXT", nullable: false),
                     StudentsId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CourseEntityStudentEntity", x => new { x.ChosenCoursesId, x.StudentsId });
+                    table.PrimaryKey("PK_CourseEntityStudentEntity", x => new { x.CoursesId, x.StudentsId });
                     table.ForeignKey(
-                        name: "FK_CourseEntityStudentEntity_Courses_ChosenCoursesId",
-                        column: x => x.ChosenCoursesId,
+                        name: "FK_CourseEntityStudentEntity_Courses_CoursesId",
+                        column: x => x.CoursesId,
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -72,7 +71,7 @@ namespace InformationSystem.DAL.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Points = table.Column<int>(type: "INTEGER", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: false),
                     StudentId = table.Column<Guid>(type: "TEXT", nullable: false),
                     ActivityId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
@@ -96,7 +95,7 @@ namespace InformationSystem.DAL.Migrations
                     FinishTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ActivityType = table.Column<int>(type: "INTEGER", nullable: false),
                     RoomType = table.Column<int>(type: "INTEGER", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: false),
                     CourseId = table.Column<Guid>(type: "TEXT", nullable: false),
                     EvaluationId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
