@@ -94,4 +94,67 @@ public class ActivityFacadeTests: FacadeTestBase
         var dbActivity = await _activityFacadeSUT.GetAsync(activity.Id);
         DeepAssert.Equal(activity, dbActivity);
     }
+    
+    [Fact]
+    public async Task GetById_NonExistentActivity()
+    {
+        var nonExistentStudent = await _activityFacadeSUT.GetAsync(Guid.Empty);
+        Assert.Null(nonExistentStudent);
+    }
+    
+    
+    [Fact]
+    public async Task Update_ActivityUpdated()
+    {
+        var activity = new ActivityDetailModel
+        {
+            Description = "Test activity",
+            CourseId = CourseSeeds.CourseICS.Id,
+            StartTime = default,
+            FinishTime = default,
+            ActivityType = ActivityType.Exercise,
+        };
+        
+        activity = await _activityFacadeSUT.SaveAsync(activity);
+        activity.Description = "New description";
+        
+        activity = await _activityFacadeSUT.SaveAsync(activity);
+        
+        await using var dbxAssert = await DbContextFactory.CreateDbContextAsync();
+        var dbActivity = await dbxAssert.Activities
+                    .Include(a=>a.Course)
+                    .SingleAsync(a => a.Id == activity.Id);
+        
+        DeepAssert.Equal(activity, ActivityModelMapper.MapToDetailModel(dbActivity));
+    }
+    
+    
+    [Fact]
+    public async Task DeleteById_StudentIlyaDeleted()
+    {
+        var activity = new ActivityDetailModel
+        {
+            Description = "Test activity",
+            CourseId = CourseSeeds.CourseICS.Id,
+            StartTime = default,
+            FinishTime = default,
+            ActivityType = ActivityType.Exercise,
+        };
+        
+        activity = await _activityFacadeSUT.SaveAsync(activity);
+        
+        await _activityFacadeSUT.DeleteAsync(activity.Id);
+        
+        await using var dbxAssert = await DbContextFactory.CreateDbContextAsync();
+        var found = await dbxAssert.Activities.AnyAsync(a => a.Id == activity.Id);
+        Assert.False(found);
+    }
+    
+    [Fact]
+    public async Task DeleteById_NonExistentStudentThrows()
+    {
+        await Assert.ThrowsAsync<InvalidOperationException>(async()=>
+            await _activityFacadeSUT.DeleteAsync(Guid.Empty)
+        );
+    }
 }
