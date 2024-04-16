@@ -14,10 +14,10 @@ public record ActivityEntity : IEntity
     [MaxLength(1000)]
     public string? Description { get; set; }
     [ForeignKey(nameof(CourseId))]
-    public CourseEntity? Course { get; init; }
+    public CourseEntity? Course { get; set; }
     public Guid? CourseId { get; set; }
 
     [ForeignKey(nameof(EvaluationId))]
     public EvaluationEntity? Evaluation { get; init; }
-    public Guid EvaluationId { get; set; }
+    public Guid? EvaluationId { get; set; }
 }

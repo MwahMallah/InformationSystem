@@ -4,10 +4,11 @@ namespace InformationSystem.BL.Models;
 
 public record ActivityDetailModel : BaseModel
 {
-    public DateTime StartTime { get; set; }
-    public DateTime FinishTime { get; set; }
-    public ActivityType ActivityType { get; set; }
-    public required string CourseAbbreviation { get; set; }
+    public required DateTime StartTime { get; set; }
+    public required DateTime FinishTime { get; set; }
+    public required ActivityType ActivityType { get; set; }
+    public string? CourseAbbreviation { get; set; }
+    public Guid? CourseId { get; set; }
     public string? Description { get; set; }
     public int? Points { get; set; }
     
@@ -18,6 +19,8 @@ public record ActivityDetailModel : BaseModel
         FinishTime = DateTime.Now,
         CourseAbbreviation = string.Empty,
         Description = string.Empty,
-        Points = 0
+        Points = 0,
+        ActivityType = ActivityType.Exercise,
+        CourseId = Guid.Empty
     };
 }
