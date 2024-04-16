@@ -3,6 +3,7 @@ using InformationSystem.BL.Models;
 using InformationSystem.DAL.Entities;
 using InformationSystem.DAL.Mappers;
 using InformationSystem.DAL.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
 
 namespace InformationSystem.BL.Facades;
 
@@ -12,5 +13,58 @@ public class ActivityFacade(
     : FacadeBase<ActivityEntity, ActivityDetailModel, 
         ActivityListModel, ActivityEntityMapper>(unitOfWorkFactory, modelMapper)
 {
-    
+    public override async Task<ActivityDetailModel?> GetAsync(Guid id)
+    {
+        await using var uow = unitOfWorkFactory.Create();
+        var repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
+        
+        var query = repository.Get()
+                            .Include(a=>a.Course);
+        
+
+        var entity = await query.SingleOrDefaultAsync(e => e.Id == id);
+        return entity is null
+            ? null
+            : ModelMapper.MapToDetailModel(entity);
+    }
+
+    public override async Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model)
+    {
+        ActivityDetailModel result;
+        ActivityEntity entity = ModelMapper.MapToEntity(model);
+
+        IUnitOfWork uow = UnitOfWorkFactory.Create();
+        var repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
+        
+        var courseRepository = uow.GetRepository<CourseEntity, CourseEntityMapper>();
+        var course = await courseRepository.Get().SingleOrDefaultAsync(c=>c.Id == model.CourseId);
+        
+        if (course != null)
+        {
+            entity.Course = course;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Course with ID {model.CourseId} does not exist.");
+        }
+        
+        Func<IQueryable<ActivityEntity>, IQueryable<ActivityEntity>> include 
+            = query => query.Include(a=>a.Course);
+        
+        if (await repository.ExistsAsync(entity))
+        {
+            ActivityEntity updatedEntity = await repository.UpdateAsync(entity, include);
+            result = ModelMapper.MapToDetailModel(updatedEntity);
+        }
+        else
+        {
+            entity.Id = Guid.NewGuid();
+            ActivityEntity insertedEntity = await repository.InsertAsync(entity);
+            result = ModelMapper.MapToDetailModel(insertedEntity);
+        }
+
+        await uow.CommitAsync();
+
+        return result;
+    }
 }

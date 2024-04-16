@@ -48,7 +48,7 @@ public abstract class
         return ModelMapper.MapToListModel(entities);
     }
 
-    public async Task<TDetailModel?> GetAsync(Guid id)
+    public virtual async Task<TDetailModel?> GetAsync(Guid id)
     {
         await using var uow = unitOfWorkFactory.Create();
         IQueryable<TEntity> query = uow.GetRepository<TEntity, TEntityMapper>()
