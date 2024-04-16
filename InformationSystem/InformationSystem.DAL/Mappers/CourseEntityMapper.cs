@@ -9,5 +9,6 @@ public class CourseEntityMapper : IEntityMapper<CourseEntity>
         existingEntity.Name = newEntity.Name;
         existingEntity.Description = newEntity.Description;
         existingEntity.Abbreviation = newEntity.Abbreviation;
+        existingEntity.Students = newEntity.Students;
     }
 }
