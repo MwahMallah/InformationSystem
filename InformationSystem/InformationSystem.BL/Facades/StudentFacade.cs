@@ -13,8 +13,20 @@ public class StudentFacade(
     : FacadeBase<StudentEntity, StudentDetailModel, StudentListModel, StudentEntityMapper>
         (unitOfWorkFactory, modelMapper)
 {
-    protected override string IncludesNavigationPathDetail => "Courses";
-
+    public override async Task<StudentDetailModel?> GetAsync(Guid id)
+    {
+        await using var uow = unitOfWorkFactory.Create();
+        var repository = uow.GetRepository<StudentEntity, StudentEntityMapper>();
+        
+        var query = repository.Get()
+            .Include(s=>s.Courses);
+        
+        var entity = await query.SingleOrDefaultAsync(e => e.Id == id);
+        return entity is null
+            ? null
+            : ModelMapper.MapToDetailModel(entity);
+    }
+    
     public override async Task<StudentDetailModel> SaveAsync(StudentDetailModel model)
     {
         StudentDetailModel result;

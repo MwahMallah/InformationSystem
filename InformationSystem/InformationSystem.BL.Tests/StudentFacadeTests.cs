@@ -23,7 +23,6 @@ public class StudentFacadeTests: FacadeTestBase
     {
         var student = new StudentDetailModel
         {
-            Id = Guid.NewGuid(), 
             FirstName = "Maksim",
             LastName = "Dubrovin",
             Group = "123",
@@ -73,7 +72,6 @@ public class StudentFacadeTests: FacadeTestBase
     {
         var student = new StudentDetailModel
         {
-            Id = Guid.NewGuid(), 
             FirstName = "Maksim",
             LastName = "Dubrovin",
             Group = "123",
@@ -104,29 +102,19 @@ public class StudentFacadeTests: FacadeTestBase
         var ilya = students.SingleOrDefault(s => s.Id == StudentSeeds.StudentIlya.Id);
         DeepAssert.Equal(ilya, StudentModelMapper.MapToListModel(StudentSeeds.StudentIlya));
     }
-
-
+    
     [Fact]
-    public async Task GetById_StudentWithGivenId()
+    public async Task GetById_StudentWithoutCourses()
     {
         var ilya = await _studentFacadeSUT.GetAsync(StudentSeeds.StudentIlya.Id);
         DeepAssert.Equal(ilya, StudentModelMapper.MapToDetailModel(StudentSeeds.StudentIlya));
     }
 
     [Fact]
-    public async Task GetById_NonExistentStudent()
-    {
-        var nonExistentStudent = await _studentFacadeSUT.GetAsync(StudentSeeds.EmptyStudentEntity.Id);
-        Assert.Null(nonExistentStudent);
-    }
-
-
-    [Fact]
     public async Task GetById_StudentWithCourses()
     {
         var student = new StudentDetailModel
         {
-            Id = Guid.NewGuid(), 
             FirstName = "Maksim",
             LastName = "Dubrovin",
             Group = "123",
@@ -141,9 +129,17 @@ public class StudentFacadeTests: FacadeTestBase
         student = await _studentFacadeSUT.SaveAsync(student);
 
         var dbStudent = await _studentFacadeSUT.GetAsync(student.Id);
-        DeepAssert.Equal(dbStudent, student);
+        DeepAssert.Equal(student, dbStudent);
     }
+    
 
+    [Fact]
+    public async Task GetById_NonExistentStudent()
+    {
+        var nonExistentStudent = await _studentFacadeSUT.GetAsync(StudentSeeds.EmptyStudentEntity.Id);
+        Assert.Null(nonExistentStudent);
+    }
+    
     [Fact]
     public async Task Update_StudentWithoutCourses_IlyaUpdated()
     {
@@ -217,7 +213,6 @@ public class StudentFacadeTests: FacadeTestBase
     {
         var student = new StudentDetailModel
         {
-            Id = Guid.NewGuid(), 
             FirstName = "Maksim",
             LastName = "Dubrovin",
             Group = "123",
@@ -255,7 +250,6 @@ public class StudentFacadeTests: FacadeTestBase
     {
         var student = new StudentDetailModel
         {
-            Id = Guid.NewGuid(), 
             FirstName = "Maksim",
             LastName = "Dubrovin",
             Group = "123",
@@ -328,6 +322,12 @@ public class StudentFacadeTests: FacadeTestBase
         Assert.False(found);
     }
 
+    [Fact]
+    public async Task UpdateStudent_CourseDeletedOutside()
+    {
+        
+    }
+    
     [Fact]
     public async Task DeleteById_NonExistentStudentThrows()
     {
