@@ -321,12 +321,6 @@ public class StudentFacadeTests: FacadeTestBase
         var found = await dbxAssert.Students.AnyAsync(s => s.Id == StudentSeeds.StudentIlya.Id);
         Assert.False(found);
     }
-
-    [Fact]
-    public async Task UpdateStudent_CourseDeletedOutside()
-    {
-        
-    }
     
     [Fact]
     public async Task DeleteById_NonExistentStudentThrows()
