@@ -18,6 +18,6 @@ public record ActivityEntity : IEntity
     public Guid? CourseId { get; set; }
 
     [ForeignKey(nameof(EvaluationId))]
-    public EvaluationEntity? Evaluation { get; init; }
+    public EvaluationEntity? Evaluation { get; set; }
     public Guid? EvaluationId { get; set; }
 }

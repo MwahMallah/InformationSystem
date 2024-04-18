@@ -13,5 +13,7 @@ public class ActivityEntityMapper: IEntityMapper<ActivityEntity>
         existingEntity.Description = newEntity.Description;
         existingEntity.CourseId = newEntity.CourseId;
         existingEntity.EvaluationId = newEntity.EvaluationId;
+        existingEntity.Course = newEntity.Course;
+        existingEntity.Evaluation = newEntity.Evaluation;
     }
 }
