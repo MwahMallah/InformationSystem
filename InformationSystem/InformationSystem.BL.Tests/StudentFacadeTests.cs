@@ -141,6 +141,28 @@ public class StudentFacadeTests: FacadeTestBase
     }
     
     [Fact]
+    public async Task GetById_StudentFoundAfterUpdate()
+    {
+        var updatedIlya = new StudentDetailModel
+        {
+            Id = StudentSeeds.StudentIlya.Id,
+            FirstName = StudentSeeds.StudentIlya.FirstName,
+            LastName = StudentSeeds.StudentIlya.LastName,
+            Group = StudentSeeds.StudentIlya.Group
+        };
+
+        updatedIlya.Courses = new ObservableCollection<CourseListModel>
+        {
+            CourseModelMapper.MapToListModel(CourseSeeds.CourseDatabase)
+        };
+        
+        updatedIlya = await _studentFacadeSUT.SaveAsync(updatedIlya);
+        
+        var dbStudent = await _studentFacadeSUT.GetAsync(updatedIlya.Id);
+        DeepAssert.Equal(updatedIlya, dbStudent);
+    }
+    
+    [Fact]
     public async Task Update_StudentWithoutCourses_IlyaUpdated()
     {
         var updatedIlya = new StudentDetailModel
@@ -177,7 +199,7 @@ public class StudentFacadeTests: FacadeTestBase
             CourseModelMapper.MapToListModel(CourseSeeds.CourseDatabase)
         };
         
-        await _studentFacadeSUT.SaveAsync(updatedIlya);
+        updatedIlya = await _studentFacadeSUT.SaveAsync(updatedIlya);
         
         await using var dbxAssert = await DbContextFactory.CreateDbContextAsync();
         var dbStudent = await dbxAssert.Students

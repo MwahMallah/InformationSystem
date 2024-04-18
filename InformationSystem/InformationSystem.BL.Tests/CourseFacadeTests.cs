@@ -65,6 +65,58 @@ public class CourseFacadeTests: FacadeTestBase
         DeepAssert.Equal(course, mapped);
     }
     
+    [Fact]
+    public async Task AddCourseWithActivity()
+    {
+        var course = new CourseDetailModel
+        {
+            Id = Guid.NewGuid(),
+            Abbreviation = "IPK",
+            Name = "networks",
+            Activities = new ObservableCollection<ActivityListModel>
+            {
+                ActivityModelMapper.MapToListModel(ActivitySeeds.ActivityExercise)
+            },
+        }; 
+        
+        course = await _courseFacadeSUT.SaveAsync(course);
+        //Assert
+        await using var dbxAssert = await DbContextFactory.CreateDbContextAsync();
+        
+        var courseFromDb = await dbxAssert.Courses
+            .Include(c=>c.Activities)
+            .SingleAsync(i => i.Id == course.Id);
+        
+        var mapped = CourseModelMapper.MapToDetailModel(courseFromDb);
+        DeepAssert.Equal(course, mapped);
+    }
+    
+    [Fact]
+    public async Task AddCourseWithMultipleActivities()
+    {
+        var course = new CourseDetailModel
+        {
+            Id = Guid.NewGuid(),
+            Abbreviation = "IPK",
+            Name = "networks",
+            Activities = new ObservableCollection<ActivityListModel>
+            {
+                ActivityModelMapper.MapToListModel(ActivitySeeds.ActivityExercise),
+                ActivityModelMapper.MapToListModel(ActivitySeeds.ActivityExam),
+            },
+        }; 
+        
+        course = await _courseFacadeSUT.SaveAsync(course);
+        //Assert
+        await using var dbxAssert = await DbContextFactory.CreateDbContextAsync();
+        
+        var courseFromDb = await dbxAssert.Courses
+            .Include(c=>c.Activities)
+            .SingleAsync(i => i.Id == course.Id);
+        
+        var mapped = CourseModelMapper.MapToDetailModel(courseFromDb);
+        DeepAssert.Equal(course, mapped);
+    }
     
     [Fact]
     public async Task AddCourseWithMultipleStudents()
@@ -130,6 +182,53 @@ public class CourseFacadeTests: FacadeTestBase
     }
     
     [Fact]
+    public async Task GetById_CourseWithActivities()
+    {
+        var course = new CourseDetailModel
+        {
+            Id = Guid.NewGuid(),
+            Abbreviation = "IPK",
+            Name = "networks",
+            Activities = new ObservableCollection<ActivityListModel>
+            {
+                ActivityModelMapper.MapToListModel(ActivitySeeds.ActivityExercise),
+                ActivityModelMapper.MapToListModel(ActivitySeeds.ActivityExam),
+            },
+        }; 
+        
+        course = await _courseFacadeSUT.SaveAsync(course);
+        var courseFromDb = await _courseFacadeSUT.GetAsync(course.Id);
+        
+        DeepAssert.Equal(course, courseFromDb);
+    }
+
+    [Fact]
+    public async Task GetById_CourseWithActivitiesAndStudents()
+    {
+        var course = new CourseDetailModel
+        {
+            Id = Guid.NewGuid(),
+            Abbreviation = "IPK",
+            Name = "networks",
+            Students = new ObservableCollection<StudentListModel>
+            {
+                StudentModelMapper.MapToListModel(StudentSeeds.StudentMaksim),
+                StudentModelMapper.MapToListModel(StudentSeeds.StudentIlya)
+            },
+            Activities = new ObservableCollection<ActivityListModel>
+            {
+                ActivityModelMapper.MapToListModel(ActivitySeeds.ActivityExercise),
+                ActivityModelMapper.MapToListModel(ActivitySeeds.ActivityExam),
+            },
+        }; 
+        
+        course = await _courseFacadeSUT.SaveAsync(course);
+        var courseFromDb = await _courseFacadeSUT.GetAsync(course.Id);
+        
+        DeepAssert.Equal(course, courseFromDb);
+    }
+    
+    [Fact]
     public async Task GetById_NonExistentCourse()
     {
         var nonExistentCourse = await _courseFacadeSUT.GetAsync(CourseSeeds.EmptyCourseEntity.Id);
@@ -137,7 +236,31 @@ public class CourseFacadeTests: FacadeTestBase
     }
     
     [Fact]
-    public async Task Update_CourseDatabaseUpdated()
+    public async Task GetById_CourseFoundAfterStudentUpdate()
+    {
+        var updatedIds = new CourseDetailModel
+        {
+            Id = CourseSeeds.CourseDatabase.Id,
+            Abbreviation = "IDS",
+            Name = "Databases",
+        };
+
+        await _courseFacadeSUT.SaveAsync(updatedIds);
+        
+        updatedIds.Students = new ObservableCollection<StudentListModel>
+        {
+            StudentModelMapper.MapToListModel(StudentSeeds.StudentIlya)
+        };
+        
+        await _courseFacadeSUT.SaveAsync(updatedIds);
+        
+        var dbCourse = await _courseFacadeSUT.GetAsync(updatedIds.Id);
+        DeepAssert.Equal(updatedIds, dbCourse);
+    }
+    
+    
+    [Fact]
+    public async Task Update_CourseUpdated()
     {
         var updatedIds = new CourseDetailModel
         {
@@ -166,19 +289,52 @@ public class CourseFacadeTests: FacadeTestBase
             Name = "Databases",
         };
 
+        await _courseFacadeSUT.SaveAsync(updatedIds);
+        
         updatedIds.Students = new ObservableCollection<StudentListModel>
         {
             StudentModelMapper.MapToListModel(StudentSeeds.StudentIlya)
+        };
+        
+        updatedIds = await _courseFacadeSUT.SaveAsync(updatedIds);
+        
+        await using var dbxAssert = await DbContextFactory.CreateDbContextAsync();
+        var dbCourse = await dbxAssert.Courses
+            .Include(c=>c.Students)
+            .SingleAsync(c => c.Id == updatedIds.Id);
+
+        Assert.Contains(StudentModelMapper.MapToListModel(StudentSeeds.StudentIlya),
+                            CourseModelMapper.MapToDetailModel(dbCourse).Students);
+        DeepAssert.Equal(updatedIds, CourseModelMapper.MapToDetailModel(dbCourse));
+    }
+    
+    [Fact]
+    public async Task Update_CourseWithoutActivities_ActivityAdded()
+    {
+        var updatedIds = new CourseDetailModel
+        {
+            Id = CourseSeeds.CourseDatabase.Id,
+            Abbreviation = "IDS",
+            Name = "Databases",
+        };
+
+        updatedIds.Activities = new ObservableCollection<ActivityListModel>
+        {
+            ActivityModelMapper.MapToListModel(ActivitySeeds.ActivityExercise)
         };
         
         await _courseFacadeSUT.SaveAsync(updatedIds);
         
         await using var dbxAssert = await DbContextFactory.CreateDbContextAsync();
         var dbCourse = await dbxAssert.Courses
-            .Include(c=>c.Students)
+            .Include(c=>c.Activities)
             .SingleAsync(c => c.Id == updatedIds.Id);
-        
-        DeepAssert.Equal(updatedIds, CourseModelMapper.MapToDetailModel(dbCourse));
+
+        var activity = ActivityModelMapper.MapToListModel(ActivitySeeds.ActivityExercise);
+        var activities = CourseModelMapper.MapToDetailModel(dbCourse).Activities;
+
+        var model = CourseModelMapper.MapToDetailModel(dbCourse);
+        Assert.Contains(activity.Id, activities.Select(a=>a.Id));
     }
     
     [Fact]
@@ -212,6 +368,44 @@ public class CourseFacadeTests: FacadeTestBase
             .SingleAsync(c => c.Id == updatedCourse.Id);
         
         DeepAssert.Equal(updatedCourse, CourseModelMapper.MapToDetailModel(dbCourse));
+    }
+
+    [Fact]
+    public async Task Update_CourseWithActivity_ActivityDeleted()
+    {
+        var course = new CourseDetailModel
+        {
+            Id = CourseSeeds.CourseDatabase.Id,
+            Abbreviation = "IDS",
+            Name = "Databases",
+            Activities = new ObservableCollection<ActivityListModel>
+            {
+                ActivityModelMapper.MapToListModel(ActivitySeeds.ActivityExercise)
+            }
+        };
+        
+        await _courseFacadeSUT.SaveAsync(course);
+        
+        var updatedCourse = new CourseDetailModel  
+        {
+            Id = course.Id,
+            Activities = new ObservableCollection<ActivityListModel>(),
+            Abbreviation = course.Abbreviation,
+            Name = course.Name
+        };
+        
+        updatedCourse = await _courseFacadeSUT.SaveAsync(updatedCourse);
+        
+        await using var dbxAssert = await DbContextFactory.CreateDbContextAsync();
+        var dbCourse = await dbxAssert.Courses
+            .Include(c=>c.Activities)
+            .SingleAsync(c => c.Id == updatedCourse.Id);
+
+        var activity = ActivityModelMapper.MapToListModel(ActivitySeeds.ActivityExercise);
+        var activities = CourseModelMapper.MapToDetailModel(dbCourse).Activities;
+
+        var model = CourseModelMapper.MapToDetailModel(dbCourse);
+        Assert.DoesNotContain(activity.Id, activities.Select(a=>a.Id));
     }
     
     [Fact]
