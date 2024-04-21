@@ -27,4 +27,8 @@
       <ProjectReference Include="..\InformationSystem.Common.Tests\InformationSystem.Common.Tests.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="InformationSystem.BL.Tests.csproj.DotSettings" />
+    </ItemGroup>
+
 </Project>

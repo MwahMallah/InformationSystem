@@ -13,7 +13,7 @@ public static class CourseSeeds
         Abbreviation = default!
     };
 
-    public static readonly CourseEntity CourseICS = new()
+    public static readonly CourseEntity CourseICS = EmptyCourseEntity with
     {
         Id = Guid.Parse("97B7F7B6-5c58-43B3-B8C0-B5FCFFF6DC2E"),
         Name = "Seminar C#",
@@ -21,7 +21,7 @@ public static class CourseSeeds
         Abbreviation = "ICS"
     };
 
-    public static readonly CourseEntity CourseDatabase = CourseICS with
+    public static readonly CourseEntity CourseDatabase = EmptyCourseEntity with
     {
         Id = Guid.Parse("53B6A7B6-5c58-43B3-C9B0-B5FCFFF6DC2E"),
         Name = "Databases",
