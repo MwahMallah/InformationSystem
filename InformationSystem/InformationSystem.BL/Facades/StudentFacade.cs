@@ -35,21 +35,9 @@ public class StudentFacade(
         IUnitOfWork uow = UnitOfWorkFactory.Create();
         var repository = uow.GetRepository<StudentEntity, StudentEntityMapper>();
         
-        var courseRepository = uow.GetRepository<CourseEntity, CourseEntityMapper>();
-
-        foreach (var courseId in model.Courses.Select(c=>c.Id))
-        {
-            var course = await courseRepository.Get().SingleOrDefaultAsync(c=>c.Id==courseId);
-            
-            if (course != null)
-            {
-                entity.Courses.Add(course);
-            }
-            else
-            {
-                throw new InvalidOperationException($"Course with ID {courseId} does not exist.");
-            }
-        }
+        //add courses to student entity
+        await AddEntitiesToCollectionAsync<CourseEntity, CourseEntityMapper>
+            (entity.Courses, model.Courses.Select(c => c.Id), uow);
         
         Func<IQueryable<StudentEntity>, IQueryable<StudentEntity>> include 
             = query => query.Include(s => s.Courses);

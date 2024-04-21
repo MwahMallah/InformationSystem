@@ -34,8 +34,12 @@ public class CourseFacade(
         
         var repository = uow.GetRepository<CourseEntity, CourseEntityMapper>();
         
-        await AddStudentsToCourse(entity, model.Students.Select(s => s.Id), uow);
-        await AddActivitiesToCourse(entity, model.Activities.Select(a => a.Id), uow);
+        //Add students to course entity
+        await AddEntitiesToCollectionAsync<StudentEntity, StudentEntityMapper>
+            (entity.Students, model.Students.Select(s => s.Id), uow);
+        //add activities to course entity
+        await AddEntitiesToCollectionAsync<ActivityEntity, ActivityEntityMapper>
+            (entity.Activities, model.Activities.Select(a => a.Id), uow);
         
         Func<IQueryable<CourseEntity>, IQueryable<CourseEntity>> include 
             = query => query.Include(c => c.Students)
@@ -54,43 +58,5 @@ public class CourseFacade(
         var result = ModelMapper.MapToDetailModel(entity);
         await uow.CommitAsync();
         return result;
-    }
-
-    private async Task AddStudentsToCourse(CourseEntity entity, IEnumerable<Guid> studentsIds, IUnitOfWork uow)
-    {
-        var studentRepository = uow.GetRepository<StudentEntity, StudentEntityMapper>();
-
-        foreach (var studentId in studentsIds)
-        {
-            var student = await studentRepository.Get().SingleOrDefaultAsync(c=>c.Id==studentId);
-            
-            if (student != null)
-            {
-                entity.Students.Add(student);
-            }
-            else
-            {
-                throw new InvalidOperationException($"Student with ID {studentId} does not exist.");
-            }
-        }
-    }
-    
-    private async Task AddActivitiesToCourse(CourseEntity entity, IEnumerable<Guid> activityIds, IUnitOfWork uow)
-    {
-        var activityRepository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
-
-        foreach (var activityId in activityIds)
-        {
-            var activity = await activityRepository.Get().SingleOrDefaultAsync(a=>a.Id==activityId);
-            
-            if (activity != null)
-            {
-                entity.Activities.Add(activity);
-            }
-            else
-            {
-                throw new InvalidOperationException($"Activity with ID {activityId} does not exist.");
-            }
-        }
     }
 }
