@@ -8,6 +8,7 @@ public record ActivityListModel : BaseModel
     public DateTime StartTime { get; set; }
     public DateTime FinishTime { get; set; }
     public ActivityType ActivityType { get; set; }
+    public int MaxPoints { get; set; }
     public required string CourseAbbreviation { get; set; }
     public int? Points { get; set; }
     

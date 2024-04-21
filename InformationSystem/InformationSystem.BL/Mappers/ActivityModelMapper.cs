@@ -14,7 +14,7 @@ public class ActivityModelMapper:
                 FinishTime = entity.FinishTime,
                 ActivityType = entity.ActivityType,
                 CourseAbbreviation = entity?.Course?.Abbreviation ?? string.Empty,
-                Points = entity?.Evaluation?.Points ?? 0
+                MaxPoints = entity.MaxPoints
             };
     
     public override ActivityDetailModel MapToDetailModel(ActivityEntity entity)
@@ -27,7 +27,7 @@ public class ActivityModelMapper:
                 CourseAbbreviation = entity?.Course?.Abbreviation ?? string.Empty,
                 CourseId = entity.CourseId,
                 Description = entity.Description,
-                Points = entity.Evaluation?.Points ?? 0
+                MaxPoints = entity.MaxPoints
             };
 
     public override ActivityEntity MapToEntity(ActivityDetailModel model)
