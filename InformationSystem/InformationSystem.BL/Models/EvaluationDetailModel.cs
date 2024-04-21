@@ -3,9 +3,10 @@
 public record EvaluationDetailModel : BaseModel
 {
     public int Points { get; set; }
-    public Guid StudentId { get; set; }
-    public Guid ActivityId { get; set; }
-    public required string Description { get; set; }
+    public Guid? StudentId { get; set; }
+    public Guid? ActivityId { get; set; }
+    public string? CourseAbbreviation { get; set; }
+    public string? Description { get; set; }
     
     public static EvaluationDetailModel Empty => new()
     {

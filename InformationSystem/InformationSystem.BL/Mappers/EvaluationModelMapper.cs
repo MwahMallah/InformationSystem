@@ -9,23 +9,31 @@ public class EvaluationModelMapper:
     public override EvaluationListModel MapToListModel(EvaluationEntity entity)
         => new EvaluationListModel
         {
+            Id = entity.Id,
             StudentId = entity.StudentId,
             ActivityId = entity.ActivityId,
-            StudentLastName = entity.Student?.LastName ?? string.Empty,
+            StudentFullName = entity.Student != null?  
+                             $"{entity.Student.FirstName} {entity.Student.LastName}"
+                             : string.Empty
         };
 
     public override EvaluationDetailModel MapToDetailModel(EvaluationEntity entity)
         => new EvaluationDetailModel
         {
+            Id = entity.Id,
             StudentId = entity.StudentId,
             ActivityId = entity.ActivityId,
             Points = entity.Points,
             Description = entity.Description
         };
-        
+
 
     public override EvaluationEntity MapToEntity(EvaluationDetailModel model)
-    {
-        throw new NotImplementedException();
-    }
+        => new EvaluationEntity
+        {
+            Id = model.Id,
+            Description = model.Description,
+            StudentId = model.StudentId,
+            ActivityId = model.ActivityId
+        };
 }
