@@ -130,7 +130,7 @@ public class ActivityFacadeTests: FacadeTestBase
     
     
     [Fact]
-    public async Task DeleteById_StudentIlyaDeleted()
+    public async Task DeleteById_ActivityDeleted()
     {
         var activity = new ActivityDetailModel
         {
@@ -151,7 +151,7 @@ public class ActivityFacadeTests: FacadeTestBase
     }
     
     [Fact]
-    public async Task DeleteById_NonExistentStudentThrows()
+    public async Task DeleteById_NonExistentActivityThrows()
     {
         await Assert.ThrowsAsync<InvalidOperationException>(async()=>
             await _activityFacadeSUT.DeleteAsync(Guid.Empty)

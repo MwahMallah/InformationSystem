@@ -351,5 +351,4 @@ public class StudentFacadeTests: FacadeTestBase
             await _studentFacadeSUT.DeleteAsync(StudentSeeds.EmptyStudentEntity.Id)
             );
     }
-
 }
