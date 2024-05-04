@@ -6,8 +6,10 @@ namespace InformationSystem.BL.Mappers;
 public class StudentListModelMapper
     : ListModelMapperBase<StudentEntity, StudentListModel>
 {
-    public override StudentListModel MapToListModel(StudentEntity entity)
-        => new StudentListModel
+    public override StudentListModel MapToListModel(StudentEntity? entity)
+        => entity is null?
+            StudentListModel.Empty : 
+            new StudentListModel
         {
             Id = entity.Id,
             FirstName = entity.FirstName,

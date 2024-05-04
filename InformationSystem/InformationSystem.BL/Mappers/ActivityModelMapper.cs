@@ -3,7 +3,7 @@ using InformationSystem.DAL.Entities;
 
 namespace InformationSystem.BL.Mappers;
 
-public class ActivityModelMapper: 
+public class ActivityModelMapper(EvaluationModelMapper evaluationModelMapper): 
     ModelMapperBase<ActivityEntity, ActivityDetailModel, ActivityListModel>
 {
     public override ActivityListModel MapToListModel(ActivityEntity entity) 
@@ -26,10 +26,11 @@ public class ActivityModelMapper:
                 ActivityType = entity.ActivityType,
                 CourseAbbreviation = entity?.Course?.Abbreviation ?? string.Empty,
                 CourseId = entity.CourseId,
+                Evaluations = evaluationModelMapper.MapToListModel(entity.Evaluations).ToObservableCollection(),
                 Description = entity.Description,
                 MaxPoints = entity.MaxPoints
             };
-
+    
     public override ActivityEntity MapToEntity(ActivityDetailModel model)
         => new ActivityEntity
         {

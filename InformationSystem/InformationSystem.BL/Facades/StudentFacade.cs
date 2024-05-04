@@ -19,7 +19,9 @@ public class StudentFacade(
         var repository = uow.GetRepository<StudentEntity, StudentEntityMapper>();
         
         var query = repository.Get()
-            .Include(s=>s.Courses);
+            .Include(s=>s.Courses)
+            .ThenInclude(c=>c.Activities)
+            .ThenInclude(a=>a.Evaluations);
         
         var entity = await query.SingleOrDefaultAsync(e => e.Id == id);
         return entity is null
