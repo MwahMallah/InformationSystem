@@ -19,10 +19,11 @@ public class FacadeTestBase : IAsyncLifetime
         DbContextFactory = new DbContextSqLiteTestingFactory(GetType().FullName!, seedTestingData: true);
         InformationSystemDbContextSUT = DbContextFactory.CreateDbContext();
 
-        ActivityModelMapper = new ActivityModelMapper();
-        EvaluationModelMapper = new EvaluationModelMapper();
         var courseListModelMapper = new CourseListModelMapper();
         var studentListModelMapper = new StudentListModelMapper();
+        
+        EvaluationModelMapper = new EvaluationModelMapper();
+        ActivityModelMapper = new ActivityModelMapper(EvaluationModelMapper);
         
         CourseModelMapper = new CourseModelMapper(ActivityModelMapper, studentListModelMapper);
         StudentModelMapper = new StudentModelMapper

@@ -17,7 +17,7 @@ public class EvaluationFacadeTests: FacadeTestBase
     }
     
     [Fact]
-    public async Task AddEvaluationWithStudentAndCourse()
+    public async Task AddEvaluationWithStudentAndActivity()
     {
         var evaluation = new EvaluationDetailModel
         {
