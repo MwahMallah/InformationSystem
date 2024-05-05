@@ -32,7 +32,9 @@ public class EvaluationFacadeTests: FacadeTestBase
         await using var dbxAssert = await DbContextFactory.CreateDbContextAsync();
         
         var evaluationFromDb = await dbxAssert
-            .Evaluations.SingleAsync(e => e.Id == evaluation.Id);
+            .Evaluations
+            .Include(e=>e.Student)
+            .SingleAsync(e => e.Id == evaluation.Id);
         var mapped = EvaluationModelMapper.MapToDetailModel(evaluationFromDb);
         DeepAssert.Equal(evaluation, mapped);
     }
