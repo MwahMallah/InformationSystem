@@ -24,7 +24,7 @@ public class CourseFacadeTests: FacadeTestBase
         var course = new CourseDetailModel
         {
             Id = Guid.NewGuid(),
-            Abbreviation = "IPK",
+            Abbreviation = "IPA",
             Name = "Computer Networks",
             MaxStudents = 200,
             Credits = 5,
@@ -46,7 +46,7 @@ public class CourseFacadeTests: FacadeTestBase
         var course = new CourseDetailModel
         {
             Id = Guid.NewGuid(),
-            Abbreviation = "IPK",
+            Abbreviation = "IPA",
             Name = "networks",
             Students = new ObservableCollection<StudentListModel>
             {
@@ -151,7 +151,85 @@ public class CourseFacadeTests: FacadeTestBase
     {
         var courses = await _courseFacadeSUT.GetAsync();
         var ics = courses.SingleOrDefault(s => s.Id == CourseSeeds.CourseICS.Id);
-        DeepAssert.Equal(ics, CourseModelMapper.MapToListModel(CourseSeeds.CourseICS));
+        DeepAssert.Equal(CourseModelMapper.MapToListModel(CourseSeeds.CourseICS), ics);
+    }
+
+    [Fact]
+    public async Task GetAll_FilteredByAbbreviation()
+    {
+        var courses = await _courseFacadeSUT.GetAsync("IP");
+        Assert.Equal(2, courses.Count());
+    }
+    
+    [Fact]
+    public async Task GetAll_FilteredByName()
+    {
+        var courses = await _courseFacadeSUT.GetAsync("networking");
+        Assert.Single(courses);
+    }
+
+    [Fact]
+    public async Task GetAll_SortedByCredits()
+    {
+        var courses = await _courseFacadeSUT.GetAsync(orderQuery:"credits");
+        DeepAssert.Equal(CourseModelMapper
+            .MapToListModel(CourseSeeds.CourseIpk), courses.ToList()[0]);
+    }
+    
+    [Fact]
+    public async Task GetAll_SortedByCreditsDescending()
+    {
+        var courses = await _courseFacadeSUT.GetAsync(orderQuery:"credits", isAscending:false);
+        DeepAssert.Equal(CourseModelMapper
+            .MapToListModel(CourseSeeds.CourseDatabase), courses.ToList()[0]);
+    }
+    
+    [Fact]
+    public async Task GetAll_SortedByName()
+    {
+        var courses = await _courseFacadeSUT.GetAsync(orderQuery:"name");
+        DeepAssert.Equal(CourseModelMapper
+            .MapToListModel(CourseSeeds.CourseIpk), courses.ToList()[0]);
+    }
+    
+    [Fact]
+    public async Task GetAll_SortedByNameDescending()
+    {
+        var courses = await _courseFacadeSUT.GetAsync(orderQuery:"name", isAscending:false);
+        DeepAssert.Equal(CourseModelMapper
+            .MapToListModel(CourseSeeds.CourseICS), courses.ToList()[0]);
+    }
+    
+    [Fact]
+    public async Task GetAll_SortedByAbbreviation()
+    {
+        var courses = await _courseFacadeSUT.GetAsync(orderQuery:"abbreviation");
+        DeepAssert.Equal(CourseModelMapper
+            .MapToListModel(CourseSeeds.CourseICS), courses.ToList()[0]);
+    }
+    
+    [Fact]
+    public async Task GetAll_SortedByAbbreviationDescending()
+    {
+        var courses = await _courseFacadeSUT.GetAsync(orderQuery:"abbreviation", isAscending:false);
+        DeepAssert.Equal(CourseModelMapper
+            .MapToListModel(CourseSeeds.CourseIpp), courses.ToList()[0]);
+    }
+    
+    [Fact]
+    public async Task GetAll_SortedByMaxStudents()
+    {
+        var courses = await _courseFacadeSUT.GetAsync(orderQuery:"max_students");
+        DeepAssert.Equal(CourseModelMapper
+            .MapToListModel(CourseSeeds.CourseICS), courses.ToList()[0]);
+    }
+    
+    [Fact]
+    public async Task GetAll_SortedByMaxStudentsDescending()
+    {
+        var courses = await _courseFacadeSUT.GetAsync(orderQuery:"max_students", isAscending:false);
+        DeepAssert.Equal(CourseModelMapper
+            .MapToListModel(CourseSeeds.CourseIpk), courses.ToList()[0]);
     }
     
     [Fact]

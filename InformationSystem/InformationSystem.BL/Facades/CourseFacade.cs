@@ -12,6 +12,44 @@ public class CourseFacade(
     IModelMapper<CourseEntity, CourseDetailModel, CourseListModel> modelMapper) 
     : FacadeBase<CourseEntity, CourseDetailModel, CourseListModel, CourseEntityMapper>(unitOfWorkFactory, modelMapper)
 {
+    public async Task<IEnumerable<CourseListModel>> GetAsync(
+        string? searchQuery = null, string? orderQuery = null, bool isAscending = true)
+    {
+        await using var uow = unitOfWorkFactory.Create();
+        var repository = uow.GetRepository<CourseEntity, CourseEntityMapper>();
+
+        var query = repository.Get();
+
+        if (!string.IsNullOrEmpty(searchQuery))
+        {
+            query = query.Where(c => c.Abbreviation.StartsWith(searchQuery)
+                        || c.Name.ToLower().Contains(searchQuery.ToLower()));
+        }
+
+        if (!string.IsNullOrEmpty(orderQuery))
+        {
+            query = orderQuery.ToLower() switch
+            {
+                "name" => isAscending 
+                    ? query.OrderBy(c => c.Name) 
+                    : query.OrderByDescending(c => c.Name),
+                "abbreviation" => isAscending
+                    ? query.OrderBy(c => c.Abbreviation)
+                    : query.OrderByDescending(c => c.Abbreviation),
+                "credits" => isAscending 
+                    ? query.OrderBy(c => c.Credits) 
+                    : query.OrderByDescending(c => c.Credits),
+                "max_students" => isAscending
+                    ? query.OrderBy(c => c.MaxStudents)
+                    : query.OrderByDescending(c => c.MaxStudents),
+                _ => query
+            };
+        }
+        
+        var entities = await query.ToListAsync();
+        return modelMapper.MapToListModel(entities);
+    }
+    
     public override async Task<CourseDetailModel?> GetAsync(Guid id)
     {
         await using var uow = unitOfWorkFactory.Create();
