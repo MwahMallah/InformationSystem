@@ -147,7 +147,7 @@ public class CourseFacadeTests: FacadeTestBase
     }
     
     [Fact]
-    public async Task GetAll_CourseFindWithGivenId()
+    public async Task GetAll_CourseFoundWithGivenId()
     {
         var courses = await _courseFacadeSUT.GetAsync();
         var ics = courses.SingleOrDefault(s => s.Id == CourseSeeds.CourseICS.Id);
