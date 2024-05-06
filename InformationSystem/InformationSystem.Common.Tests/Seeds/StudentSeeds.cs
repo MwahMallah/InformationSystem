@@ -32,15 +32,49 @@ public static class StudentSeeds
     {
         FirstName = "Maksim",
         LastName = "Dubrovin",
+        StartYear = 2022,
+        Group = "7C",
         Id = Guid.Parse("98B7F7B6-0F51-43B3-B8C0-B5FCFFF6DC2E"), 
         Courses = Array.Empty<CourseEntity>()
     };
     
-    public static readonly StudentEntity StudentIlya = StudentMaksim with
+    public static readonly StudentEntity StudentMaksimSecond = StudentEntity with
+    {
+        FirstName = "Maksim",
+        LastName = "Antonov",
+        StartYear = 2021,
+        Group = "7D",
+        Id = Guid.Parse("A7FE02C1-0F51-43B3-B8C0-B5FCFFF6DC2E"), 
+        Courses = Array.Empty<CourseEntity>()
+    };
+    
+    public static readonly StudentEntity StudentIlya = StudentEntity with
     {
         FirstName = "Ilya",
         LastName = "Volkov",
+        StartYear = 2023,
+        Group = "9C",
         Id = Guid.Parse("17D8F7B6-0E51-4183-B8C0-B5FCFFF6DC2E"), 
+        Courses = Array.Empty<CourseEntity>()
+    };
+    
+    public static readonly StudentEntity StudentNastya = StudentEntity with
+    {
+        FirstName = "Nastya",
+        LastName = "Mironova",
+        StartYear = 2020,
+        Group = "9C",
+        Id = Guid.Parse("34B09E2B-0E51-4183-B8C0-B5FCFFF6DC2E"), 
+        Courses = Array.Empty<CourseEntity>()
+    };
+    
+    public static readonly StudentEntity StudentArtyom = StudentEntity with
+    {
+        FirstName = "Artyom",
+        LastName = "Belitzkiy",
+        StartYear = 2019,
+        Group = "2A",
+        Id = Guid.Parse("F2AFBCAA-0E51-4183-B8C0-B5FCFFF6DC2E"), 
         Courses = Array.Empty<CourseEntity>()
     };
     
@@ -48,7 +82,10 @@ public static class StudentSeeds
     {
         modelBuilder.Entity<StudentEntity>().HasData(
             StudentMaksim,
-            StudentIlya
+            StudentIlya,
+            StudentMaksimSecond,
+            StudentNastya,
+            StudentArtyom
         );
     }
     
