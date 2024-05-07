@@ -34,13 +34,14 @@ public class EvaluationFacadeTests: FacadeTestBase
         var evaluationFromDb = await dbxAssert
             .Evaluations
             .Include(e=>e.Student)
+            .Include(e=>e.Activity)
             .SingleAsync(e => e.Id == evaluation.Id);
         var mapped = EvaluationModelMapper.MapToDetailModel(evaluationFromDb);
         DeepAssert.Equal(evaluation, mapped);
     }
     
     [Fact]
-    public async Task GetEvaluationById()
+    public async Task GetById_EvaluationWithoutActivity()
     {
         var evaluation = await _evaluationFacadeSUT.GetAsync(EvaluationSeeds.GoodEvaluation.Id);
         
@@ -51,9 +52,26 @@ public class EvaluationFacadeTests: FacadeTestBase
         var mapped = EvaluationModelMapper.MapToDetailModel(evaluationFromDb);
         DeepAssert.Equal(evaluation, mapped);
     }
+
+    [Fact]
+    public async Task GetById_EvaluationWithActivityAndStudent()
+    {
+        var evaluation = new EvaluationDetailModel
+        {
+            Description = "30/30 for this submission",
+            StudentId = StudentSeeds.StudentIlya.Id,
+            ActivityId = ActivitySeeds.ActivityExercise.Id
+        };
+        
+        evaluation = await _evaluationFacadeSUT.SaveAsync(evaluation);
+        
+        var evaluationFromDb = await _evaluationFacadeSUT.GetAsync(evaluation.Id);
+        
+        DeepAssert.Equal(evaluation, evaluationFromDb);
+    }
     
     [Fact]
-    public async Task GetAllEvaluations()
+    public async Task GetAll_Evaluations()
     {
         var evaluations = await _evaluationFacadeSUT.GetAsync();
         var evaluation = evaluations.SingleOrDefault(e => e.Id == EvaluationSeeds.BadEvaluation.Id);

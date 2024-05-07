@@ -30,7 +30,7 @@ public class EvaluationModelMapper:
                 $"{entity.Student.FirstName} {entity.Student.LastName}"
                 : string.Empty,
             CourseAbbreviation = entity.Activity?.Course != null?
-                $"{entity.Activity.Course.Abbreviation}":
+                entity.Activity.Course.Abbreviation:
                 string.Empty,
             ActivityId = entity.ActivityId,
             Points = entity.Points,

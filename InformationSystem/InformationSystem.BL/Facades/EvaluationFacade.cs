@@ -12,6 +12,22 @@ public class EvaluationFacade(IUnitOfWorkFactory unitOfWorkFactory,
     : FacadeBase<EvaluationEntity, EvaluationDetailModel, EvaluationListModel, EvaluationEntityMapper>
         (unitOfWorkFactory, modelMapper)
 {
+    public override async Task<EvaluationDetailModel?> GetAsync(Guid id)
+    {
+        await using var uow = unitOfWorkFactory.Create();
+        var repository = uow.GetRepository<EvaluationEntity, EvaluationEntityMapper>();
+        
+        IQueryable<EvaluationEntity> query = repository.Get()
+            .Include(e=>e.Student)
+            .Include(e=>e.Activity)
+            .ThenInclude(a => a.Course);
+        
+        var entity = await query.SingleOrDefaultAsync(e => e.Id == id);
+        return entity is null
+            ? null
+            : ModelMapper.MapToDetailModel(entity);
+    }
+    
     public override async Task<EvaluationDetailModel> SaveAsync(EvaluationDetailModel model)
     {
         EvaluationDetailModel result;

@@ -55,7 +55,7 @@ public class CourseFacade(
         await using var uow = unitOfWorkFactory.Create();
         var repository = uow.GetRepository<CourseEntity, CourseEntityMapper>();
         
-        var query = repository.Get()
+        IQueryable<CourseEntity> query = repository.Get()
             .Include(c=>c.Students)
             .Include(c=>c.Activities);
         
