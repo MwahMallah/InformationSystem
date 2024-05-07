@@ -13,6 +13,47 @@ public class ActivityFacade(
     : FacadeBase<ActivityEntity, ActivityDetailModel, 
         ActivityListModel, ActivityEntityMapper>(unitOfWorkFactory, modelMapper)
 {
+    public async Task<IEnumerable<ActivityListModel>> GetAsync(
+        string? searchQuery = null, string? orderQuery = null, bool isAscending = true)
+    {
+        await using var uow = unitOfWorkFactory.Create();
+        var repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
+
+        IQueryable<ActivityEntity> query = repository.Get()
+            .Include(a => a.Course);
+
+        if (!string.IsNullOrEmpty(searchQuery))
+        {
+            // Finds Activity that has matching course Abbreviation or Description
+            query = query.Where(a => 
+                (a.Description != null && a.Description.StartsWith(searchQuery.ToLower())) || 
+                (a.Course != null && a.Course.Abbreviation.StartsWith(searchQuery.ToLower())));
+        }
+
+        if (!string.IsNullOrEmpty(orderQuery))
+        {
+            query = orderQuery.ToLower() switch
+            {
+                "course_abbreviation" => isAscending 
+                    ? query.OrderBy(a => a.Course.Abbreviation) 
+                    : query.OrderByDescending(a => a.Course.Abbreviation),
+                "max_points" => isAscending
+                    ? query.OrderBy(a => a.MaxPoints)
+                    : query.OrderByDescending(a => a.MaxPoints),
+                "start_time" => isAscending 
+                    ? query.OrderBy(a => a.StartTime) 
+                    : query.OrderByDescending(a => a.StartTime),
+                "finish_time" => isAscending
+                    ? query.OrderBy(a => a.FinishTime)
+                    : query.OrderByDescending(a => a.FinishTime),
+                _ => query
+            };
+        }
+        
+        var entities = await query.ToListAsync();
+        return modelMapper.MapToListModel(entities);
+    }
+    
     public override async Task<ActivityDetailModel?> GetAsync(Guid id)
     {
         await using var uow = unitOfWorkFactory.Create();

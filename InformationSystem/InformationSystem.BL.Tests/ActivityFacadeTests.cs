@@ -77,6 +77,144 @@ public class ActivityFacadeTests: FacadeTestBase
         Assert.Equal(activity.Id, dbActivity.Id);
     }
     
+    [Fact]
+    public async Task GetAll_FilteredByAbbreviation()
+    {
+        var activity = new ActivityDetailModel
+        {
+            Description = "Test activity",
+            CourseId = CourseSeeds.CourseICS.Id,
+            StartTime = default,
+            FinishTime = default,
+            ActivityType = ActivityType.Exercise,
+        };
+        
+        activity = await _activityFacadeSUT.SaveAsync(activity);
+        var activities = await _activityFacadeSUT.GetAsync("IC");
+        Assert.Single(activities);
+        Assert.Equal("ICS", activities.ToList()[0].CourseAbbreviation);
+    }
+    
+    [Fact]
+    public async Task GetAll_FilteredByDescription()
+    {
+        var activities = await _activityFacadeSUT.GetAsync("c# ");
+        Assert.Single(activities);
+    }
+
+    [Fact]
+    public async Task GetAll_SortedByCourseAbbreviation()
+    {
+        var activityIcs = new ActivityDetailModel
+        {
+            Description = "Test activity",
+            CourseId = CourseSeeds.CourseICS.Id,
+            StartTime = default,
+            FinishTime = default,
+            ActivityType = ActivityType.Exercise,
+        };
+        
+        var activityIds = new ActivityDetailModel
+        {
+            Description = "Test activity",
+            CourseId = CourseSeeds.CourseDatabase.Id,
+            StartTime = default,
+            FinishTime = default,
+            ActivityType = ActivityType.Exercise,
+        };
+        
+        await _activityFacadeSUT.SaveAsync(activityIcs);
+        await _activityFacadeSUT.SaveAsync(activityIds);
+        
+        var activities = await _activityFacadeSUT.GetAsync(orderQuery:"course_abbreviation");
+        //skip entries without course abbreviation
+        Assert.Equal("ICS", activities
+            .Where(a => a.CourseAbbreviation != "")
+            .ToList()[0].CourseAbbreviation);
+    }
+    
+    [Fact]
+    public async Task GetAll_SortedByCourseAbbreviationDescending()
+    {
+        var activityIcs = new ActivityDetailModel
+        {
+            Description = "Test activity",
+            CourseId = CourseSeeds.CourseICS.Id,
+            StartTime = default,
+            FinishTime = default,
+            ActivityType = ActivityType.Exercise,
+        };
+        
+        var activityIds = new ActivityDetailModel
+        {
+            Description = "Test activity",
+            CourseId = CourseSeeds.CourseDatabase.Id,
+            StartTime = default,
+            FinishTime = default,
+            ActivityType = ActivityType.Exercise,
+        };
+        
+        await _activityFacadeSUT.SaveAsync(activityIcs);
+        await _activityFacadeSUT.SaveAsync(activityIds);
+        
+        var activities = await _activityFacadeSUT.GetAsync(orderQuery:"course_abbreviation", isAscending:false);
+        //skip entries without course abbreviation
+        Assert.Equal("IDS", activities
+            .Where(a => a.CourseAbbreviation != "")
+            .ToList()[0].CourseAbbreviation);
+    }
+    
+    [Fact]
+    public async Task GetAll_SortedByMaxPoints()
+    {
+        var activities = await _activityFacadeSUT.GetAsync(orderQuery:"max_points");
+        DeepAssert.Equal(ActivityModelMapper
+            .MapToListModel(ActivitySeeds.ActivityExercise), activities.ToList()[0]);
+    }
+    
+    [Fact]
+    public async Task GetAll_SortedByMaxPointsDescending()
+    {
+        var activities = await _activityFacadeSUT
+            .GetAsync(orderQuery:"max_points", isAscending:false);
+        DeepAssert.Equal(ActivityModelMapper
+            .MapToListModel(ActivitySeeds.ActivityExam), activities.ToList()[0]);
+    }
+    
+    [Fact]
+    public async Task GetAll_SortedByStartTime()
+    {
+        var activities = await _activityFacadeSUT.GetAsync(orderQuery:"start_time");
+        DeepAssert.Equal(ActivityModelMapper
+            .MapToListModel(ActivitySeeds.ActivityExamIds), activities.ToList()[0]);
+    }
+    
+    [Fact]
+    public async Task GetAll_SortedByStartTimeDescending()
+    {
+        var activities = await _activityFacadeSUT
+            .GetAsync(orderQuery:"start_time", isAscending:false);
+        DeepAssert.Equal(ActivityModelMapper
+            .MapToListModel(ActivitySeeds.ActivityExercise), activities.ToList()[0]);
+    }
+    
+    [Fact]
+    public async Task GetAll_SortedByFinishTime()
+    {
+        var activities = await _activityFacadeSUT
+            .GetAsync(orderQuery:"finish_time");
+        DeepAssert.Equal(ActivityModelMapper
+            .MapToListModel(ActivitySeeds.ActivityExamIds), activities.ToList()[0]);
+    }
+    
+    [Fact]
+    public async Task GetAll_SortedByFinishTimeDescending()
+    {
+        var activities = await _activityFacadeSUT
+            .GetAsync(orderQuery:"finish_time", isAscending:false);
+        DeepAssert.Equal(ActivityModelMapper
+            .MapToListModel(ActivitySeeds.ActivityExercise), activities.ToList()[0]);
+    }
     
     [Fact]
     public async Task GetById_Activity()

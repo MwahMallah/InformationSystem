@@ -107,8 +107,8 @@ public class StudentFacadeTests: FacadeTestBase
     [Fact]
     public async Task GetAll_FilteredByName()
     {
-        var courses = await _studentFacadeSUT.GetAsync("maks");
-        Assert.Equal(2, courses.Count());
+        var students = await _studentFacadeSUT.GetAsync("maks");
+        Assert.Equal(2, students.Count());
     }
     
     [Fact]
@@ -121,49 +121,49 @@ public class StudentFacadeTests: FacadeTestBase
     [Fact]
     public async Task GetAll_SortedByName()
     {
-        var courses = await _studentFacadeSUT.GetAsync(orderQuery:"name");
+        var students = await _studentFacadeSUT.GetAsync(orderQuery:"name");
         DeepAssert.Equal(StudentModelMapper
-            .MapToListModel(StudentSeeds.StudentMaksimSecond), courses.ToList()[0]);
+            .MapToListModel(StudentSeeds.StudentMaksimSecond), students.ToList()[0]);
     }
     
     [Fact]
     public async Task GetAll_SortedByNameDescending()
     {
-        var courses = await _studentFacadeSUT.GetAsync(orderQuery:"name", isAscending:false);
+        var students = await _studentFacadeSUT.GetAsync(orderQuery:"name", isAscending:false);
         DeepAssert.Equal(StudentModelMapper
-            .MapToListModel(StudentSeeds.StudentIlya), courses.ToList()[0]);
+            .MapToListModel(StudentSeeds.StudentIlya), students.ToList()[0]);
     }
     
     [Fact]
     public async Task GetAll_SortedByGroup()
     {
-        var courses = await _studentFacadeSUT.GetAsync(orderQuery:"group");
+        var students = await _studentFacadeSUT.GetAsync(orderQuery:"group");
         DeepAssert.Equal(StudentModelMapper
-            .MapToListModel(StudentSeeds.StudentArtyom), courses.ToList()[0]);
+            .MapToListModel(StudentSeeds.StudentArtyom), students.ToList()[0]);
     }
     
     [Fact]
     public async Task GetAll_SortedByGroupDescending()
     {
-        var courses = await _studentFacadeSUT.GetAsync(orderQuery:"group", isAscending:false);
+        var students = await _studentFacadeSUT.GetAsync(orderQuery:"group", isAscending:false);
         DeepAssert.Equal(StudentModelMapper
-            .MapToListModel(StudentSeeds.StudentArtyom), courses.ToList().Last());
+            .MapToListModel(StudentSeeds.StudentArtyom), students.ToList().Last());
     }
     
     [Fact]
     public async Task GetAll_SortedByCurrentYear()
     {
-        var courses = await _studentFacadeSUT.GetAsync(orderQuery:"current_year");
+        var students = await _studentFacadeSUT.GetAsync(orderQuery:"current_year");
         DeepAssert.Equal(StudentModelMapper
-            .MapToListModel(StudentSeeds.StudentArtyom), courses.ToList()[0]);
+            .MapToListModel(StudentSeeds.StudentArtyom), students.ToList()[0]);
     }
     
     [Fact]
     public async Task GetAll_SortedByCurrentYearDescending()
     {
-        var courses = await _studentFacadeSUT.GetAsync(orderQuery:"current_year", isAscending:false);
+        var students = await _studentFacadeSUT.GetAsync(orderQuery:"current_year", isAscending:false);
         DeepAssert.Equal(StudentModelMapper
-            .MapToListModel(StudentSeeds.StudentIlya), courses.ToList()[0]);
+            .MapToListModel(StudentSeeds.StudentIlya), students.ToList()[0]);
     }
     
     [Fact]
