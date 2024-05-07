@@ -39,7 +39,8 @@ public class ActivityModelMapper(EvaluationModelMapper evaluationModelMapper):
             FinishTime = model.FinishTime,
             ActivityType = model.ActivityType,
             Description = model.Description,
-            CourseId = model.CourseId
+            CourseId = model.CourseId,
+            MaxPoints = model.MaxPoints
         };
     
 }

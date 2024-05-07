@@ -53,6 +53,30 @@ public class ActivityFacade(
         var entities = await query.ToListAsync();
         return modelMapper.MapToListModel(entities);
     }
+
+    public async Task<IEnumerable<ActivityListModel>> GetFromCourseAsync(
+        Guid courseId, DateTime? startTime = null, DateTime? finishTime = null)
+    {
+        await using var uow = unitOfWorkFactory.Create();
+        var repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
+        
+        var query = repository.Get()
+            .Include(a => a.Course)
+            .Where(a => a.CourseId == courseId);
+        
+        if (startTime.HasValue)
+        {
+            query = query.Where(a => a.StartTime >= startTime);
+        }
+
+        if (finishTime.HasValue)
+        {
+            query = query.Where(a => a.FinishTime <= finishTime);
+        }
+
+        var entities = await query.ToListAsync();
+        return modelMapper.MapToListModel(entities);
+    }
     
     public override async Task<ActivityDetailModel?> GetAsync(Guid id)
     {

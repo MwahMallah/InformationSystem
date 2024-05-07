@@ -1,4 +1,5 @@
-﻿using InformationSystem.BL.Facades;
+﻿using System.Globalization;
+using InformationSystem.BL.Facades;
 using InformationSystem.BL.Models;
 using InformationSystem.Common.Enums;
 using InformationSystem.Common.Tests;
@@ -89,7 +90,7 @@ public class ActivityFacadeTests: FacadeTestBase
             ActivityType = ActivityType.Exercise,
         };
         
-        activity = await _activityFacadeSUT.SaveAsync(activity);
+        await _activityFacadeSUT.SaveAsync(activity);
         var activities = await _activityFacadeSUT.GetAsync("IC");
         Assert.Single(activities);
         Assert.Equal("ICS", activities.ToList()[0].CourseAbbreviation);
@@ -100,6 +101,70 @@ public class ActivityFacadeTests: FacadeTestBase
     {
         var activities = await _activityFacadeSUT.GetAsync("c# ");
         Assert.Single(activities);
+    }
+    
+    [Fact]
+    public async Task GetAll_FilteredByStartDateInGivenCourse()
+    {
+        var activity1 = new ActivityDetailModel
+        {
+            Description = "Test activity1",
+            CourseId = CourseSeeds.CourseICS.Id,
+            StartTime = DateTime.ParseExact("05-05-2023", "dd-MM-yyyy", CultureInfo.InvariantCulture),
+            FinishTime = default,
+            ActivityType = ActivityType.Exercise,
+            MaxPoints = 2
+        };
+        await _activityFacadeSUT.SaveAsync(activity1);
+        
+        var activity2 = new ActivityDetailModel
+        {
+            Description = "Test activity2",
+            CourseId = CourseSeeds.CourseICS.Id,
+            StartTime = DateTime.ParseExact("10-05-2023", "dd-MM-yyyy", CultureInfo.InvariantCulture),
+            FinishTime = default,
+            ActivityType = ActivityType.Exercise,
+            MaxPoints = 5
+        };
+        await _activityFacadeSUT.SaveAsync(activity2);
+        
+        var activities = await _activityFacadeSUT
+            .GetFromCourseAsync(CourseSeeds.CourseICS.Id, 
+                startTime:DateTime.ParseExact("08-05-2023", "dd-MM-yyyy", CultureInfo.InvariantCulture));
+        Assert.Single(activities);
+        Assert.Equal(5, activities.ToList()[0].MaxPoints);
+    }
+    
+    [Fact]
+    public async Task GetAll_FilteredByFinishDateInGivenCourse()
+    {
+        var activity1 = new ActivityDetailModel
+        {
+            Description = "Test activity1",
+            CourseId = CourseSeeds.CourseIpk.Id,
+            FinishTime = DateTime.ParseExact("05-05-2023", "dd-MM-yyyy", CultureInfo.InvariantCulture),
+            StartTime = default,
+            ActivityType = ActivityType.Exercise,
+            MaxPoints = 2
+        };
+        await _activityFacadeSUT.SaveAsync(activity1);
+        
+        var activity2 = new ActivityDetailModel
+        {
+            Description = "Test activity2",
+            CourseId = CourseSeeds.CourseIpk.Id,
+            FinishTime = DateTime.ParseExact("10-05-2023", "dd-MM-yyyy", CultureInfo.InvariantCulture),
+            StartTime = default,
+            ActivityType = ActivityType.Exercise,
+            MaxPoints = 5
+        };
+        await _activityFacadeSUT.SaveAsync(activity2);
+        
+        var activities = await _activityFacadeSUT
+            .GetFromCourseAsync(CourseSeeds.CourseIpk.Id, 
+                finishTime:DateTime.ParseExact("08-05-2023", "dd-MM-yyyy", CultureInfo.InvariantCulture));
+        Assert.Single(activities);
+        Assert.Equal(2, activities.ToList()[0].MaxPoints);
     }
 
     [Fact]
