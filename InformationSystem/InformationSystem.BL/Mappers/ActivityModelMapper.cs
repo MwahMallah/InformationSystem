@@ -3,36 +3,34 @@ using InformationSystem.DAL.Entities;
 
 namespace InformationSystem.BL.Mappers;
 
-public class ActivityModelMapper: 
+public class ActivityModelMapper(EvaluationModelMapper evaluationModelMapper): 
     ModelMapperBase<ActivityEntity, ActivityDetailModel, ActivityListModel>
 {
     public override ActivityListModel MapToListModel(ActivityEntity entity) 
-        => entity?.Course is null
-            ? ActivityListModel.Empty 
-            : new ActivityListModel
+        => new ActivityListModel
             {
                 Id = entity.Id,
                 StartTime = entity.StartTime,
                 FinishTime = entity.FinishTime,
                 ActivityType = entity.ActivityType,
-                CourseAbbreviation = entity.Course.Abbreviation,
-                Points = entity.Evaluation?.Points ?? 0
+                CourseAbbreviation = entity?.Course?.Abbreviation ?? string.Empty,
+                MaxPoints = entity.MaxPoints
             };
     
     public override ActivityDetailModel MapToDetailModel(ActivityEntity entity)
-        => entity?.Course is null
-            ? ActivityDetailModel.Empty
-            : new ActivityDetailModel
+        => new ActivityDetailModel
             {
                 Id = entity.Id,
                 StartTime = entity.StartTime,
                 FinishTime = entity.FinishTime,
                 ActivityType = entity.ActivityType,
-                CourseAbbreviation = entity.Course.Abbreviation,
+                CourseAbbreviation = entity?.Course?.Abbreviation ?? string.Empty,
+                CourseId = entity.CourseId,
+                Evaluations = evaluationModelMapper.MapToListModel(entity.Evaluations).ToObservableCollection(),
                 Description = entity.Description,
-                Points = entity.Evaluation?.Points ?? 0
+                MaxPoints = entity.MaxPoints
             };
-
+    
     public override ActivityEntity MapToEntity(ActivityDetailModel model)
         => new ActivityEntity
         {
@@ -40,31 +38,9 @@ public class ActivityModelMapper:
             StartTime = model.StartTime,
             FinishTime = model.FinishTime,
             ActivityType = model.ActivityType,
-            Description = model.Description
-        };
-
-    public ActivityEntity MapToEntity(ActivityDetailModel model, Guid courseId)
-        => new ActivityEntity
-        {
-            Id = model.Id,
             Description = model.Description,
-            CourseId = courseId,
-            Course = null!,
-            Evaluation = null!,
-            StartTime = model.StartTime,
-            FinishTime = model.FinishTime,
-            ActivityType = model.ActivityType,
+            CourseId = model.CourseId,
+            MaxPoints = model.MaxPoints
         };
     
-    public ActivityEntity MapToEntity(ActivityListModel model, Guid courseId)
-        => new ActivityEntity
-        {
-            Id = model.Id,
-            CourseId = courseId,
-            Course = null!,
-            Evaluation = null!,
-            StartTime = model.StartTime,
-            FinishTime = model.FinishTime,
-            ActivityType = model.ActivityType,
-        };
 }

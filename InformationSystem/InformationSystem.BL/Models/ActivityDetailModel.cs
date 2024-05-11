@@ -1,16 +1,19 @@
-﻿using InformationSystem.Common.Enums;
+﻿using System.Collections.ObjectModel;
+using InformationSystem.Common.Enums;
 
 namespace InformationSystem.BL.Models;
 
 public record ActivityDetailModel : BaseModel
 {
-    public DateTime StartTime { get; set; }
-    public DateTime FinishTime { get; set; }
-    public ActivityType ActivityType { get; set; }
-    public required string CourseAbbreviation { get; set; }
+    public required DateTime StartTime { get; set; }
+    public required DateTime FinishTime { get; set; }
+    public required ActivityType ActivityType { get; set; }
+    public string? CourseAbbreviation { get; set; }
+    public Guid? CourseId { get; set; }
     public string? Description { get; set; }
-    public int? Points { get; set; }
-    
+    public int? MaxPoints { get; set; }
+    public ObservableCollection<EvaluationListModel> Evaluations { get; set; } = [];
+     
     public static ActivityDetailModel Empty => new()
     {
         Id = Guid.Empty,
@@ -18,6 +21,8 @@ public record ActivityDetailModel : BaseModel
         FinishTime = DateTime.Now,
         CourseAbbreviation = string.Empty,
         Description = string.Empty,
-        Points = 0
+        MaxPoints = 0,
+        ActivityType = ActivityType.Exercise,
+        CourseId = Guid.Empty
     };
 }

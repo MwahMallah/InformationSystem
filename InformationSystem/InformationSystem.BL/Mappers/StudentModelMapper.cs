@@ -27,7 +27,7 @@ public class StudentModelMapper(
         var activities = courses
             .SelectMany(c => c.Activities ?? Enumerable.Empty<ActivityEntity>());
         var evaluations = activities
-            .Select(a => a.Evaluation).Where(e => e != null);
+            .SelectMany(a => a.Evaluations).Where(e => e.StudentId == entity.Id);
         
         var student = new StudentDetailModel
         {
@@ -58,7 +58,4 @@ public class StudentModelMapper(
             StartYear = model.CurrentYear + DateTime.Now.Year,
             ImageUrl = model.ImageUrl
         };
-
-
-    // public StudentEntity MapToEntity(StudentDetailModel model, )
 }

@@ -17,6 +17,8 @@ public class InformationSystemDbContextTesting(DbContextOptions contextOptions, 
         {
             CourseSeeds.Seed(modelBuilder);
             StudentSeeds.Seed(modelBuilder);
+            ActivitySeeds.Seed(modelBuilder);
+            EvaluationSeeds.Seed(modelBuilder);
         }
     }
 }

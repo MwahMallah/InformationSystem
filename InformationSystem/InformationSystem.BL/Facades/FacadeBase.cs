@@ -48,7 +48,7 @@ public abstract class
         return ModelMapper.MapToListModel(entities);
     }
 
-    public async Task<TDetailModel?> GetAsync(Guid id)
+    public virtual async Task<TDetailModel?> GetAsync(Guid id)
     {
         await using var uow = unitOfWorkFactory.Create();
         IQueryable<TEntity> query = uow.GetRepository<TEntity, TEntityMapper>()
@@ -91,6 +91,45 @@ public abstract class
 
         return result;
     }
+    
+    protected async Task AddEntitiesToCollectionAsync<TCollectionEntity, TCollectionEntityMapper>
+        (ICollection<TCollectionEntity> collection, IEnumerable<Guid> ids, IUnitOfWork uow)
+        where TCollectionEntity: class, IEntity
+        where TCollectionEntityMapper: IEntityMapper<TCollectionEntity>, new()
+    {
+        var repository = uow.GetRepository<TCollectionEntity, TCollectionEntityMapper>();
+
+        foreach (var id in ids)
+        {
+            var entity = await repository.Get().SingleOrDefaultAsync(e=>e.Id==id);
+            
+            if (entity != null)
+            {
+                collection.Add(entity);
+            }
+            else
+            {
+                throw new InvalidOperationException($"Entity with ID {id} does not exist.");
+            }
+        }
+    }
+    
+    protected async Task<TNavigationalPropertyEntity> GetEntityOrThrowAsync<TNavigationalPropertyEntity, TNavigationalPropertyEntityMapper>
+        (Guid? id, IUnitOfWork uow)
+        where TNavigationalPropertyEntity: class, IEntity
+        where TNavigationalPropertyEntityMapper: IEntityMapper<TNavigationalPropertyEntity>, new()
+    {
+        var repository = uow.GetRepository<TNavigationalPropertyEntity, TNavigationalPropertyEntityMapper>();
+        var entity = await repository.Get().SingleOrDefaultAsync(p=>p.Id == id);
+        
+        if (entity != null)
+        {
+            return entity;
+        }
+
+        throw new InvalidOperationException($"Entity with ID {id} does not exist.");
+    }
+    
     
     private static void GuardCollectionsAreNotSet(TDetailModel model)
     {

@@ -12,7 +12,15 @@ public class DbContextStudentTests(ITestOutputHelper output) : DbContextTestsBas
     [Fact]
     public async Task AddNew_StudentWithoutCourses_Persisted()
     {
-        var entity = StudentSeeds.StudentIlya;
+        var entity = new StudentEntity()
+        {
+            Id = Guid.Parse(input: "fabde0cd-eefe-443f-baf6-3d96cc2cbf2e"),
+            FirstName = "Maksim",
+            LastName = "Dubrovin",
+            ImageUrl = null,
+            Group = "2B",
+            StartYear = 2022,
+        };
         
         InformationSystemDbContextSUT.Students.Add(entity);
         await InformationSystemDbContextSUT.SaveChangesAsync();

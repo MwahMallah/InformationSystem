@@ -10,14 +10,12 @@ public record ActivityEntity : IEntity
     public DateTime StartTime{ get; set; }
     public DateTime FinishTime { get; set; }
     public ActivityType ActivityType { get; set; }
+    public int? MaxPoints { get; set; }
     public RoomType RoomType { get; set; }
     [MaxLength(1000)]
     public string? Description { get; set; }
     [ForeignKey(nameof(CourseId))]
-    public CourseEntity? Course { get; init; }
+    public CourseEntity? Course { get; set; }
     public Guid? CourseId { get; set; }
-
-    [ForeignKey(nameof(EvaluationId))]
-    public EvaluationEntity? Evaluation { get; init; }
-    public Guid? EvaluationId { get; set; }
+    public ICollection<EvaluationEntity> Evaluations { get; set; } = new List<EvaluationEntity>();
 }

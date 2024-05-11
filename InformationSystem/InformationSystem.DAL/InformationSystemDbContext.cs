@@ -11,11 +11,9 @@ namespace InformationSystem.DAL
         
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
-            
+
             modelBuilder.Entity<ActivityEntity>()
-                .HasOne(a => a.Evaluation)
-                .WithOne(e => e.Activity)
-                .IsRequired(false);
+                .HasMany(a => a.Evaluations);
 
             modelBuilder.Entity<CourseEntity>()
                 .HasMany(c => c.Activities)

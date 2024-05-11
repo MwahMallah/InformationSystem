@@ -8,12 +8,13 @@ public record EvaluationEntity : IEntity
     public Guid Id { get; set; } = Guid.NewGuid();
     public int Points { get; set; }
     [MaxLength(1000)]
-    public required string Description { get; set; }
+    public string? Description { get; set; }
 
     [ForeignKey(nameof(StudentId))]
-    public required StudentEntity Student { get; set; }
-    public Guid StudentId { get; set; }
+    public StudentEntity? Student { get; set; }
+    public Guid? StudentId { get; set; }
 
-    public required ActivityEntity Activity { get; set; }
-    public Guid ActivityId { get; set; }
+    [ForeignKey((nameof(ActivityId)))]
+    public ActivityEntity? Activity { get; set; }
+    public Guid? ActivityId { get; set; }
 }

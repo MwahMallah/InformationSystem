@@ -13,6 +13,5 @@ public record StudentEntity : IEntity
     [MaxLength(5)]
     public required string Group { get; set; }
     public int StartYear { get; set; } 
-
     public ICollection<CourseEntity> Courses { get; set; } = new List<CourseEntity>();
 }
