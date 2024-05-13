@@ -1,9 +1,0 @@
-<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:local="clr-namespace:InformationSystem.App"
-       x:Class="InformationSystem.App.AppShell"
-       Shell.FlyoutBehavior="Disabled">
-    <ShellContent Route="students" ContentTemplate="{DataTemplate local:MainPage}" />
-    <ShellContent Route="courses" ContentTemplate="{DataTemplate local:MainPage}" />
-    <ShellContent Route="activities" ContentTemplate="{DataTemplate local:MainPage}" />
-</Shell>

@@ -34,6 +34,7 @@ public static class MauiProgram
         var app = builder.Build();
 
         MigrateDb(app.Services.GetRequiredService<IDbMigrator>());
+        
         return app;
     }
 

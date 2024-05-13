@@ -2,16 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="InformationSystem.App.MainPage">
-    <HorizontalStackLayout>
-        <RadioButton Content="students" 
-                     CheckedChanged="RadioButton_OnCheckedChanged"
-                     GroupName="Navigation" />
-        <RadioButton Content="courses" 
-                     CheckedChanged="RadioButton_OnCheckedChanged"
-                     GroupName="Navigation" />
-        <RadioButton Content="activities" 
-                     CheckedChanged="RadioButton_OnCheckedChanged"
-                     GroupName="Navigation" />
-    </HorizontalStackLayout>
+    <Label Text="main page"></Label>
 
 </ContentPage>
