@@ -1,10 +1,11 @@
-﻿using InformationSystem.BL.Models;
+﻿using InformationSystem.BL.Mappers.Interfaces;
+using InformationSystem.BL.Models;
 using InformationSystem.DAL.Entities;
 
 namespace InformationSystem.BL.Mappers;
 
-public class ActivityModelMapper(EvaluationModelMapper evaluationModelMapper): 
-    ModelMapperBase<ActivityEntity, ActivityDetailModel, ActivityListModel>
+public class ActivityModelMapper(IEvaluationModelMapper evaluationModelMapper): 
+    ModelMapperBase<ActivityEntity, ActivityDetailModel, ActivityListModel>, IActivityModelMapper
 {
     public override ActivityListModel MapToListModel(ActivityEntity entity) 
         => new ActivityListModel

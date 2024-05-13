@@ -1,4 +1,6 @@
-﻿using InformationSystem.BL.Mappers;
+﻿using InformationSystem.BL.Facades.Interfaces;
+using InformationSystem.BL.Mappers;
+using InformationSystem.BL.Mappers.Interfaces;
 using InformationSystem.BL.Models;
 using InformationSystem.DAL.Entities;
 using InformationSystem.DAL.Mappers;
@@ -10,7 +12,8 @@ namespace InformationSystem.BL.Facades;
 public class CourseFacade(
     IUnitOfWorkFactory unitOfWorkFactory, 
     IModelMapper<CourseEntity, CourseDetailModel, CourseListModel> modelMapper) 
-    : FacadeBase<CourseEntity, CourseDetailModel, CourseListModel, CourseEntityMapper>(unitOfWorkFactory, modelMapper)
+    : FacadeBase<CourseEntity, CourseDetailModel, 
+            CourseListModel, CourseEntityMapper>(unitOfWorkFactory, modelMapper), ICourseFacade
 {
     public async Task<IEnumerable<CourseListModel>> GetAsync(
         string? searchQuery = null, string? orderQuery = null, bool isAscending = true)

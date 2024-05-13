@@ -1,10 +1,11 @@
-﻿using InformationSystem.BL.Models;
+﻿using InformationSystem.BL.Mappers.Interfaces;
+using InformationSystem.BL.Models;
 using InformationSystem.DAL.Entities;
 
 namespace InformationSystem.BL.Mappers;
 
 public class StudentListModelMapper
-    : ListModelMapperBase<StudentEntity, StudentListModel>
+    : ListModelMapperBase<StudentEntity, StudentListModel>, IStudentListModelMapper
 {
     public override StudentListModel MapToListModel(StudentEntity? entity)
         => entity is null?

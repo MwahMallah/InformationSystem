@@ -1,4 +1,5 @@
 ﻿using InformationSystem.BL.Facades;
+using InformationSystem.BL.Facades.Interfaces;
 using InformationSystem.BL.Mappers;
 using InformationSystem.DAL.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,12 +17,6 @@ public static class BLInstaller
             .AddClasses(filter => filter.AssignableTo(typeof(IFacade<,,>)))
             .AsMatchingInterface()
             .WithSingletonLifetime());
-
-        services.Scan(selector => selector
-            .FromAssemblyOf<BusinessLogic>()
-            .AddClasses(filter => filter.AssignableTo(typeof(ModelMapperBase<,,>)))
-            .AsMatchingInterface()
-            .WithSingletonLifetime());
         
         services.Scan(selector => selector
             .FromAssemblyOf<BusinessLogic>()
@@ -29,6 +24,12 @@ public static class BLInstaller
             .AsMatchingInterface()
             .WithSingletonLifetime());
 
+        services.Scan(selector => selector
+            .FromAssemblyOf<BusinessLogic>()
+            .AddClasses(filter => filter.AssignableTo(typeof(ModelMapperBase<,,>)))
+            .AsMatchingInterface()
+            .WithSingletonLifetime());
+        
         return services;
     }
 }

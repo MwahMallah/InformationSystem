@@ -1,7 +1,7 @@
 ﻿using InformationSystem.BL.Models;
 using InformationSystem.DAL.Entities;
 
-namespace InformationSystem.BL.Facades;
+namespace InformationSystem.BL.Facades.Interfaces;
 
 public interface IFacade<TEntity, TDetailModel, TListModel>
     where TEntity: class, IEntity

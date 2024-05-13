@@ -1,4 +1,5 @@
-﻿using InformationSystem.DAL.Entities;
+﻿using InformationSystem.BL.Mappers.Interfaces;
+using InformationSystem.DAL.Entities;
 using Microsoft.EntityFrameworkCore.Metadata;
 using IModel = InformationSystem.BL.Models.IModel;
 

@@ -1,4 +1,5 @@
-﻿using InformationSystem.BL.Models;
+﻿using InformationSystem.BL.Mappers.Interfaces;
+using InformationSystem.BL.Models;
 using InformationSystem.DAL.Entities;
 
 namespace InformationSystem.BL.Mappers;

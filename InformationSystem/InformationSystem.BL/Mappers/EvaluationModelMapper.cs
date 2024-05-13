@@ -1,10 +1,11 @@
-﻿using InformationSystem.BL.Models;
+﻿using InformationSystem.BL.Mappers.Interfaces;
+using InformationSystem.BL.Models;
 using InformationSystem.DAL.Entities;
 
 namespace InformationSystem.BL.Mappers;
 
 public class EvaluationModelMapper: 
-    ModelMapperBase<EvaluationEntity, EvaluationDetailModel, EvaluationListModel>
+    ModelMapperBase<EvaluationEntity, EvaluationDetailModel, EvaluationListModel>, IEvaluationModelMapper
 {
     public override EvaluationListModel MapToListModel(EvaluationEntity entity)
         => new EvaluationListModel

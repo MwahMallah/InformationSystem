@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Data.Common;
 using System.Reflection;
+using InformationSystem.BL.Facades.Interfaces;
 using InformationSystem.BL.Mappers;
+using InformationSystem.BL.Mappers.Interfaces;
 using InformationSystem.BL.Models;
 using InformationSystem.DAL.Entities;
 using InformationSystem.DAL.Mappers;

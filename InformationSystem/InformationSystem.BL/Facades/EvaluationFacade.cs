@@ -1,4 +1,6 @@
-﻿using InformationSystem.BL.Mappers;
+﻿using InformationSystem.BL.Facades.Interfaces;
+using InformationSystem.BL.Mappers;
+using InformationSystem.BL.Mappers.Interfaces;
 using InformationSystem.BL.Models;
 using InformationSystem.DAL.Entities;
 using InformationSystem.DAL.Mappers;
@@ -9,8 +11,8 @@ namespace InformationSystem.BL.Facades;
 
 public class EvaluationFacade(IUnitOfWorkFactory unitOfWorkFactory, 
     IModelMapper<EvaluationEntity, EvaluationDetailModel, EvaluationListModel> modelMapper) 
-    : FacadeBase<EvaluationEntity, EvaluationDetailModel, EvaluationListModel, EvaluationEntityMapper>
-        (unitOfWorkFactory, modelMapper)
+    : FacadeBase<EvaluationEntity, EvaluationDetailModel, 
+            EvaluationListModel, EvaluationEntityMapper>(unitOfWorkFactory, modelMapper), IEvaluationFacade
 {
     public override async Task<EvaluationDetailModel?> GetAsync(Guid id)
     {

@@ -1,7 +1,7 @@
 ﻿using InformationSystem.BL.Models;
 using InformationSystem.DAL.Entities;
 
-namespace InformationSystem.BL.Mappers;
+namespace InformationSystem.BL.Mappers.Interfaces;
 
 public interface IListModelMapper<TEntity, out TListModel> 
     where TEntity : IEntity

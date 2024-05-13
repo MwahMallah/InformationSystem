@@ -1,4 +1,6 @@
-﻿using InformationSystem.BL.Mappers;
+﻿using InformationSystem.BL.Facades.Interfaces;
+using InformationSystem.BL.Mappers;
+using InformationSystem.BL.Mappers.Interfaces;
 using InformationSystem.BL.Models;
 using InformationSystem.DAL.Entities;
 using InformationSystem.DAL.Mappers;
@@ -11,7 +13,7 @@ public class ActivityFacade(
     IUnitOfWorkFactory unitOfWorkFactory, 
     IModelMapper<ActivityEntity, ActivityDetailModel, ActivityListModel> modelMapper) 
     : FacadeBase<ActivityEntity, ActivityDetailModel, 
-        ActivityListModel, ActivityEntityMapper>(unitOfWorkFactory, modelMapper)
+        ActivityListModel, ActivityEntityMapper>(unitOfWorkFactory, modelMapper), IActivityFacade
 {
     public async Task<IEnumerable<ActivityListModel>> GetAsync(
         string? searchQuery = null, string? orderQuery = null, bool isAscending = true)

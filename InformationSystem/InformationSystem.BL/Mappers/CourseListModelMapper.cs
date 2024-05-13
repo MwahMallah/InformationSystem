@@ -1,10 +1,11 @@
-﻿using InformationSystem.BL.Models;
+﻿using InformationSystem.BL.Mappers.Interfaces;
+using InformationSystem.BL.Models;
 using InformationSystem.DAL.Entities;
 
 namespace InformationSystem.BL.Mappers;
 
 public class CourseListModelMapper
-    : ListModelMapperBase<CourseEntity, CourseListModel>
+    : ListModelMapperBase<CourseEntity, CourseListModel>, ICourseListModelMapper
 {
     public override CourseListModel MapToListModel(CourseEntity? entity)
         =>  entity is null?

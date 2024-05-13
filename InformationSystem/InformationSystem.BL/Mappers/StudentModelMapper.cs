@@ -1,13 +1,14 @@
-﻿using InformationSystem.BL.Models;
+﻿using InformationSystem.BL.Mappers.Interfaces;
+using InformationSystem.BL.Models;
 using InformationSystem.DAL.Entities;
 
 namespace InformationSystem.BL.Mappers;
 
 public class StudentModelMapper(
-    CourseListModelMapper courseListModelMapper, 
-    ActivityModelMapper activityModelMapper,
-    EvaluationModelMapper evaluationModelMapper): 
-    ModelMapperBase<StudentEntity, StudentDetailModel, StudentListModel>
+    ICourseListModelMapper courseListModelMapper, 
+    IActivityModelMapper activityModelMapper,
+    IEvaluationModelMapper evaluationModelMapper): 
+    ModelMapperBase<StudentEntity, StudentDetailModel, StudentListModel>, IStudentModelMapper
 {
     public override StudentListModel MapToListModel(StudentEntity entity)
         => new StudentListModel
