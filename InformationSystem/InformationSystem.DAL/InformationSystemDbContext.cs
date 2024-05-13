@@ -1,9 +1,11 @@
 ﻿using InformationSystem.DAL.Entities;
+using InformationSystem.DAL.Seeds;
 using Microsoft.EntityFrameworkCore;
 
 namespace InformationSystem.DAL 
 {
-    public class InformationSystemDbContext(DbContextOptions options) : DbContext(options) {
+    public class InformationSystemDbContext(DbContextOptions options, bool seedDemoData=false) 
+        : DbContext(options) {
         public DbSet<ActivityEntity> Activities => Set<ActivityEntity>();
         public DbSet<CourseEntity> Courses => Set<CourseEntity>();
         public DbSet<EvaluationEntity> Evaluations => Set<EvaluationEntity>();
@@ -26,6 +28,11 @@ namespace InformationSystem.DAL
 
             modelBuilder.Entity<EvaluationEntity>()
                 .HasOne(e => e.Student);
+
+            if (seedDemoData)
+            {
+                StudentSeeds.Seed(modelBuilder);
+            }
         }
     }
 }
