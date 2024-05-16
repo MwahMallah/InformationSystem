@@ -15,6 +15,11 @@ public class CourseFacade(
     : FacadeBase<CourseEntity, CourseDetailModel, 
             CourseListModel, CourseEntityMapper>(unitOfWorkFactory, modelMapper), ICourseFacade
 {
+    public override async Task<IEnumerable<CourseListModel>> GetAsync()
+    {
+        return await GetAsync(null, null);
+    }
+    
     public async Task<IEnumerable<CourseListModel>> GetAsync(
         string? searchQuery = null, string? orderQuery = null, bool isAscending = true)
     {
