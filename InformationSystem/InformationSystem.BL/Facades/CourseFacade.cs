@@ -21,13 +21,21 @@ public class CourseFacade(
     }
     
     public async Task<IEnumerable<CourseListModel>> GetAsync(
-        string? searchQuery = null, string? orderQuery = null, bool isAscending = true)
+        string? searchQuery = null, string? orderQuery = null, bool isAscending = true, Guid? studentId = null)
     {
         await using var uow = unitOfWorkFactory.Create();
         var repository = uow.GetRepository<CourseEntity, CourseEntityMapper>();
 
-        var query = repository.Get();
+        
+        IQueryable<CourseEntity> query;
 
+        query = studentId == null ? repository.Get() : repository.Get().Include(c => c.Students);
+
+        if (studentId != null)
+        {
+            query = query.Where(c => c.Students.Any(s => s.Id == studentId));
+        }
+        
         if (!string.IsNullOrEmpty(searchQuery))
         {
             query = query.Where(c => c.Abbreviation.StartsWith(searchQuery)
