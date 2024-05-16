@@ -68,6 +68,14 @@ public partial class StudentListViewModel(
         await navigationService.GoToAsync("/edit");
     }
 
+    [RelayCommand]
+    private async Task GoToDetailAsync(Guid id)
+    {
+        await navigationService.GoToAsync<StudentDetailViewModel>(
+                new Dictionary<string, object?>() {[nameof(StudentDetailViewModel.Id)] = id}
+            );
+    }
+
     public async void Receive(MessageEditStudent message)
     {
         //Performs this code after receiving edit student message.
