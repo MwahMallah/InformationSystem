@@ -10,15 +10,37 @@
     <VerticalStackLayout>
         <Button Text="Add Student" 
             Command="{Binding GoToCreateCommand}"
-            BackgroundColor="Green"></Button>
+            BackgroundColor="Green"/>
+        <Entry HorizontalOptions="Fill" FontSize="20" TextChanged="OnTextChanged"></Entry>
         
         <Grid Margin="20"
-              ColumnDefinitions="*, *, *, *"
+              ColumnDefinitions="*, *, *, *, *"
               BackgroundColor="#EEEEEE"> 
-            <Label Text="First Name" Grid.Column="0" FontSize="20" HorizontalOptions="Center"/>
-            <Label Text="Last Name" Grid.Column="1" FontSize="20" HorizontalOptions="Center"/>
-            <Label Text="Group" Grid.Column="2" FontSize="20" HorizontalOptions="Center"/>
-            <Label Text="Current Year" Grid.Column="3" FontSize="20" HorizontalOptions="Center"/>
+            <Label Text="First Name" Grid.Column="0" FontSize="20" HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SortCommand}" 
+                                          CommandParameter="name"></TapGestureRecognizer>
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Text="Last Name" Grid.Column="1" FontSize="20" HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SortCommand}" 
+                                          CommandParameter="name"></TapGestureRecognizer>
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Text="Group" Grid.Column="2" FontSize="20" HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SortCommand}" 
+                                          CommandParameter="group"></TapGestureRecognizer>
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Text="Current Year" Grid.Column="3" FontSize="20" HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SortCommand}" 
+                                          CommandParameter="current_year"></TapGestureRecognizer>
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Text="Detail View" FontSize="20" Grid.Column="4"></Label>
         </Grid>
         
         <CollectionView ItemsSource="{Binding Students}"
@@ -29,11 +51,12 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:StudentListModel">
-                    <Grid ColumnDefinitions="*, *, *, *">
+                    <Grid ColumnDefinitions="*, *, *, *, *">
                         <Label Text="{Binding FirstName}" Grid.Column="0" FontSize="20" HorizontalOptions="Center"/>
                         <Label Text="{Binding LastName}" Grid.Column="1" FontSize="20" HorizontalOptions="Center"/>
                         <Label Text="{Binding Group}" Grid.Column="2" FontSize="20" HorizontalOptions="Center"/>
                         <Label Text="{Binding CurrentYear}" Grid.Column="3" FontSize="20" HorizontalOptions="Center"/>
+                        <Button Text="Detail" FontSize="20" Grid.Column="4"></Button>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

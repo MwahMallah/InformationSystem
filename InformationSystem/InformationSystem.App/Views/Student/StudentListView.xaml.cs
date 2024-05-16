@@ -15,4 +15,10 @@ public partial class StudentListView
     {
         InitializeComponent();
     }
+
+    private void OnTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        var studentViewModel = ViewModel as StudentListViewModel;
+        studentViewModel?.FilterCommand.Execute(e.NewTextValue);
+    }
 }

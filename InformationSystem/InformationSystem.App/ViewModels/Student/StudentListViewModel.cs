@@ -16,6 +16,11 @@ public partial class StudentListViewModel(
     IMessengerService messengerService
     ) : ViewModelBase(messengerService), IRecipient<MessageEditStudent>
 {
+    private bool _isGroupAscending = true;
+    private bool _isCurrentYearAscending = true;
+    private bool _isNameAscending = true;
+    private string? _filterText = null;
+    
     [ObservableProperty]
     private IEnumerable<StudentListModel> students;
 
@@ -24,6 +29,37 @@ public partial class StudentListViewModel(
         await base.LoadDataAsync();
 
         Students = await studentFacade.GetAsync();
+    }
+
+    [RelayCommand]
+    private async Task SortAsync(string sortingQuery)
+    {
+        var isAscending = true;
+        switch (sortingQuery)
+        {
+            case "group":
+                _isGroupAscending = !_isGroupAscending;
+                isAscending = _isGroupAscending;
+                break;
+            case "current_year":
+                _isCurrentYearAscending = !_isCurrentYearAscending;
+                isAscending = _isCurrentYearAscending;
+                break;
+            case "name":
+                _isNameAscending = !_isNameAscending;
+                isAscending = _isNameAscending;
+                break;
+        }
+        
+        Students = await studentFacade.GetAsync(searchQuery: _filterText, 
+            orderQuery:sortingQuery, isAscending: isAscending);
+    }
+
+    [RelayCommand]
+    private async Task FilterAsync(string filterText)
+    {
+        _filterText = filterText;
+        Students = await studentFacade.GetAsync(searchQuery: filterText);
     }
     
     [RelayCommand]
