@@ -56,7 +56,7 @@ public class StudentModelMapper(
             FirstName = model.FirstName,
             LastName = model.LastName,
             Group = model.Group,
-            StartYear = model.CurrentYear + DateTime.Now.Year,
+            StartYear = DateTime.Now.Year - model.CurrentYear,
             ImageUrl = model.ImageUrl
         };
 }
