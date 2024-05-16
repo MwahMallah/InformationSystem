@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using CommunityToolkit.Maui.Core;
+using InformationSystem.App.Services;
 using InformationSystem.BL;
 using InformationSystem.BL.Facades;
 using InformationSystem.DAL;
@@ -34,8 +35,17 @@ public static class MauiProgram
         var app = builder.Build();
 
         MigrateDb(app.Services.GetRequiredService<IDbMigrator>());
+        RegisterRoutes(app.Services.GetRequiredService<INavigationService>());
         
         return app;
+    }
+
+    private static void RegisterRoutes(INavigationService navigationService)
+    {
+        foreach (var route in navigationService.Routes)
+        {
+            Routing.RegisterRoute(route.Route, route.ViewType);
+        }
     }
 
     private static void MigrateDb(IDbMigrator migrator)

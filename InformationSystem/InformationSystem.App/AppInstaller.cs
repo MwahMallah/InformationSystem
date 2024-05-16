@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using InformationSystem.App.Services;
 using InformationSystem.App.ViewModels;
 using InformationSystem.App.Views;
 
@@ -22,6 +23,7 @@ public static class AppInstaller
             .AsSelfWithInterfaces()
             .WithTransientLifetime());
 
+        services.AddTransient<INavigationService, NavigationService>();
         return services;
     }
 }
