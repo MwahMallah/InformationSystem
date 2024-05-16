@@ -11,7 +11,7 @@ namespace InformationSystem.BL.Facades;
 
 public class CourseFacade(
     IUnitOfWorkFactory unitOfWorkFactory, 
-    IModelMapper<CourseEntity, CourseDetailModel, CourseListModel> modelMapper) 
+    ICourseModelMapper modelMapper) 
     : FacadeBase<CourseEntity, CourseDetailModel, 
             CourseListModel, CourseEntityMapper>(unitOfWorkFactory, modelMapper), ICourseFacade
 {
