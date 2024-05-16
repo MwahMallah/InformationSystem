@@ -1,10 +1,21 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using InformationSystem.App.Services.Interfaces;
 
 namespace InformationSystem.App.ViewModels;
 
-public class ViewModelBase: ObservableRecipient, IViewModel
+public abstract class ViewModelBase: ObservableRecipient, IViewModel
 {
     private bool _isRefreshRequired = true;
+    protected readonly IMessengerService MessengerService;
+
+    protected ViewModelBase(IMessengerService messengerService)
+        : base(messengerService.Messenger)
+    {
+        MessengerService = messengerService;
+        
+        //Enables message receiving from messenger service 
+        IsActive = true;
+    }
     
     public async Task OnAppearingAsync()
     {
