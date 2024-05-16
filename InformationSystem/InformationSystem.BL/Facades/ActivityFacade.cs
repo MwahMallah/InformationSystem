@@ -15,6 +15,11 @@ public class ActivityFacade(
     : FacadeBase<ActivityEntity, ActivityDetailModel, 
         ActivityListModel, ActivityEntityMapper>(unitOfWorkFactory, modelMapper), IActivityFacade
 {
+    public override async Task<IEnumerable<ActivityListModel>> GetAsync()
+    {
+        return await GetAsync(null, null);
+    }
+
     public async Task<IEnumerable<ActivityListModel>> GetAsync(
         string? searchQuery = null, string? orderQuery = null, bool isAscending = true)
     {

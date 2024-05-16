@@ -49,12 +49,33 @@ public static class StudentSeeds
     };
     
     
+    public static readonly StudentEntity StudentNastya = StudentEntity with
+    {
+        FirstName = "Nastya",
+        LastName = "Mironova",
+        StartYear = 2020,
+        Group = "9C",
+        Id = Guid.Parse("34B09E2B-0E51-4183-B8C0-B5FCFFF6DC2E"), 
+        Courses = Array.Empty<CourseEntity>()
+    };
+    
+    public static readonly StudentEntity StudentArtyom = StudentEntity with
+    {
+        FirstName = "Artyom",
+        LastName = "Belitzkiy",
+        StartYear = 2019,
+        Group = "2A",
+        Id = Guid.Parse("F2AFBCAA-0E51-4183-B8C0-B5FCFFF6DC2E"), 
+        Courses = Array.Empty<CourseEntity>()
+    };
     
     public static void Seed(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<StudentEntity>().HasData(
             StudentMaksim,
-            StudentIlya
+            StudentIlya,
+            StudentNastya,
+            StudentArtyom
         );
     }
     

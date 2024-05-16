@@ -5,8 +5,7 @@ namespace InformationSystem.App.ViewModels;
 public class ViewModelBase: ObservableRecipient, IViewModel
 {
     private bool _isRefreshRequired = true;
-
-
+    
     public async Task OnAppearingAsync()
     {
         if (_isRefreshRequired)
