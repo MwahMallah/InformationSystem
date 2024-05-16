@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using CommunityToolkit.Maui.Core;
 using InformationSystem.App.Services;
+using InformationSystem.App.Services.Interfaces;
 using InformationSystem.BL;
 using InformationSystem.BL.Facades;
 using InformationSystem.DAL;

@@ -1,6 +1,6 @@
 ﻿using InformationSystem.App.Models;
 
-namespace InformationSystem.App.Services;
+namespace InformationSystem.App.Services.Interfaces;
 
 public interface INavigationService
 {

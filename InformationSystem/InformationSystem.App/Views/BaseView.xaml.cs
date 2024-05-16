@@ -7,21 +7,20 @@ using InformationSystem.App.ViewModels;
 
 namespace InformationSystem.App.Views;
 
-public partial class BaseView : ContentPage
+public partial class BaseView 
 {
     protected IViewModel ViewModel { get; }
     
     public BaseView(IViewModel viewModel)
     {
-        BindingContext = ViewModel = viewModel;
-        
         InitializeComponent();
+        BindingContext = viewModel;
+        ViewModel = viewModel;
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-
         await ViewModel.OnAppearingAsync();
     }
 }
