@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<views:BaseView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:student="using:InformationSystem.App.ViewModels.Student"
+                xmlns:views="using:InformationSystem.App.Views"
+                x:Class="InformationSystem.App.Views.Student.StudentDetailView"
+                xmlns:models="clr-namespace:InformationSystem.BL.Models;assembly=InformationSystem.BL"
+                x:DataType="student:StudentDetailViewModel">
+    <ContentPage.Content>
+        <Grid ColumnDefinitions="*, *, *, *"
+              RowDefinitions="*, *, *, *">
+            <Label Text="{Binding Student.FirstName}" 
+                   FontSize="20"
+                   Grid.Column="1"
+                   Grid.Row="0"/>
+            <Label Text="{Binding Student.LastName}" 
+                   FontSize="20"
+                   Grid.Column="2"
+                   Grid.Row="0"/>
+            <Label Text="{Binding Student.Group}" 
+                   FontSize="20"
+                   Grid.Column="1"
+                   Grid.Row="1"/>
+            <ScrollView Grid.Column="3" Grid.RowSpan="3" >
+                <Frame Padding="10" BorderColor="Black" BackgroundColor="Transparent">
+                    <VerticalStackLayout>
+                        <Label Text="Courses" FontSize="25" FontAttributes="Bold"></Label>
+                        <Entry TextChanged="OnTextChanged"></Entry>
+                        <CollectionView ItemsSource="{Binding Courses}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:CourseListModel">
+                                    <HorizontalStackLayout>
+                                        <Label Text="{Binding Abbreviation}" 
+                                               Margin="0,0,5,0"
+                                               FontSize="20"/>
+                                        <Label Text="{Binding Name}"
+                                               FontSize="20"/>
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Frame>
+            </ScrollView>
+            <Button Grid.Row="3" 
+                    Grid.Column="3"
+                    BackgroundColor="DarkGreen"
+                    Text="Edit"
+                    FontSize="20"
+                    Command="{Binding GoToCreateCommand}"></Button>
+        </Grid>
+    </ContentPage.Content>
+</views:BaseView>

@@ -6,6 +6,7 @@
              xmlns:vm="clr-namespace:InformationSystem.App.ViewModels.Student"
              xmlns:models="clr-namespace:InformationSystem.BL.Models;assembly=InformationSystem.BL"
              x:Class="InformationSystem.App.Views.Student.StudentListView"
+             x:Name="StudentListViewRoot"
              x:DataType="vm:StudentListViewModel">
     <VerticalStackLayout>
         <Button Text="Add Student" 
@@ -56,7 +57,12 @@
                         <Label Text="{Binding LastName}" Grid.Column="1" FontSize="20" HorizontalOptions="Center"/>
                         <Label Text="{Binding Group}" Grid.Column="2" FontSize="20" HorizontalOptions="Center"/>
                         <Label Text="{Binding CurrentYear}" Grid.Column="3" FontSize="20" HorizontalOptions="Center"/>
-                        <Button Text="Detail" FontSize="20" Grid.Column="4"></Button>
+                        <Button Text="Detail" FontSize="20" 
+                                Grid.Column="4"
+                                Command="{Binding 
+                                Source={x:Reference Name=StudentListViewRoot},
+                                Path=BindingContext.GoToDetailCommand}"
+                                CommandParameter="{Binding Id}"></Button>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
