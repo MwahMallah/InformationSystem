@@ -20,6 +20,11 @@
                     Text="Save" 
                     BackgroundColor="Green"
                     Command="{Binding SaveCommand}"></Button>
+            <Button HorizontalOptions="Fill" 
+                    Margin="0, 10"
+                    Text="Change Courses" 
+                    BackgroundColor="MidnightBlue"
+                    Command="{Binding GoToStudentCourseEditCommand}"></Button>
         </VerticalStackLayout>
     </ContentPage.Content>
 </views:BaseView>
