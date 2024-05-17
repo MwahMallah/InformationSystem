@@ -8,6 +8,7 @@ public interface INavigationService
     public IEnumerable<RouteModel> Routes { get; }
 
     public Task GoToAsync(string route);
+    public Task GoToAsync(string route, IDictionary<string, object?> parameters);
     public Task GoToAsync<TViewModel>(IDictionary<string, object?> parameters)
         where TViewModel: IViewModel;
     public bool SendBackButtonPressed();
