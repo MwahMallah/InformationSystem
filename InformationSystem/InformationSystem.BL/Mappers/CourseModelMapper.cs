@@ -21,6 +21,18 @@ public class CourseModelMapper(IActivityModelMapper activityModelMapper,
                 Credits = entity.Credits
             };
 
+    public CourseListModel MapToListModel(CourseDetailModel? model)
+        => model is null?
+            CourseListModel.Empty 
+            : new CourseListModel
+            {
+                Id = model.Id,
+                Abbreviation = model.Abbreviation,
+                Name = model.Name,
+                MaxStudents = model.MaxStudents,
+                Credits = model.Credits
+            };
+        
 
     public override CourseDetailModel MapToDetailModel(CourseEntity? entity)
         => entity is null?

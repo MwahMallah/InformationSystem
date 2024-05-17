@@ -21,20 +21,12 @@ public class CourseFacade(
     }
     
     public async Task<IEnumerable<CourseListModel>> GetAsync(
-        string? searchQuery = null, string? orderQuery = null, bool isAscending = true, Guid? studentId = null)
+        string? searchQuery = null, string? orderQuery = null, bool isAscending = true)
     {
         await using var uow = unitOfWorkFactory.Create();
         var repository = uow.GetRepository<CourseEntity, CourseEntityMapper>();
-
         
-        IQueryable<CourseEntity> query;
-
-        query = studentId == null ? repository.Get() : repository.Get().Include(c => c.Students);
-
-        if (studentId != null)
-        {
-            query = query.Where(c => c.Students.Any(s => s.Id == studentId));
-        }
+        IQueryable<CourseEntity> query = repository.Get();
         
         if (!string.IsNullOrEmpty(searchQuery))
         {
@@ -60,6 +52,24 @@ public class CourseFacade(
                     : query.OrderByDescending(c => c.MaxStudents),
                 _ => query
             };
+        }
+        
+        var entities = await query.ToListAsync();
+        return modelMapper.MapToListModel(entities);
+    }
+
+    public async Task<IEnumerable<CourseListModel>> GetStudentsCoursesAsync(Guid studentId, string? filterText)
+    {
+        await using var uow = unitOfWorkFactory.Create();
+        var repository = uow.GetRepository<CourseEntity, CourseEntityMapper>();
+        
+        IQueryable<CourseEntity> query = repository.Get().Include(c => c.Students);
+        query = query.Where(c => c.Students.Any(s => s.Id == studentId));
+
+        if (!string.IsNullOrEmpty(filterText))
+        {
+            query = query.Where(c => c.Abbreviation.StartsWith(filterText)
+                                     || c.Name.ToLower().Contains(filterText.ToLower()));
         }
         
         var entities = await query.ToListAsync();
