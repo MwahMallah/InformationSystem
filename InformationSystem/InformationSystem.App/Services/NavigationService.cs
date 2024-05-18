@@ -2,8 +2,10 @@
 using InformationSystem.App.Services.Interfaces;
 using InformationSystem.App.ViewModels;
 using InformationSystem.App.ViewModels.Activity;
+using InformationSystem.App.ViewModels.Course;
 using InformationSystem.App.ViewModels.Student;
 using InformationSystem.App.Views.Activity;
+using InformationSystem.App.Views.Course;
 using InformationSystem.App.Views.Student;
 using InformationSystem.BL.Models;
 
@@ -23,6 +25,10 @@ public class NavigationService : INavigationService
         new("//activities/edit", typeof(ActivityEditView), typeof(ActivityEditViewModel)),
 
         new("//activities/detail", typeof(ActivityDetailView), typeof(ActivityDetailViewModel)),
+        
+        new("//courses", typeof(CourseListView), typeof(CourseListViewModel)),
+        // new("//courses/edit", typeof(ActivityEditView), typeof(ActivityEditViewModel)),
+        
     };
     
     public async Task GoToAsync(string route)

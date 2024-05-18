@@ -3,6 +3,7 @@
        xmlns:local="clr-namespace:InformationSystem.App"
        xmlns:student="using:InformationSystem.App.Views.Student"
        xmlns:activity="using:InformationSystem.App.Views.Activity"
+       xmlns:course="using:InformationSystem.App.Views.Course"
        x:Class="InformationSystem.App.AppShell"
        Shell.FlyoutBehavior="Disabled">
     <TabBar>
@@ -10,7 +11,7 @@
             <ShellContent Route="students" ContentTemplate="{DataTemplate student:StudentListView}"/>
         </Tab>
         <Tab Title="Courses">
-            <ShellContent Route="courses" ContentTemplate="{DataTemplate local:MainPage}"/>
+            <ShellContent Route="courses" ContentTemplate="{DataTemplate course:CourseListView}"/>
         </Tab>
         <Tab Title="Activities">
             <ShellContent Route="activities" ContentTemplate="{DataTemplate activity:ActivityListView}"/>
