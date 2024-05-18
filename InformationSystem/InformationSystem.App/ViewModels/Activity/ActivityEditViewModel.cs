@@ -25,6 +25,12 @@ public partial class ActivityEditViewModel(
     
     public CourseListModel? SelectedCourse { get; set; } = null;
 
+    public DateTime StartDate { get; set; } = DateTime.Today;
+    public TimeSpan StartTime { get; set; } = DateTime.Now.TimeOfDay;
+    
+    public DateTime FinishDate { get; set; } = DateTime.Today;
+    public TimeSpan FinishTime { get; set; } = DateTime.Now.TimeOfDay;
+    
     public IEnumerable<ActivityType> ActivityTypes { get; set; } = new[]
     {
         ActivityType.Exam,
@@ -47,6 +53,9 @@ public partial class ActivityEditViewModel(
         if (SelectedCourse != null)
         {
             Activity.CourseId = SelectedCourse.Id;
+            Activity.StartTime = StartDate + StartTime;
+            Activity.FinishTime = FinishDate + FinishTime;
+            
             await activityFacade.SaveAsync(Activity);
             
             MessengerService.Send(new MessageAddActivity() {ActivityId = Activity.Id});
