@@ -32,6 +32,7 @@ namespace InformationSystem.DAL
             if (seedDemoData)
             {
                 StudentSeeds.Seed(modelBuilder);
+                CourseSeeds.Seed(modelBuilder);
             }
         }
     }
