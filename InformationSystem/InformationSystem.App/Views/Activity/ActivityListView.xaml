@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<views:BaseView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="using:InformationSystem.App.Views"
+             xmlns:models="clr-namespace:InformationSystem.BL.Models;assembly=InformationSystem.BL"
+             xmlns:vm="clr-namespace:InformationSystem.App.ViewModels.Activity"
+             x:Class="InformationSystem.App.Views.Activity.ActivityListView"
+             x:DataType="vm:ActivityListViewModel">
+    <ContentPage.Content>
+        <VerticalStackLayout>
+            <Button Text="Add Activity" 
+                    Command="{Binding GoToCreateCommand}"
+                    BackgroundColor="Green"/>
+            <!-- <Entry HorizontalOptions="Fill" FontSize="20" TextChanged="OnTextChanged"></Entry> -->
+            
+            <Grid Margin="20"
+                  ColumnDefinitions="*, *, *, *, *, *"
+                  BackgroundColor="#EEEEEE"> 
+                <Label Text="Course Abbreviation" Grid.Column="0" FontSize="20" HorizontalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <!-- <TapGestureRecognizer Command="{Binding SortCommand}"  -->
+                        <!--                       CommandParameter="name"></TapGestureRecognizer> -->
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Start Time" Grid.Column="1" FontSize="20" HorizontalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <!-- <TapGestureRecognizer Command="{Binding SortCommand}"  -->
+                        <!--                       CommandParameter="name"></TapGestureRecognizer> -->
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Finish Time" Grid.Column="2" FontSize="20" HorizontalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <!-- <TapGestureRecognizer Command="{Binding SortCommand}"  -->
+                        <!--                       CommandParameter="group"></TapGestureRecognizer> -->
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Activity Type" Grid.Column="3" FontSize="20" HorizontalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <!-- <TapGestureRecognizer Command="{Binding SortCommand}"  -->
+                        <!--                       CommandParameter="current_year"></TapGestureRecognizer> -->
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Maximum Points" Grid.Column="4" FontSize="20" HorizontalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <!-- <TapGestureRecognizer Command="{Binding SortCommand}"  -->
+                        <!--                       CommandParameter="current_year"></TapGestureRecognizer> -->
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Detail View" Grid.Column="5" FontSize="20"/>
+            </Grid>
+            
+            <CollectionView ItemsSource="{Binding Activities}"
+                            Margin="20">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:ActivityListModel">
+                        <Grid ColumnDefinitions="*, *, *, *, *, *">
+                            <Label Text="{Binding CourseAbbreviation}" Grid.Column="0" FontSize="20" HorizontalOptions="Center"/>
+                            <Label Text="{Binding StartTime}" Grid.Column="1" FontSize="20" HorizontalOptions="Center"/>
+                            <Label Text="{Binding FinishTime}" Grid.Column="2" FontSize="20" HorizontalOptions="Center"/>
+                            <Label Text="{Binding ActivityType}" Grid.Column="3" FontSize="20" HorizontalOptions="Center"/>
+                            <Label Text="{Binding MaxPoints}" Grid.Column="4" FontSize="20" HorizontalOptions="Center"/>
+                            <Button Text="Detail" FontSize="20" 
+                                    Grid.Column="5"></Button>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</views:BaseView>
