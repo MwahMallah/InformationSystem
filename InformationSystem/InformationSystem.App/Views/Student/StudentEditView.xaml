@@ -9,13 +9,13 @@
     <ContentPage.Content>
         <VerticalStackLayout Margin="10">
             <Label Text="First Name" FontSize="20"></Label>
-            <Entry HorizontalOptions="Fill" Text="{Binding Student.FirstName}"></Entry>
+            <Entry HorizontalOptions="Fill" Text="{Binding FirstName}"></Entry>
             <Label Text="Last Name" FontSize="20"></Label>
-            <Entry HorizontalOptions="Fill" Text="{Binding Student.LastName}"></Entry>
+            <Entry HorizontalOptions="Fill" Text="{Binding LastName}"></Entry>
             <Label Text="Group" FontSize="20"></Label>
-            <Entry HorizontalOptions="Fill" Text="{Binding Student.Group}"></Entry>
+            <Entry HorizontalOptions="Fill" Text="{Binding Group}"></Entry>
             <Label Text="Current Year" FontSize="20"></Label>
-            <Entry HorizontalOptions="Fill" Text="{Binding Student.CurrentYear}"></Entry>
+            <Entry HorizontalOptions="Fill" Text="{Binding CurrentYear}"></Entry>
             <Button HorizontalOptions="Fill" 
                     Text="Save" 
                     BackgroundColor="Green"
