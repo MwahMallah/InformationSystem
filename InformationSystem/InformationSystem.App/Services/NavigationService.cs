@@ -1,8 +1,11 @@
 ﻿using InformationSystem.App.Models;
 using InformationSystem.App.Services.Interfaces;
 using InformationSystem.App.ViewModels;
+using InformationSystem.App.ViewModels.Activity;
 using InformationSystem.App.ViewModels.Student;
+using InformationSystem.App.Views.Activity;
 using InformationSystem.App.Views.Student;
+using InformationSystem.BL.Models;
 
 namespace InformationSystem.App.Services;
 
@@ -15,6 +18,9 @@ public class NavigationService : INavigationService
         
         new("//students/edit", typeof(StudentEditView), typeof(StudentEditViewModel)),
         new("//students/detail/courses", typeof(StudentCoursesEditView), typeof(StudentCoursesEditViewModel)),
+        
+        new("//activities", typeof(ActivityListView), typeof(ActivityListViewModel)),
+        new("//activities/edit", typeof(ActivityEditView), typeof(ActivityEditViewModel)),
     };
     
     public async Task GoToAsync(string route)
