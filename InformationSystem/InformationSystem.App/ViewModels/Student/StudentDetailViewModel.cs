@@ -18,12 +18,15 @@ public partial class StudentDetailViewModel(
     INavigationService navigationService,
     IMessengerService messengerService,
     IAlertService alertService
-) : ViewModelBase(messengerService), IRecipient<MessageEditStudent>
+) : ViewModelBase(messengerService), IRecipient<MessageEditStudent>, IRecipient<MessageAddActivity>
 {
     public Guid Id { get; set; }
     
     [ObservableProperty]
     private StudentDetailModel? student;
+
+    [ObservableProperty] 
+    private ObservableCollection<ActivityListModel> activities = [];
     
     [ObservableProperty]
     private ObservableCollection<CourseListModel> courses = [];
@@ -32,6 +35,7 @@ public partial class StudentDetailViewModel(
     {
         Student = await studentFacade.GetAsync(Id);
         Courses = Student.Courses;
+        Activities = Student.Activities;
     }
     
     [RelayCommand]
@@ -70,6 +74,11 @@ public partial class StudentDetailViewModel(
     public async void Receive(MessageEditStudent message)
     {
         //Performs this code after receiving edit student message.
+        await LoadDataAsync();
+    }
+
+    public async void Receive(MessageAddActivity message)
+    {
         await LoadDataAsync();
     }
 }

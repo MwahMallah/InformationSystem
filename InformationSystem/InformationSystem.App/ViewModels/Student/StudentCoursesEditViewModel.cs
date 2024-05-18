@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using InformationSystem.App.Messages;
 using InformationSystem.App.Services.Interfaces;
 using InformationSystem.BL.Facades.Interfaces;
 using InformationSystem.BL.Mappers.Interfaces;
@@ -46,6 +47,7 @@ public partial class StudentCoursesEditViewModel
         {
             Student.Courses.Add(SelectedCourse);
             await studentFacade.SaveAsync(Student);
+            MessengerService.Send(new MessageEditStudent() {StudentId = Student.Id});
             CoursesToShow.Remove(SelectedCourse);
             SelectedCourse = null;
         }

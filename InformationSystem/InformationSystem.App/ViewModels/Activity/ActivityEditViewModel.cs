@@ -53,9 +53,4 @@ public partial class ActivityEditViewModel(
             navigationService.SendBackButtonPressed();
         }
     }
-
-    public void Receive(MessageEditStudent message)
-    {
-        throw new NotImplementedException();
-    }
 }

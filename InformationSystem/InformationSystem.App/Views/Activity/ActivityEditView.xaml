@@ -14,7 +14,6 @@
                     ItemDisplayBinding="{Binding Abbreviation}"
                     SelectedItem="{Binding SelectedCourse}"></Picker>
             <Grid ColumnDefinitions="*, *" RowDefinitions="*,*">
-                <!-- TODO: date picking might not work -->
                 <Label Text="Start Time" FontSize="20" Grid.Column="0"></Label>
                 <HorizontalStackLayout Grid.Column="0" Grid.Row="1" Spacing="10">
                     <DatePicker 
