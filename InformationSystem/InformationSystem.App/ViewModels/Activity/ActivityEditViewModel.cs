@@ -23,13 +23,16 @@ public partial class ActivityEditViewModel(
     [ObservableProperty] 
     private ObservableCollection<CourseListModel> courses = [];
     
-    public CourseListModel? SelectedCourse { get; set; } = null;
+    [ObservableProperty]
+    private CourseListModel? selectedCourse = null;
 
     public DateTime StartDate { get; set; } = DateTime.Today;
     public TimeSpan StartTime { get; set; } = DateTime.Now.TimeOfDay;
     
     public DateTime FinishDate { get; set; } = DateTime.Today;
     public TimeSpan FinishTime { get; set; } = DateTime.Now.TimeOfDay;
+
+    partial void OnSelectedCourseChanged(CourseListModel? value) => SaveCommand.NotifyCanExecuteChanged();
     
     public IEnumerable<ActivityType> ActivityTypes { get; set; } = new[]
     {
@@ -47,7 +50,7 @@ public partial class ActivityEditViewModel(
         }
     }
     
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
         if (SelectedCourse != null)
@@ -61,5 +64,10 @@ public partial class ActivityEditViewModel(
             MessengerService.Send(new MessageAddActivity() {ActivityId = Activity.Id});
             navigationService.SendBackButtonPressed();
         }
+    }
+    
+    private bool CanSave()
+    {
+        return SelectedCourse != null;
     }
 }
