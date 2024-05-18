@@ -20,7 +20,7 @@ public partial class StudentCoursesEditViewModel
     private StudentDetailModel student;
 
     [ObservableProperty] 
-    private ObservableCollection<CourseListModel> courses = [];
+    private ObservableCollection<CourseListModel> coursesToShow = [];
 
     public CourseListModel? SelectedCourse { get; set; } = null;
     
@@ -28,10 +28,14 @@ public partial class StudentCoursesEditViewModel
     {
         var allCourses = await courseFacade.GetAsync();
 
-        Courses.Clear();
+        CoursesToShow.Clear();
         foreach (var course in allCourses)
         {
-            Courses.Add(course);
+            if (Student.Courses.Any(c => c.Id == course.Id))
+            {
+                continue;
+            }
+            CoursesToShow.Add(course);
         }
     }
 
@@ -40,11 +44,18 @@ public partial class StudentCoursesEditViewModel
     {
         if (SelectedCourse != null)
         {
-            var courseListModel = courseListModelMapper
-                .MapToListModel(await courseFacade.GetAsync(SelectedCourse.Id));
-            
-            Student.Courses.Add(courseListModel);
+            Student.Courses.Add(SelectedCourse);
             await studentFacade.SaveAsync(Student);
+            CoursesToShow.Remove(SelectedCourse);
+            SelectedCourse = null;
         }
+    }
+
+    [RelayCommand]
+    private async Task RemoveCourseAsync(CourseListModel modelToRemove)
+    {
+        Student.Courses.Remove(modelToRemove);
+        await studentFacade.SaveAsync(Student);
+        CoursesToShow.Add(modelToRemove);
     }
 }
