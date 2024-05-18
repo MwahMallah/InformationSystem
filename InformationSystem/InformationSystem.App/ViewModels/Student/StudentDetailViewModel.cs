@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using InformationSystem.App.Messages;
 using InformationSystem.App.Services.Interfaces;
+using InformationSystem.App.ViewModels.Activity;
 using InformationSystem.BL.Facades.Interfaces;
 using InformationSystem.BL.Mappers;
 using InformationSystem.BL.Models;
@@ -71,6 +72,15 @@ public partial class StudentDetailViewModel(
         });
     }
 
+    [RelayCommand]
+    private async Task GoToActivityDetailAsync(Guid id)
+    {
+        await navigationService.GoToAsync("//activities/detail", new Dictionary<string, object?>()
+        {
+            [nameof(ActivityDetailViewModel.Id)] = id
+        });
+    }
+    
     public async void Receive(MessageEditStudent message)
     {
         //Performs this code after receiving edit student message.

@@ -6,7 +6,8 @@
                 xmlns:views="using:InformationSystem.App.Views"
                 x:Class="InformationSystem.App.Views.Student.StudentDetailView"
                 xmlns:models="clr-namespace:InformationSystem.BL.Models;assembly=InformationSystem.BL"
-                x:DataType="student:StudentDetailViewModel">
+                x:DataType="student:StudentDetailViewModel"
+                x:Name="StudentDetailViewRoot">
     <ContentPage.Content>
         <Grid ColumnDefinitions="*, *, *, *"
               RowDefinitions="*, *, *, *">
@@ -33,9 +34,9 @@
                                     <HorizontalStackLayout>
                                         <Label Text="{Binding Abbreviation}" 
                                                Margin="0,0,5,0"
-                                               FontSize="20"/>
+                                               FontSize="15"/>
                                         <Label Text="{Binding Name}"
-                                               FontSize="20"/>
+                                               FontSize="15"/>
                                     </HorizontalStackLayout>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
@@ -56,6 +57,11 @@
                                                FontSize="20"/>
                                         <Label Text="{Binding ActivityType}"
                                                FontSize="20"/>
+                                        <Button Text="Detail"
+                                                Command="{Binding 
+                                                Source={x:Reference StudentDetailViewRoot},
+                                                Path=BindingContext.GoToActivityDetailCommand}"
+                                                CommandParameter="{Binding Id}"></Button>
                                     </HorizontalStackLayout>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>

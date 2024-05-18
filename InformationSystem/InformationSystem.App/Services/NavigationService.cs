@@ -21,6 +21,8 @@ public class NavigationService : INavigationService
         
         new("//activities", typeof(ActivityListView), typeof(ActivityListViewModel)),
         new("//activities/edit", typeof(ActivityEditView), typeof(ActivityEditViewModel)),
+
+        new("//activities/detail", typeof(ActivityDetailView), typeof(ActivityDetailViewModel)),
     };
     
     public async Task GoToAsync(string route)
