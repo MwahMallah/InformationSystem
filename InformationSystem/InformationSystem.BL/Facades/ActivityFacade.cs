@@ -44,6 +44,9 @@ public class ActivityFacade(
                 "course_abbreviation" => isAscending 
                     ? query.OrderBy(a => a.Course.Abbreviation) 
                     : query.OrderByDescending(a => a.Course.Abbreviation),
+                "activity_type" => isAscending 
+                    ? query.OrderBy(a => a.ActivityType) 
+                    : query.OrderByDescending(a => a.ActivityType),
                 "max_points" => isAscending
                     ? query.OrderBy(a => a.MaxPoints)
                     : query.OrderByDescending(a => a.MaxPoints),

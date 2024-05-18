@@ -6,48 +6,49 @@
              xmlns:models="clr-namespace:InformationSystem.BL.Models;assembly=InformationSystem.BL"
              xmlns:vm="clr-namespace:InformationSystem.App.ViewModels.Activity"
              x:Class="InformationSystem.App.Views.Activity.ActivityListView"
-             x:DataType="vm:ActivityListViewModel">
+             x:DataType="vm:ActivityListViewModel"
+             x:Name="ActivityListViewRoot">
     <ContentPage.Content>
         <VerticalStackLayout>
             <Button Text="Add Activity" 
                     Command="{Binding GoToCreateCommand}"
                     BackgroundColor="Green"/>
-            <!-- <Entry HorizontalOptions="Fill" FontSize="20" TextChanged="OnTextChanged"></Entry> -->
+            <Entry HorizontalOptions="Fill" FontSize="20" TextChanged="OnTextChanged"></Entry>
             
             <Grid Margin="20"
                   ColumnDefinitions="*, *, *, *, *, *"
                   BackgroundColor="#EEEEEE"> 
                 <Label Text="Course Abbreviation" Grid.Column="0" FontSize="20" HorizontalOptions="Center">
                     <Label.GestureRecognizers>
-                        <!-- <TapGestureRecognizer Command="{Binding SortCommand}"  -->
-                        <!--                       CommandParameter="name"></TapGestureRecognizer> -->
+                        <TapGestureRecognizer Command="{Binding SortCommand}"
+                                              CommandParameter="course_abbreviation"></TapGestureRecognizer>
                     </Label.GestureRecognizers>
                 </Label>
                 <Label Text="Start Time" Grid.Column="1" FontSize="20" HorizontalOptions="Center">
                     <Label.GestureRecognizers>
-                        <!-- <TapGestureRecognizer Command="{Binding SortCommand}"  -->
-                        <!--                       CommandParameter="name"></TapGestureRecognizer> -->
+                        <TapGestureRecognizer Command="{Binding SortCommand}"
+                                              CommandParameter="start_time"></TapGestureRecognizer>
                     </Label.GestureRecognizers>
                 </Label>
                 <Label Text="Finish Time" Grid.Column="2" FontSize="20" HorizontalOptions="Center">
                     <Label.GestureRecognizers>
-                        <!-- <TapGestureRecognizer Command="{Binding SortCommand}"  -->
-                        <!--                       CommandParameter="group"></TapGestureRecognizer> -->
+                        <TapGestureRecognizer Command="{Binding SortCommand}"
+                                              CommandParameter="finish_time"></TapGestureRecognizer>
                     </Label.GestureRecognizers>
                 </Label>
                 <Label Text="Activity Type" Grid.Column="3" FontSize="20" HorizontalOptions="Center">
                     <Label.GestureRecognizers>
-                        <!-- <TapGestureRecognizer Command="{Binding SortCommand}"  -->
-                        <!--                       CommandParameter="current_year"></TapGestureRecognizer> -->
+                        <TapGestureRecognizer Command="{Binding SortCommand}"
+                                              CommandParameter="activity_type"></TapGestureRecognizer>
                     </Label.GestureRecognizers>
                 </Label>
                 <Label Text="Maximum Points" Grid.Column="4" FontSize="20" HorizontalOptions="Center">
                     <Label.GestureRecognizers>
-                        <!-- <TapGestureRecognizer Command="{Binding SortCommand}"  -->
-                        <!--                       CommandParameter="current_year"></TapGestureRecognizer> -->
+                        <TapGestureRecognizer Command="{Binding SortCommand}"
+                                              CommandParameter="max_points"></TapGestureRecognizer>
                     </Label.GestureRecognizers>
                 </Label>
-                <Label Text="Detail View" Grid.Column="5" FontSize="20"/>
+                <Label Text="Detail View" Grid.Column="5" FontSize="20" HorizontalOptions="Center"/>
             </Grid>
             
             <CollectionView ItemsSource="{Binding Activities}"
@@ -65,7 +66,10 @@
                             <Label Text="{Binding ActivityType}" Grid.Column="3" FontSize="20" HorizontalOptions="Center"/>
                             <Label Text="{Binding MaxPoints}" Grid.Column="4" FontSize="20" HorizontalOptions="Center"/>
                             <Button Text="Detail" FontSize="20" 
-                                    Grid.Column="5"></Button>
+                                    Grid.Column="5"
+                                    Command="{Binding Source={x:Reference ActivityListViewRoot},
+                                    Path=BindingContext.GoToDetailCommand}"
+                                    CommandParameter="{Binding Id}"></Button>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

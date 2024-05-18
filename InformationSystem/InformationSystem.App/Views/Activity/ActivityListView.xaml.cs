@@ -13,4 +13,10 @@ public partial class ActivityListView
     {
         InitializeComponent();
     }
+
+    private void OnTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        var activityListViewModel = ViewModel as ActivityListViewModel;
+        activityListViewModel?.FilterCommand.Execute(e.NewTextValue);
+    }
 }
