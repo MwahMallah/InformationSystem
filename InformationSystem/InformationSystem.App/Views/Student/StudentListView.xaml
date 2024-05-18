@@ -41,7 +41,7 @@
                                           CommandParameter="current_year"></TapGestureRecognizer>
                 </Label.GestureRecognizers>
             </Label>
-            <Label Text="Detail View" FontSize="20" Grid.Column="4"></Label>
+            <Label Text="Detail View" Grid.Column="4" FontSize="20"/>
         </Grid>
         
         <CollectionView ItemsSource="{Binding Students}"

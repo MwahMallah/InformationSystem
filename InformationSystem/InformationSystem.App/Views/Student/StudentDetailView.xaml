@@ -44,9 +44,15 @@
                 </Frame>
             </ScrollView>
             <Button Grid.Row="3" 
+                    Grid.Column="2"
+                    BackgroundColor="DarkRed"
+                    Text="Delete Student"
+                    FontSize="20"
+                    Command="{Binding DeleteCommand}"></Button>
+            <Button Grid.Row="3" 
                     Grid.Column="3"
                     BackgroundColor="DarkGreen"
-                    Text="Edit"
+                    Text="Edit Student"
                     FontSize="20"
                     Command="{Binding GoToCreateCommand}"></Button>
         </Grid>

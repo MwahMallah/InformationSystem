@@ -16,7 +16,8 @@ public partial class StudentDetailViewModel(
     IStudentFacade studentFacade,
     ICourseFacade courseFacade,
     INavigationService navigationService,
-    IMessengerService messengerService
+    IMessengerService messengerService,
+    IAlertService alertService
 ) : ViewModelBase(messengerService), IRecipient<MessageEditStudent>
 {
     public Guid Id { get; set; }
@@ -38,6 +39,23 @@ public partial class StudentDetailViewModel(
     {
         Courses = new ObservableCollection<CourseListModel>(await courseFacade
             .GetStudentsCoursesAsync(Student!.Id, filterText));
+    }
+
+    [RelayCommand]
+    private async Task DeleteAsync()
+    {
+        if (Student != null)
+        {
+            var isConfirmed = await alertService
+                .WaitConfirmationAsync("Delete Student", "Are you sure you want to Delete Student?");
+
+            if (isConfirmed)
+            {
+                await studentFacade.DeleteAsync(Student.Id);
+                Messenger.Send(new MessageDeleteStudent() {StudentId = Student.Id});
+                navigationService.SendBackButtonPressed();
+            }
+        }
     }
     
     [RelayCommand]

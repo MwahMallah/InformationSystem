@@ -14,7 +14,7 @@ public partial class StudentListViewModel(
     IStudentFacade studentFacade,
     INavigationService navigationService,
     IMessengerService messengerService
-    ) : ViewModelBase(messengerService), IRecipient<MessageEditStudent>
+    ) : ViewModelBase(messengerService), IRecipient<MessageEditStudent>, IRecipient<MessageDeleteStudent>
 {
     private bool _isGroupAscending = true;
     private bool _isCurrentYearAscending = true;
@@ -79,6 +79,11 @@ public partial class StudentListViewModel(
     public async void Receive(MessageEditStudent message)
     {
         //Performs this code after receiving edit student message.
+        await LoadDataAsync();
+    }
+
+    public async void Receive(MessageDeleteStudent message)
+    {
         await LoadDataAsync();
     }
 }
