@@ -18,7 +18,7 @@
         </Grid>
         <Grid RowDefinitions="40, *" Margin="0,20,0,20" Grid.Row="1">
             <Grid Margin="0,20,0,20"
-                  ColumnDefinitions="2, 3*, 2, 3*, 2, 1*, 2, 1*, 2, 100, 2"
+                  ColumnDefinitions="2, 3*, 2, 3*, 2, 100, 2, 80, 2, 100, 2"
                   RowDefinitions="*"
                   BackgroundColor="Black"
                   HeightRequest="40">
@@ -40,7 +40,7 @@
                                   CommandParameter="group"></TapGestureRecognizer>
                     </Label.GestureRecognizers>
                 </Label>
-                <Label Text="Current Year" Grid.Column="7" FontSize="20" Padding="5" VerticalOptions="Center">
+                <Label Text="Year" Grid.Column="7" FontSize="20" Padding="5" VerticalOptions="Center">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding SortCommand}" 
                                   CommandParameter="current_year"></TapGestureRecognizer>
@@ -51,20 +51,20 @@
             <Grid Grid.Row="1">
                 <CollectionView ItemsSource="{Binding Students}" Grid.ColumnSpan="5" Grid.Row="1">
                     <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="5" />
+                        <LinearItemsLayout Orientation="Vertical"/>
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:StudentListModel">
-                            <Grid ColumnDefinitions="2, 3*, 2, 3*, 2, 1*, 2, 1*, 2, 100, 2" RowDefinitions="*, 2">
-                                <Border StrokeThickness="0" BackgroundColor="White" VerticalOptions="Fill"></Border>
-                                <Label Text="{Binding FirstName}" Grid.Column="1" FontSize="20" Padding="5" VerticalOptions="Center"/>
-                                <Border StrokeThickness="0" BackgroundColor="White" Grid.Column="2" VerticalOptions="Fill"></Border>
-                                <Label Text="{Binding LastName}" Grid.Column="3" FontSize="20" Padding="5" VerticalOptions="Center"/>
-                                <Border StrokeThickness="0" BackgroundColor="White" Grid.Column="4" VerticalOptions="Fill"></Border>
-                                <Label Text="{Binding Group}" Grid.Column="5" FontSize="20" Padding="5" VerticalOptions="Center"/>
-                                <Border StrokeThickness="0" BackgroundColor="White" Grid.Column="6" VerticalOptions="Fill"></Border>
-                                <Label Text="{Binding CurrentYear}" Grid.Column="7" FontSize="20" Padding="5" VerticalOptions="Center"/>
-                                <Border StrokeThickness="0" BackgroundColor="White" Grid.Column="8" VerticalOptions="Fill"></Border>
+                            <Grid ColumnDefinitions="2, 3*, 2, 3*, 2, 100, 2, 80, 2, 100, 2" RowDefinitions="*, 2">
+                                <Border StrokeThickness="0" BackgroundColor="Black" VerticalOptions="Fill"></Border>
+                                <Label Text="{Binding FirstName}" Grid.Column="1" FontSize="20" TextColor="Black" Padding="5" VerticalOptions="Center"/>
+                                <Border StrokeThickness="0" BackgroundColor="Black" Grid.Column="2" VerticalOptions="Fill"></Border>
+                                <Label Text="{Binding LastName}" Grid.Column="3" FontSize="20" TextColor="Black" Padding="5" VerticalOptions="Center"/>
+                                <Border StrokeThickness="0" BackgroundColor="Black" Grid.Column="4" VerticalOptions="Fill"></Border>
+                                <Label Text="{Binding Group}" Grid.Column="5" FontSize="20" TextColor="Black" Padding="5" VerticalOptions="Center"/>
+                                <Border StrokeThickness="0" BackgroundColor="Black" Grid.Column="6" VerticalOptions="Fill"></Border>
+                                <Label Text="{Binding CurrentYear}" Grid.Column="7" FontSize="20" TextColor="Black" Padding="5" VerticalOptions="Center"/>
+                                <Border StrokeThickness="0" BackgroundColor="Black" Grid.Column="8" VerticalOptions="Fill"></Border>
                                 <Button Text="Detail" Margin="2" FontSize="20"
                                         WidthRequest="70"
                                         HorizontalOptions="Center" VerticalOptions="Center"
@@ -73,8 +73,8 @@
                                         CommandParameter="{Binding Id}">
 
                                 </Button>
-                                <Border StrokeThickness="0" BackgroundColor="White" Grid.Column="10" VerticalOptions="Fill"></Border>
-                                <Border StrokeThickness="0" BackgroundColor="White" Grid.Row="1" Grid.ColumnSpan="10" HorizontalOptions="Fill"></Border>
+                                <Border StrokeThickness="0" BackgroundColor="Black" Grid.Column="10" VerticalOptions="Fill"></Border>
+                                <Border StrokeThickness="0" BackgroundColor="Black" Grid.Row="1" Grid.ColumnSpan="10" HorizontalOptions="Fill"></Border>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
