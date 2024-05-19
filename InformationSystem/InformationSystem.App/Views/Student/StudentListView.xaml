@@ -11,7 +11,7 @@
     <ContentPage.Content>
         <Grid Padding="20" RowDefinitions="50, *" BackgroundColor="{StaticResource SecondaryColor}">
             <Grid RowDefinitions="50" ColumnDefinitions="3*, 5*, 50, 10, 100">
-                <Entry HeightRequest="40" TextChanged="OnTextChanged"></Entry>
+                <Entry HeightRequest="40" TextChanged="OnTextChanged" Placeholder="Search"/>
                 <Button FontSize="30" Text="⟳"
                         Style="{StaticResource SecondaryButtonStyle}" Grid.Column="2"/>
                 <Button Text="+New"
