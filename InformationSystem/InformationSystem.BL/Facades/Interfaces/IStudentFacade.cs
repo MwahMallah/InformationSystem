@@ -7,4 +7,6 @@ public interface IStudentFacade : IFacade<StudentEntity, StudentDetailModel, Stu
 {
     public Task<IEnumerable<StudentListModel>> GetAsync(
         string? searchQuery = null, string? orderQuery = null, bool isAscending = true);
+    
+    public Task<IEnumerable<StudentListModel>> GetCourseStudentsAsync(Guid studentId, string? filterText);
 }

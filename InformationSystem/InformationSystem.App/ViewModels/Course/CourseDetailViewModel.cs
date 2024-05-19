@@ -6,6 +6,7 @@ using InformationSystem.App.Messages;
 using InformationSystem.App.Services.Interfaces;
 using InformationSystem.App.ViewModels.Activity;
 using InformationSystem.BL.Facades.Interfaces;
+using InformationSystem.BL.Mappers.Interfaces;
 using InformationSystem.BL.Models;
 
 namespace InformationSystem.App.ViewModels.Course;
@@ -14,11 +15,12 @@ namespace InformationSystem.App.ViewModels.Course;
 public partial class CourseDetailViewModel(
     IStudentFacade studentFacade,
     ICourseFacade courseFacade,
+    ICourseModelMapper modelMapper,
     INavigationService navigationService,
     IMessengerService messengerService,
     IAlertService alertService
 ) : ViewModelBase(messengerService), IRecipient<MessageDeleteStudent>, 
-    IRecipient<MessageEditStudent>, IRecipient<MessageAddActivity>
+    IRecipient<MessageEditStudent>, IRecipient<MessageAddActivity>, IRecipient<MessageDeleteActivity>
 {
     public Guid Id { get; set; }
     
@@ -39,11 +41,19 @@ public partial class CourseDetailViewModel(
     }
     
     [RelayCommand]
+    private async Task FilterStudentsAsync(string filterText)
+    {
+        Students = new ObservableCollection<StudentListModel>(await studentFacade
+            .GetCourseStudentsAsync(Course!.Id, filterText));
+    }
+    
+    [RelayCommand]
     private async Task GoToEditAsync()
     {
+        
         await navigationService.GoToAsync("/edit", new Dictionary<string, object?>()
         {
-            [nameof(CourseEditViewModel.Course)] = Course
+            [nameof(ActivityEditViewModel.SelectedCourse)] = Course
         });
     }
     
@@ -53,6 +63,16 @@ public partial class CourseDetailViewModel(
         await navigationService.GoToAsync("//activities/detail", new Dictionary<string, object?>()
         {
             [nameof(ActivityDetailViewModel.Id)] = id
+        });
+    }
+
+    [RelayCommand]
+    private async Task AddActivityAsync()
+    {
+        var listCourseModel = modelMapper.MapToListModel(Course);   
+        await navigationService.GoToAsync("//activities/edit", new Dictionary<string, object?>()
+        {
+            [nameof(ActivityEditViewModel.CourseFromQuery)] = listCourseModel
         });
     }
     
@@ -98,4 +118,11 @@ public partial class CourseDetailViewModel(
         }
     }
 
+    public async void Receive(MessageDeleteActivity message)
+    {
+        if (Course != null)
+        {
+            await LoadDataAsync();
+        }
+    }
 }

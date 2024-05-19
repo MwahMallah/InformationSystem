@@ -32,7 +32,7 @@
                 <Frame Padding="10" BorderColor="Black" BackgroundColor="Transparent">
                     <VerticalStackLayout>
                         <Label Text="Students" FontSize="25" FontAttributes="Bold"></Label>
-                        <!-- <Entry TextChanged="OnTextChanged"></Entry> -->
+                        <Entry TextChanged="OnTextChanged"></Entry>
                         <CollectionView ItemsSource="{Binding Students}">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:StudentListModel">
@@ -72,6 +72,10 @@
                     </VerticalStackLayout>
                 </Frame>
             </ScrollView>
+            <Button Grid.Row="3"
+                    Grid.Column="1"
+                    Text="Add Activity"
+                    Command="{Binding AddActivityCommand}"></Button>
             <Button Grid.Row="3"
                     Grid.Column="2"
                     BackgroundColor="DarkRed"

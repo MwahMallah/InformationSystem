@@ -56,6 +56,25 @@ public class StudentFacade(
         return modelMapper.MapToListModel(entities);
     }
     
+    public async Task<IEnumerable<StudentListModel>> GetCourseStudentsAsync(Guid courseId, string? filterText)
+    {
+        await using var uow = unitOfWorkFactory.Create();
+        var repository = uow.GetRepository<StudentEntity, StudentEntityMapper>();
+        
+        IQueryable<StudentEntity> query = repository.Get().Include(s => s.Courses);
+        query = query.Where(s => s.Courses.Any(c => c.Id == courseId));
+
+        if (!string.IsNullOrEmpty(filterText))
+        {
+            query = query.Where(s => s.FirstName.ToLower().StartsWith(filterText)
+                                     || s.LastName.ToLower().StartsWith(filterText)
+                                     || s.Group.ToLower().StartsWith(filterText));
+        }
+        
+        var entities = await query.ToListAsync();
+        return modelMapper.MapToListModel(entities);
+    }
+    
     public override async Task<StudentDetailModel?> GetAsync(Guid id)
     {
         await using var uow = unitOfWorkFactory.Create();
