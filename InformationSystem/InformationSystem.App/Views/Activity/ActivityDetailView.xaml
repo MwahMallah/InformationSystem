@@ -20,6 +20,14 @@
             <Label Text="{Binding Activity.Description}" FontSize="20"></Label>
             <Label Text="Max Points" FontSize="20"></Label>
             <Label Text="{Binding Activity.MaxPoints}" FontSize="20"></Label>
+            <Button BackgroundColor="DarkRed"
+                    Text="Delete Activity"
+                    FontSize="20"
+                    Command="{Binding DeleteCommand}"></Button>
+            <Button BackgroundColor="DarkGreen"
+                    Text="Edit Activity"
+                    FontSize="20"
+                    Command="{Binding GoToEditCommand}"></Button>
         </VerticalStackLayout>
     </ContentPage.Content>
 </views:BaseView>

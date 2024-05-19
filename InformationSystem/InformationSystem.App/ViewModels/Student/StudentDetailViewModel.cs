@@ -21,7 +21,7 @@ public partial class StudentDetailViewModel(
     IMessengerService messengerService,
     IAlertService alertService
 ) : ViewModelBase(messengerService), IRecipient<MessageEditStudent>, 
-    IRecipient<MessageAddActivity>, IRecipient<MessageDeleteCourse>
+    IRecipient<MessageAddActivity>, IRecipient<MessageDeleteCourse>, IRecipient<MessageDeleteActivity>
 {
     public Guid Id { get; set; }
     
@@ -112,6 +112,14 @@ public partial class StudentDetailViewModel(
     }
 
     public async void Receive(MessageDeleteCourse message)
+    {
+        if (Student != null)
+        {
+            await LoadDataAsync();
+        }
+    }
+
+    public async void Receive(MessageDeleteActivity message)
     {
         if (Student != null)
         {

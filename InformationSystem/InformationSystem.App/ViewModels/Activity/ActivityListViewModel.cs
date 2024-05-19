@@ -13,7 +13,7 @@ public partial class ActivityListViewModel(
     IActivityFacade activityFacade,
     INavigationService navigationService,
     IMessengerService messengerService
-) : ViewModelBase(messengerService), IRecipient<MessageAddActivity>
+) : ViewModelBase(messengerService), IRecipient<MessageAddActivity>, IRecipient<MessageDeleteActivity>
 {
     private string? _filterText = null;
 
@@ -85,6 +85,11 @@ public partial class ActivityListViewModel(
     }
 
     public async void Receive(MessageAddActivity message)
+    {
+        await LoadDataAsync();
+    }
+
+    public async void Receive(MessageDeleteActivity message)
     {
         await LoadDataAsync();
     }
