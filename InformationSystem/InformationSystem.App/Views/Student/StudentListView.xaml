@@ -81,67 +81,6 @@
                 </CollectionView>
             </Grid>
         </Grid>
-        <!--<Grid Margin="0,20,0,200"
-              ColumnDefinitions="3*, 3*, 1*, 1*, 2*"
-              RowDefinitions="60,500"
-              BackgroundColor="Black"
-              HeightRequest="70">
-            <Label Text="First Name" Grid.Column="0" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SortCommand}" 
-                                          CommandParameter="name"></TapGestureRecognizer>
-                </Label.GestureRecognizers>
-            </Label>
-            <Label Text="Last Name" Grid.Column="1" FontSize="20" HorizontalOptions="Center">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SortCommand}" 
-                                          CommandParameter="name"></TapGestureRecognizer>
-                </Label.GestureRecognizers>
-            </Label>
-            <Label Text="Group" Grid.Column="2" FontSize="20" HorizontalOptions="Center">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SortCommand}" 
-                                          CommandParameter="group"></TapGestureRecognizer>
-                </Label.GestureRecognizers>
-            </Label>
-            <Label Text="Current Year" Grid.Column="3" FontSize="20" HorizontalOptions="Center">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SortCommand}" 
-                                          CommandParameter="current_year"></TapGestureRecognizer>
-                </Label.GestureRecognizers>
-            </Label>
-            <Label Text="Detail View" Grid.Column="4" FontSize="20" HorizontalOptions="Center"/>
-            <CollectionView ItemsSource="{Binding Students}" Grid.ColumnSpan="5" Grid.Row="1">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="5" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:StudentListModel">
-                        <Grid ColumnDefinitions="3*, 3, 3*, 3, 1*, 3, 1*, 2*">
-                            <Label Text="{Binding FirstName}" Grid.Column="0" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
-                            <Border WidthRequest="3" HeightRequest="70" BackgroundColor="White" Grid.Column="1" VerticalOptions="Fill"></Border>
-                            <Label Text="{Binding LastName}" Grid.Column="2" FontSize="20" HorizontalOptions="Center"/>
-                            <Label Text="{Binding Group}" Grid.Column="4" FontSize="20" HorizontalOptions="Center"/>
-                            <Label Text="{Binding CurrentYear}" Grid.Column="6" FontSize="20" HorizontalOptions="Center"/>
-                            <Button Text="Detail"
-            Margin="10"
-            FontSize="20"
-            HeightRequest="50"
-            WidthRequest="100"
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
-            Grid.Column="8"
-            Command="{Binding 
-            Source={x:Reference Name=StudentListViewRoot},
-            Path=BindingContext.GoToDetailCommand}"
-            CommandParameter="{Binding Id}">
-
-                            </Button>
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </Grid>-->
 
     </Grid>
 </views:BaseView>
