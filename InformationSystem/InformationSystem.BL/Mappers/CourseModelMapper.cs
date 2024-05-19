@@ -55,6 +55,8 @@ public class CourseModelMapper(IActivityModelMapper activityModelMapper,
             Id = model.Id,
             Name = model.Name,
             Description = model.Description,
-            Abbreviation = model.Abbreviation
+            Abbreviation = model.Abbreviation,
+            MaxStudents = model.MaxStudents,
+            Credits = model.Credits
         };
 }
