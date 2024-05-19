@@ -13,7 +13,7 @@ public partial class CourseListViewModel(
     ICourseFacade courseFacade,
     INavigationService navigationService,
     IMessengerService messengerService
-) : ViewModelBase(messengerService), IRecipient<MessageEditCourse>
+) : ViewModelBase(messengerService), IRecipient<MessageEditCourse>, IRecipient<MessageDeleteCourse>
 {
     private bool _isAbbreviationAscending = true;
     private bool _isCreditsAscending = true;
@@ -81,6 +81,11 @@ public partial class CourseListViewModel(
     }
 
     public async void Receive(MessageEditCourse message)
+    {
+        await LoadDataAsync();
+    }
+
+    public async void Receive(MessageDeleteCourse message)
     {
         await LoadDataAsync();
     }

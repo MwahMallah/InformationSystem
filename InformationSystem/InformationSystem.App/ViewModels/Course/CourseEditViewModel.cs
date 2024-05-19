@@ -8,6 +8,7 @@ using InformationSystem.BL.Models;
 
 namespace InformationSystem.App.ViewModels.Course;
 
+[QueryProperty(nameof(Course), nameof(Course))]
 public partial class CourseEditViewModel(
     ICourseFacade courseFacade,
     INavigationService navigationService,

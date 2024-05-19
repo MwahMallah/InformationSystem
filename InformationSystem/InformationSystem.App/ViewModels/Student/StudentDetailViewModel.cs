@@ -20,7 +20,8 @@ public partial class StudentDetailViewModel(
     INavigationService navigationService,
     IMessengerService messengerService,
     IAlertService alertService
-) : ViewModelBase(messengerService), IRecipient<MessageEditStudent>, IRecipient<MessageAddActivity>
+) : ViewModelBase(messengerService), IRecipient<MessageEditStudent>, 
+    IRecipient<MessageAddActivity>, IRecipient<MessageDeleteCourse>
 {
     public Guid Id { get; set; }
     
@@ -59,6 +60,7 @@ public partial class StudentDetailViewModel(
             {
                 await studentFacade.DeleteAsync(Student.Id);
                 Messenger.Send(new MessageDeleteStudent() {StudentId = Student.Id});
+                Student = null;
                 navigationService.SendBackButtonPressed();
             }
         }
@@ -78,7 +80,8 @@ public partial class StudentDetailViewModel(
     {
         await navigationService.GoToAsync("//activities/detail", new Dictionary<string, object?>()
         {
-            [nameof(ActivityDetailViewModel.Id)] = id
+            {nameof(ActivityDetailViewModel.Id), id},
+            {"ViewModel", typeof(ActivityDetailViewModel)}
         });
     }
     
@@ -94,11 +97,25 @@ public partial class StudentDetailViewModel(
     public async void Receive(MessageEditStudent message)
     {
         //Performs this code after receiving edit student message.
-        await LoadDataAsync();
+        if (Student?.Id == message.StudentId)
+        {
+            await LoadDataAsync();
+        }
     }
 
     public async void Receive(MessageAddActivity message)
     {
-        await LoadDataAsync();
+        if (Student != null)
+        {
+            await LoadDataAsync();
+        }
+    }
+
+    public async void Receive(MessageDeleteCourse message)
+    {
+        if (Student != null)
+        {
+            await LoadDataAsync();
+        }
     }
 }
