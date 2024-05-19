@@ -50,36 +50,34 @@
                     </Label>
                     <Label Text="" Grid.Column="9" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center"/>
                 </Grid>
-                <Grid Grid.Row="1">
-                    <CollectionView ItemsSource="{Binding Students}" Grid.ColumnSpan="5" Grid.Row="1">
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Vertical"/>
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:StudentListModel">
-                                <Grid ColumnDefinitions="2, 3*, 2, 3*, 2, 100, 2, 80, 2, 50, 2" RowDefinitions="*, 2">
-                                    <Border StrokeThickness="0" VerticalOptions="Fill"></Border>
-                                    <Label Text="{Binding FirstName}" Grid.Column="1" Padding="5" VerticalOptions="Center"/>
-                                    <Border StrokeThickness="0" Grid.Column="2" VerticalOptions="Fill"></Border>
-                                    <Label Text="{Binding LastName}" Grid.Column="3" Padding="5" VerticalOptions="Center"/>
-                                    <Border StrokeThickness="0" Grid.Column="4" VerticalOptions="Fill"></Border>
-                                    <Label Text="{Binding Group}" Grid.Column="5" Padding="5" VerticalOptions="Center"/>
-                                    <Border StrokeThickness="0" Grid.Column="6" VerticalOptions="Fill"></Border>
-                                    <Label Text="{Binding CurrentYear}" Grid.Column="7" Padding="5" VerticalOptions="Center"/>
-                                    <Border StrokeThickness="0" Grid.Column="8" VerticalOptions="Fill"></Border>
-                                    <Button Text="→" Margin="2" WidthRequest="40"
-                                            HorizontalOptions="Center" VerticalOptions="Center"
-                                            Grid.Column="9"
-                                            Command="{Binding Source={x:Reference Name=StudentListViewRoot},Path=BindingContext.GoToDetailCommand}"
-                                            CommandParameter="{Binding Id}">
-                                    </Button>
-                                    <Border StrokeThickness="0" Grid.Column="10" VerticalOptions="Fill"></Border>
-                                    <Border StrokeThickness="0" Grid.Row="1" Grid.ColumnSpan="10" HorizontalOptions="Fill"></Border>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </Grid>
+                <CollectionView ItemsSource="{Binding Students}" Grid.ColumnSpan="5" Grid.Row="1">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:StudentListModel">
+                            <Grid ColumnDefinitions="2, 3*, 2, 3*, 2, 100, 2, 80, 2, 50, 2" RowDefinitions="*, 2">
+                                <Border StrokeThickness="0" VerticalOptions="Fill"></Border>
+                                <Label Text="{Binding FirstName}" Grid.Column="1" Padding="5" VerticalOptions="Center"/>
+                                <Border StrokeThickness="0" Grid.Column="2" VerticalOptions="Fill"></Border>
+                                <Label Text="{Binding LastName}" Grid.Column="3" Padding="5" VerticalOptions="Center"/>
+                                <Border StrokeThickness="0" Grid.Column="4" VerticalOptions="Fill"></Border>
+                                <Label Text="{Binding Group}" Grid.Column="5" Padding="5" VerticalOptions="Center"/>
+                                <Border StrokeThickness="0" Grid.Column="6" VerticalOptions="Fill"></Border>
+                                <Label Text="{Binding CurrentYear}" Grid.Column="7" Padding="5" VerticalOptions="Center"/>
+                                <Border StrokeThickness="0" Grid.Column="8" VerticalOptions="Fill"></Border>
+                                <Button Text="→" Margin="2" WidthRequest="40"
+                        HorizontalOptions="Center" VerticalOptions="Center"
+                        Grid.Column="9"
+                        Command="{Binding Source={x:Reference Name=StudentListViewRoot},Path=BindingContext.GoToDetailCommand}"
+                        CommandParameter="{Binding Id}">
+                                </Button>
+                                <Border StrokeThickness="0" Grid.Column="10" VerticalOptions="Fill"></Border>
+                                <Border StrokeThickness="0" Grid.Row="1" Grid.ColumnSpan="10" HorizontalOptions="Fill"></Border>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </Grid>
 
         </Grid>

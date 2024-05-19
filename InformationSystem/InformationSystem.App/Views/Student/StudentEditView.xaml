@@ -7,24 +7,38 @@
              x:Class="InformationSystem.App.Views.Student.StudentEditView"
              x:DataType="student:StudentEditViewModel">
     <ContentPage.Content>
-        <VerticalStackLayout Margin="10">
-            <Label Text="First Name" FontSize="20"></Label>
-            <Entry HorizontalOptions="Fill" Text="{Binding FirstName}"></Entry>
-            <Label Text="Last Name" FontSize="20"></Label>
-            <Entry HorizontalOptions="Fill" Text="{Binding LastName}"></Entry>
-            <Label Text="Group" FontSize="20"></Label>
-            <Entry HorizontalOptions="Fill" Text="{Binding Group}"></Entry>
-            <Label Text="Current Year" FontSize="20"></Label>
-            <Entry HorizontalOptions="Fill" Text="{Binding CurrentYear}"></Entry>
-            <Button HorizontalOptions="Fill" 
-                    Text="Save" 
-                    BackgroundColor="Green"
-                    Command="{Binding SaveCommand}"></Button>
-            <Button HorizontalOptions="Fill" 
-                    Margin="0, 10"
-                    Text="Change Courses" 
-                    BackgroundColor="MidnightBlue"
-                    Command="{Binding GoToStudentCourseEditCommand}"></Button>
-        </VerticalStackLayout>
+        <Grid BackgroundColor="{StaticResource SecondaryColor}" Padding="20"
+              RowDefinitions="4*,1*">
+            <Grid ColumnDefinitions="1*,3*">
+                <Grid RowDefinitions="*,60">
+                    <Image
+                           Source="https://upload.wikimedia.org/wikipedia/commons/e/ec/Raphael-bostic-300x400.jpg"/>
+                    <Button Text="Change photo" Margin="5" WidthRequest="200" Grid.Row="1"/>
+                </Grid>
+                <Grid ColumnDefinitions="3*,3*" RowDefinitions="1*,3*" Grid.Column="1">
+                    <VerticalStackLayout Margin="20,0,20,0">
+                        <Label Text="First Name"/>
+                        <Entry HorizontalOptions="Fill" Text="{Binding FirstName}"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Margin="20,0,20,0" Grid.Row="1">
+                        <Label Text="Group" Margin="0,70,0,0"/>
+                        <Entry HorizontalOptions="Fill" Text="{Binding Group}"/>
+                        <Label Text="Current Year" Margin="0,20,0,0"/>
+                        <Entry HorizontalOptions="Fill" Text="{Binding CurrentYear}"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Margin="20,0,20,0" Grid.Column="1">
+                        <Label Text="Last Name" />
+                        <Entry HorizontalOptions="Fill" Text="{Binding LastName}"/>
+                    </VerticalStackLayout>
+                    <Button Text="Change Courses" Grid.Column="1" Grid.Row="1"
+                            WidthRequest="200"
+                            Command="{Binding GoToStudentCourseEditCommand}" />
+                    <!--TODO courses table-->
+                </Grid>
+            </Grid>
+            <Grid ColumnDefinitions="*,200" Grid.Row="1">
+                <Button Text="Save" Grid.Column="1" Margin="20" Command="{Binding SaveCommand}"/>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </views:BaseView>
