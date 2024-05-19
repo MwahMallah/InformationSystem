@@ -27,7 +27,7 @@ public class NavigationService : INavigationService
         new("//activities/detail", typeof(ActivityDetailView), typeof(ActivityDetailViewModel)),
         
         new("//courses", typeof(CourseListView), typeof(CourseListViewModel)),
-        // new("//courses/edit", typeof(ActivityEditView), typeof(ActivityEditViewModel)),
+        new("//courses/edit", typeof(CourseEditView), typeof(CourseEditViewModel)),
         
     };
     
