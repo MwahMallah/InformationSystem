@@ -64,7 +64,7 @@ public partial class StudentDetailViewModel(
     }
     
     [RelayCommand]
-    private async Task GoToCreateAsync()
+    private async Task GoToEditAsync()
     {
         await navigationService.GoToAsync("/edit", new Dictionary<string, object?>()
         {

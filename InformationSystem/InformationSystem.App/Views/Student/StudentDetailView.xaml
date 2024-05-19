@@ -80,7 +80,7 @@
                     BackgroundColor="DarkGreen"
                     Text="Edit Student"
                     FontSize="20"
-                    Command="{Binding GoToCreateCommand}"></Button>
+                    Command="{Binding GoToEditCommand}"></Button>
         </Grid>
     </ContentPage.Content>
 </views:BaseView>
