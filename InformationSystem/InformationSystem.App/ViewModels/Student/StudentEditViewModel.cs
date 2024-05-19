@@ -28,11 +28,24 @@ public partial class StudentEditViewModel(
     private string? group = null;
     [ObservableProperty] 
     private int currentYear;
+    [ObservableProperty] 
+    private string? imageText;
+    [ObservableProperty] 
+    private Uri image;
 
     partial void OnFirstNameChanged(string? value) => SaveCommand.NotifyCanExecuteChanged();
     partial void OnLastNameChanged(string? value) => SaveCommand.NotifyCanExecuteChanged();
     partial void OnGroupChanged(string? value) => SaveCommand.NotifyCanExecuteChanged();
     partial void OnCurrentYearChanged(int value) => SaveCommand.NotifyCanExecuteChanged();
+
+    partial void OnImageTextChanged(string? value)
+    {
+        if (Uri.TryCreate(value, UriKind.Absolute, out var uri))
+        {
+            Image = uri;
+        }
+        SaveCommand.NotifyCanExecuteChanged();
+    }
 
     protected override Task LoadDataAsync()
     {
@@ -40,6 +53,8 @@ public partial class StudentEditViewModel(
         LastName = Student.LastName;
         Group = Student.Group;
         CurrentYear = Student.CurrentYear;
+        ImageText = Student?.ImageUrl != null ? Student.ImageUrl.ToString() 
+            : "https://upload.wikimedia.org/wikipedia/commons/e/ec/Raphael-bostic-300x400.jpg";
         
         return base.LoadDataAsync();
     }
@@ -51,6 +66,7 @@ public partial class StudentEditViewModel(
         Student.LastName = LastName!;
         Student.Group = Group!;
         Student.CurrentYear = CurrentYear;
+        Student.ImageUrl = Image;
         
         await studentFacade.SaveAsync(Student);
         
@@ -64,6 +80,12 @@ public partial class StudentEditViewModel(
                && !string.IsNullOrEmpty(LastName)
                && !string.IsNullOrEmpty(Group)
                && CurrentYear > 0;
+    }
+
+    [RelayCommand]
+    private async Task UpdateAsync()
+    {
+        await LoadDataAsync();
     }
 
     [RelayCommand(CanExecute = nameof(CanAddCourses))]

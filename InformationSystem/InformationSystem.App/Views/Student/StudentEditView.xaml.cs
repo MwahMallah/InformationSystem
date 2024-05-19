@@ -13,4 +13,10 @@ public partial class StudentEditView : BaseView
     {
         InitializeComponent();
     }
+
+    private void OnTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        var studentEditViewModel = ViewModel as StudentEditViewModel;
+        studentEditViewModel?.UpdateCommand.Execute(e.NewTextValue);
+    }
 }
