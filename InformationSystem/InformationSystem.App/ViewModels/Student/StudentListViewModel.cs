@@ -76,6 +76,12 @@ public partial class StudentListViewModel(
             );
     }
 
+    [RelayCommand]
+    private async Task RefreshAsync()
+    {
+        await LoadDataAsync();
+    }
+
     public async void Receive(MessageEditStudent message)
     {
         //Performs this code after receiving edit student message.

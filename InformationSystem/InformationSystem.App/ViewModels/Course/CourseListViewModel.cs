@@ -79,6 +79,12 @@ public partial class CourseListViewModel(
             new Dictionary<string, object?>() {[nameof(CourseDetailViewModel.Id)] = id}
         );
     }
+    
+    [RelayCommand]
+    private async Task RefreshAsync()
+    {
+        await LoadDataAsync();
+    }
 
     public async void Receive(MessageEditCourse message)
     {

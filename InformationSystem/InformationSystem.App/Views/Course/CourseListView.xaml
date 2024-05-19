@@ -13,10 +13,12 @@
             <Grid RowDefinitions="50" ColumnDefinitions="3*, 5*, 50, 10, 100">
                 <Entry HeightRequest="40" TextChanged="OnTextChanged" Placeholder="Search"/>
                 <Button FontSize="30" Text="⟳"
-                Style="{StaticResource SecondaryButtonStyle}" Grid.Column="2"/>
+                        Command="{Binding RefreshCommand}"
+
+                    Style="{StaticResource SecondaryButtonStyle}" Grid.Column="2"/>
                 <Button Text="+New"
-                Command="{Binding GoToCreateCommand}"
-                Grid.Column="4"/>
+                    Command="{Binding GoToCreateCommand}"
+                    Grid.Column="4"/>
             </Grid>
             <Grid RowDefinitions="40, *" Margin="0,20,0,20" Grid.Row="1">
                 <Grid Margin="0,20,0,20"
@@ -80,66 +82,4 @@
 
         </Grid>
     </ContentPage.Content>
-    
-    
-    
-    <!--<VerticalStackLayout>
-        <Button Text="Add Course" 
-            Command="{Binding GoToCreateCommand}"
-            BackgroundColor="Green"/>
-        <Entry HorizontalOptions="Fill" FontSize="20" TextChanged="OnTextChanged"></Entry>
-        <Grid Margin="20"
-              ColumnDefinitions="*, *, *, *, *"
-              BackgroundColor="#EEEEEE"> 
-            <Label Text="Abbreviation" Grid.Column="0" FontSize="20" HorizontalOptions="Center">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SortCommand}" 
-                                          CommandParameter="abbreviation"></TapGestureRecognizer>
-                </Label.GestureRecognizers>
-            </Label>
-            <Label Text="Name" Grid.Column="1" FontSize="20" HorizontalOptions="Center">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SortCommand}" 
-                                          CommandParameter="name"></TapGestureRecognizer>
-                </Label.GestureRecognizers>
-            </Label>
-            <Label Text="Max Students" Grid.Column="2" FontSize="20" HorizontalOptions="Center">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SortCommand}" 
-                                          CommandParameter="max_students"></TapGestureRecognizer>
-                </Label.GestureRecognizers>
-            </Label>
-            <Label Text="Max Credits" Grid.Column="3" FontSize="20" HorizontalOptions="Center">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SortCommand}" 
-                                          CommandParameter="credits"></TapGestureRecognizer>
-                </Label.GestureRecognizers>
-            </Label>
-            <Label Text="Detail View" Grid.Column="4" FontSize="20"/>
-        </Grid>
-        
-        <CollectionView ItemsSource="{Binding Courses}"
-                        Margin="20">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical"
-                                   ItemSpacing="5" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:CourseListModel">
-                    <Grid ColumnDefinitions="*, *, *, *, *">
-                        <Label Text="{Binding Abbreviation}" Grid.Column="0" FontSize="20" HorizontalOptions="Center"/>
-                        <Label Text="{Binding Name}" Grid.Column="1" FontSize="20" HorizontalOptions="Center"/>
-                        <Label Text="{Binding MaxStudents}" Grid.Column="2" FontSize="20" HorizontalOptions="Center"/>
-                        <Label Text="{Binding Credits}" Grid.Column="3" FontSize="20" HorizontalOptions="Center"/>
-                        <Button Text="Detail" FontSize="20" 
-                                Grid.Column="4"
-                                Command="{Binding 
-                                Source={x:Reference Name=CourseListViewRoot},
-                                Path=BindingContext.GoToDetailCommand}"
-                                CommandParameter="{Binding Id}"></Button>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </VerticalStackLayout>-->
 </views:BaseView>

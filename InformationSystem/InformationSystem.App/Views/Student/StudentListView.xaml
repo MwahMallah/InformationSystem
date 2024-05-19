@@ -13,6 +13,7 @@
             <Grid RowDefinitions="50" ColumnDefinitions="3*, 5*, 50, 10, 100">
                 <Entry HeightRequest="40" TextChanged="OnTextChanged" Placeholder="Search"/>
                 <Button FontSize="30" Text="⟳"
+                        Command="{Binding RefreshCommand}"
                         Style="{StaticResource SecondaryButtonStyle}" Grid.Column="2"/>
                 <Button Text="+New"
                         Command="{Binding GoToCreateCommand}"
