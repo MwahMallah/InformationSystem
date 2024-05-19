@@ -9,7 +9,46 @@
                 x:DataType="student:StudentDetailViewModel"
                 x:Name="StudentDetailViewRoot">
     <ContentPage.Content>
-        <Grid ColumnDefinitions="*, *, *, *"
+        <Grid BackgroundColor="{StaticResource SecondaryColor}" Padding="20" RowDefinitions="1*, 80">
+            <Grid ColumnDefinitions="1*,1*,1*">
+                <Grid RowDefinitions="1*,1*,1*,1*" ColumnDefinitions="1*,1*">
+                    <Image Grid.RowSpan="3" Source="https://upload.wikimedia.org/wikipedia/commons/e/ec/Raphael-bostic-300x400.jpg"/>
+                    <VerticalStackLayout Grid.Row="3">
+                        <Label Text="FirstName" Style="{StaticResource SecondaryLable}"/>
+                        <Label Text="{Binding Student.FirstName}"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1">
+                        <Label Text="Current Year" Style="{StaticResource SecondaryLable}"/>
+                        <Label Text="{Binding Student.CurrentYear}"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Grid.Row="1">
+                        <Label Text="Group" Style="{StaticResource SecondaryLable}"/>
+                        <Label Text="{Binding Student.Group}"/>
+                    </VerticalStackLayout>
+                </Grid>
+                <CollectionView ItemsSource="{Binding Courses}" Grid.Column="1">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:CourseListModel">
+                            <Grid ColumnDefinitions="2, 3*, 2, 3*, 2" RowDefinitions="*, 2">
+                                <Border StrokeThickness="0" BackgroundColor="Black" VerticalOptions="Fill"></Border>
+                                <Label Text="{Binding Abbreviation}" Margin="0,0,5,0" FontSize="15" Grid.Column="1"/>
+                                <Label Text="{Binding Name}" FontSize="15" Grid.Column="3"/>
+                                <Border StrokeThickness="0" BackgroundColor="Black" Grid.Column="10" VerticalOptions="Fill"></Border>
+                                <Border StrokeThickness="0" BackgroundColor="Black" Grid.Row="1" Grid.ColumnSpan="10" HorizontalOptions="Fill"></Border>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+            
+            <Grid Grid.Row="1">
+                
+            </Grid>
+        </Grid>
+        <!--<Grid ColumnDefinitions="*, *, *, *"
               RowDefinitions="*, *, *, *">
             <Label Text="{Binding Student.FirstName}" 
                    FontSize="20"
@@ -81,6 +120,6 @@
                     Text="Edit Student"
                     FontSize="20"
                     Command="{Binding GoToEditCommand}"></Button>
-        </Grid>
+        </Grid>-->
     </ContentPage.Content>
 </views:BaseView>
