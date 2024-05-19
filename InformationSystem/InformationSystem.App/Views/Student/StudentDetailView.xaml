@@ -9,83 +9,110 @@
                 x:DataType="student:StudentDetailViewModel"
                 x:Name="StudentDetailViewRoot">
     <ContentPage.Content>
-        <Grid ColumnDefinitions="*, *, *, *"
-              RowDefinitions="*, *, *, *">
-            <Label Text="{Binding Student.FirstName}" 
-                   FontSize="20"
-                   Grid.Column="1"
-                   Grid.Row="0"/>
-            <Label Text="{Binding Student.LastName}" 
-                   FontSize="20"
-                   Grid.Column="2"
-                   Grid.Row="0"/>
-            <Label Text="{Binding Student.Group}" 
-                   FontSize="20"
-                   Grid.Column="1"
-                   Grid.Row="1"/>
-            <ScrollView Grid.Column="3" Grid.RowSpan="3" >
-                <Frame Padding="10" BorderColor="Black" BackgroundColor="Transparent">
-                    <VerticalStackLayout>
-                        <Label Text="Courses" FontSize="25" FontAttributes="Bold"></Label>
-                        <Entry TextChanged="OnTextChanged"></Entry>
-                        <CollectionView ItemsSource="{Binding Courses}">
+        <Grid BackgroundColor="{StaticResource SecondaryColor}" Padding="20" RowDefinitions="1*, 80">
+            <Grid ColumnDefinitions="1*,1*,1*">
+                <Grid RowDefinitions="1*,1*,1*,1*" ColumnDefinitions="1*,1*">
+                    <Image Grid.RowSpan="3" Source="https://upload.wikimedia.org/wikipedia/commons/e/ec/Raphael-bostic-300x400.jpg"/>
+                    <VerticalStackLayout Grid.Row="3">
+                        <Label Text="FirstName" Style="{StaticResource SecondaryLable}"/>
+                        <Label Text="{Binding Student.FirstName}"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Grid.Row="1">
+                        <Label Text="Current Year" Style="{StaticResource SecondaryLable}"/>
+                        <Label Text="{Binding Student.CurrentYear}"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Grid.Row="2">
+                        <Label Text="Group" Style="{StaticResource SecondaryLable}"/>
+                        <Label Text="{Binding Student.Group}"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Grid.Row="3">
+                        <Label Text="Last Name" Style="{StaticResource SecondaryLable}"/>
+                        <Label Text="{Binding Student.LastName}"/>
+                    </VerticalStackLayout>
+                </Grid>
+
+
+
+
+
+
+
+                <Grid Padding="20" RowDefinitions="50, *" BackgroundColor="{StaticResource SecondaryColor}" Grid.Column="1">
+                    <Grid RowDefinitions="60" ColumnDefinitions="1*">
+                        <Entry HeightRequest="40" TextChanged="OnTextChanged" Placeholder="Courses"/>
+                    </Grid>
+                    <Grid RowDefinitions="40, 1*" Grid.Row="1">
+                        <Grid Margin="0,20,0,20" ColumnDefinitions="2, 3*, 2, 3*, 2"
+                              RowDefinitions="*" BackgroundColor="{StaticResource PrimaryColor}"
+                              HeightRequest="40">
+                            <Label Text="Abbreviation" Grid.Column="1" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center"/>
+                            <Label Text="Name" Grid.Column="3" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center"/>
+                        </Grid>
+                        <CollectionView ItemsSource="{Binding Courses}" Grid.ColumnSpan="5" Grid.Row="1">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical"/>
+                            </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="models:CourseListModel">
-                                    <HorizontalStackLayout>
-                                        <Label Text="{Binding Abbreviation}" 
-                                               Margin="0,0,5,0"
-                                               FontSize="15"/>
-                                        <Label Text="{Binding Name}"
-                                               FontSize="15"/>
-                                        <Button Text="Detail"
+                                <DataTemplate x:DataType="models:CourseListModel">                       
+                                    <Grid ColumnDefinitions="2, 3*, 2, 3*, 2" RowDefinitions="*, 2">
+                                        <Border StrokeThickness="0" VerticalOptions="Fill"/>
+                                        <Label Text="{Binding Abbreviation}" Grid.Column="1" Padding="5" VerticalOptions="Center"/>
+                                        <Border StrokeThickness="0" Grid.Column="2" VerticalOptions="Fill"/>
+                                        <Label Text="{Binding Name}" Grid.Column="3" Padding="5" VerticalOptions="Center"/>
+                                        <Border StrokeThickness="0" Grid.Column="4" VerticalOptions="Fill"/>
+                                        <Border StrokeThickness="0" Grid.Row="1" Grid.ColumnSpan="10" HorizontalOptions="Fill"/>
+                                        <Button Text="Detail" Grid.Column="3"
                                                 Command="{Binding 
                                                 Source={x:Reference StudentDetailViewRoot},
                                                 Path=BindingContext.GoToCourseDetailCommand}"
                                                 CommandParameter="{Binding Id}"></Button>
-                                    </HorizontalStackLayout>
+                                    </Grid>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
-                    </VerticalStackLayout>
-                </Frame>
-            </ScrollView>
-            <ScrollView Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" >
-                <Frame Padding="10" BorderColor="Black" BackgroundColor="Transparent">
-                    <VerticalStackLayout>
-                        <Label Text="Activities" FontSize="25" FontAttributes="Bold"></Label>
-                        <CollectionView ItemsSource="{Binding Activities}">
+                    </Grid>
+                </Grid>
+
+                <Grid Padding="20" RowDefinitions="50,*" BackgroundColor="{StaticResource SecondaryColor}" Grid.Column="2">
+                    <Grid RowDefinitions="60">
+                        <Label Style="{StaticResource SecondaryLable}" Padding="5" HeightRequest="40" Text="Activities"/>
+                    </Grid>
+                    <Grid RowDefinitions="40, 1*" Grid.Row="1">
+                        <Grid ColumnDefinitions="2, 3*, 2, 3*, 2"
+                              RowDefinitions="*" BackgroundColor="{StaticResource PrimaryColor}"
+                              HeightRequest="40">
+                            <Label Text="Abbreviation" Grid.Column="1" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center"/>
+                            <Label Text="Type" Grid.Column="3" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center"/>
+                        </Grid>
+                        <CollectionView ItemsSource="{Binding Activities}" Grid.ColumnSpan="5" Grid.Row="1">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical"/>
+                            </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:ActivityListModel">
-                                    <HorizontalStackLayout>
-                                        <Label Text="{Binding CourseAbbreviation}" 
-                                               Margin="0,0,5,0"
-                                               FontSize="20"/>
-                                        <Label Text="{Binding ActivityType}"
-                                               FontSize="20"/>
+                                    <Grid ColumnDefinitions="2, 3*, 2, 3*, 2, 70, 2" RowDefinitions="*, 2">
+                                        <Border StrokeThickness="0" VerticalOptions="Fill"/>
+                                        <Label Text="{Binding CourseAbbreviation}" Grid.Column="1" Padding="5" VerticalOptions="Center"/>
+                                        <Border StrokeThickness="0" Grid.Column="2" VerticalOptions="Fill"/>
+                                        <Label Text="{Binding ActivityType}" Grid.Column="3" Padding="5" VerticalOptions="Center"/>
+                                        <Border StrokeThickness="0" Grid.Column="4" VerticalOptions="Fill"/>
                                         <Button Text="Detail"
-                                                Command="{Binding 
-                                                Source={x:Reference StudentDetailViewRoot},
-                                                Path=BindingContext.GoToActivityDetailCommand}"
-                                                CommandParameter="{Binding Id}"></Button>
-                                    </HorizontalStackLayout>
+                                                Command="{Binding Source={x:Reference StudentDetailViewRoot}, Path=BindingContext.GoToActivityDetailCommand}"
+                                                CommandParameter="{Binding Id}" Grid.Column="5"/>
+                                        <Border StrokeThickness="0" Grid.Column="6" VerticalOptions="Fill"/>
+                                        <Border StrokeThickness="0" Grid.Row="1" Grid.ColumnSpan="10" HorizontalOptions="Fill"/>
+                                    </Grid>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
-                    </VerticalStackLayout>
-                </Frame>
-            </ScrollView>
-            <Button Grid.Row="3" 
-                    Grid.Column="2"
-                    BackgroundColor="DarkRed"
-                    Text="Delete Student"
-                    FontSize="20"
-                    Command="{Binding DeleteCommand}"></Button>
-            <Button Grid.Row="3" 
-                    Grid.Column="3"
-                    BackgroundColor="DarkGreen"
-                    Text="Edit Student"
-                    FontSize="20"
-                    Command="{Binding GoToEditCommand}"></Button>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Grid ColumnDefinitions="100,50,100,*" Grid.Row="1">
+                <Button Text="Delete" Command="{Binding DeleteCommand}"/>
+                <Button Grid.Column="2" Text="Edit" Command="{Binding GoToEditCommand}"/>
+            </Grid>
         </Grid>
     </ContentPage.Content>
 </views:BaseView>

@@ -14,6 +14,7 @@
 
     <Style x:Key="SecondaryLable" TargetType="Label">
         <Setter Property="TextColor" Value="{StaticResource SecondaryColor}"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
     </Style>
 
     <Style TargetType="Entry">
