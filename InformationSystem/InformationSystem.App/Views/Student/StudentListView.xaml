@@ -66,12 +66,12 @@
                                 <Border StrokeThickness="0" Grid.Column="6" VerticalOptions="Fill"/>
                                 <Label Text="{Binding CurrentYear}" Grid.Column="7" Padding="5" VerticalOptions="Center"/>
                                 <Border StrokeThickness="0" Grid.Column="8" VerticalOptions="Fill"/>
-                                <Button Text="→" Margin="0" VerticalOptions="Fill" HorizontalOptions="Fill"
-                        Grid.Column="9"
-                        Command="{Binding Source={x:Reference Name=StudentListViewRoot},Path=BindingContext.GoToDetailCommand}"
-                        CommandParameter="{Binding Id}">
+                                <Button Text="→" Style="{StaticResource SecondaryButtonStyle}"
+                                        Grid.Column="9" HeightRequest="25" WidthRequest="40"
+                                        Command="{Binding Source={x:Reference Name=StudentListViewRoot},Path=BindingContext.GoToDetailCommand}"
+                                        CommandParameter="{Binding Id}">
                                 </Button>
-                                <Border StrokeThickness="0" Grid.Column="10" VerticalOptions="Fill"/>
+                                <Border StrokeThickness="0" Grid.Column="10" Grid.RowSpan="2" VerticalOptions="FillAndExpand"/>
                                 <Border StrokeThickness="0" Grid.Row="1" Grid.ColumnSpan="10" HorizontalOptions="Fill"/>
                             </Grid>
                         </DataTemplate>
