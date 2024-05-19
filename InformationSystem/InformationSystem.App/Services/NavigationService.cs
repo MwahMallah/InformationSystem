@@ -22,11 +22,12 @@ public class NavigationService : INavigationService
         new("//students/detail/courses", typeof(StudentCoursesEditView), typeof(StudentCoursesEditViewModel)),
         
         new("//activities", typeof(ActivityListView), typeof(ActivityListViewModel)),
+        new("//activities/detail", typeof(ActivityDetailView), typeof(ActivityDetailViewModel)),
         new("//activities/edit", typeof(ActivityEditView), typeof(ActivityEditViewModel)),
 
-        new("//activities/detail", typeof(ActivityDetailView), typeof(ActivityDetailViewModel)),
         
         new("//courses", typeof(CourseListView), typeof(CourseListViewModel)),
+        new("//courses/detail", typeof(CourseDetailView), typeof(CourseDetailViewModel)),
         new("//courses/edit", typeof(CourseEditView), typeof(CourseEditViewModel)),
         
     };

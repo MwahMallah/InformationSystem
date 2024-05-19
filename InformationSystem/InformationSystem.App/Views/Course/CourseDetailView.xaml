@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<views:BaseView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:student="using:InformationSystem.App.ViewModels.Student"
+                xmlns:views="using:InformationSystem.App.Views"
+                x:Class="InformationSystem.App.Views.Course.CourseDetailView"
+                xmlns:models="clr-namespace:InformationSystem.BL.Models;assembly=InformationSystem.BL"
+                xmlns:course="using:InformationSystem.App.ViewModels.Course"
+                x:DataType="course:CourseDetailViewModel"
+                x:Name="CourseDetailViewRoot">
+    <ContentPage.Content>
+        <Grid ColumnDefinitions="*, *, *, *"
+              RowDefinitions="*, *, *, *">
+            <Label Text="{Binding Course.Abbreviation}" 
+                   FontSize="20"
+                   Grid.Column="1"
+                   Grid.Row="0"/>
+            <Label Text="{Binding Course.Name}" 
+                   FontSize="20"
+                   Grid.Column="2"
+                   Grid.Row="0"/>
+            <Label Text="{Binding Course.Description}" 
+                   FontSize="20"
+                   Grid.Column="1"
+                   Grid.Row="1"/>
+            <Label Text="{Binding Course.Credits}" 
+                   FontSize="20"
+                   Grid.Column="2"
+                   Grid.Row="1"/>
+            <!-- <ScrollView Grid.Column="3" Grid.RowSpan="3" > -->
+            <!--     <Frame Padding="10" BorderColor="Black" BackgroundColor="Transparent"> -->
+            <!--         <VerticalStackLayout> -->
+            <!--             <Label Text="Courses" FontSize="25" FontAttributes="Bold"></Label> -->
+            <!--             <Entry TextChanged="OnTextChanged"></Entry> -->
+            <!--             <CollectionView ItemsSource="{Binding Courses}"> -->
+            <!--                 <CollectionView.ItemTemplate> -->
+            <!--                     <DataTemplate x:DataType="models:CourseListModel"> -->
+            <!--                         <HorizontalStackLayout> -->
+            <!--                             <Label Text="{Binding Abbreviation}"  -->
+            <!--                                    Margin="0,0,5,0" -->
+            <!--                                    FontSize="15"/> -->
+            <!--                             <Label Text="{Binding Name}" -->
+            <!--                                    FontSize="15"/> -->
+            <!--                         </HorizontalStackLayout> -->
+            <!--                     </DataTemplate> -->
+            <!--                 </CollectionView.ItemTemplate> -->
+            <!--             </CollectionView> -->
+            <!--         </VerticalStackLayout> -->
+            <!--     </Frame> -->
+            <!-- </ScrollView> -->
+            <!-- <ScrollView Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" > -->
+            <!--     <Frame Padding="10" BorderColor="Black" BackgroundColor="Transparent"> -->
+            <!--         <VerticalStackLayout> -->
+            <!--             <Label Text="Activities" FontSize="25" FontAttributes="Bold"></Label> -->
+            <!--             <CollectionView ItemsSource="{Binding Activities}"> -->
+            <!--                 <CollectionView.ItemTemplate> -->
+            <!--                     <DataTemplate x:DataType="models:ActivityListModel"> -->
+            <!--                         <HorizontalStackLayout> -->
+            <!--                             <Label Text="{Binding CourseAbbreviation}"  -->
+            <!--                                    Margin="0,0,5,0" -->
+            <!--                                    FontSize="20"/> -->
+            <!--                             <Label Text="{Binding ActivityType}" -->
+            <!--                                    FontSize="20"/> -->
+            <!--                             <Button Text="Detail" -->
+            <!--                                     Command="{Binding  -->
+            <!--                                     Source={x:Reference StudentDetailViewRoot}, -->
+            <!--                                     Path=BindingContext.GoToActivityDetailCommand}" -->
+            <!--                                     CommandParameter="{Binding Id}"></Button> -->
+            <!--                         </HorizontalStackLayout> -->
+            <!--                     </DataTemplate> -->
+            <!--                 </CollectionView.ItemTemplate> -->
+            <!--             </CollectionView> -->
+            <!--         </VerticalStackLayout> -->
+            <!--     </Frame> -->
+            <!-- </ScrollView> -->
+            <!-- <Button Grid.Row="3"  -->
+            <!--         Grid.Column="2" -->
+            <!--         BackgroundColor="DarkRed" -->
+            <!--         Text="Delete Student" -->
+            <!--         FontSize="20" -->
+            <!--         Command="{Binding DeleteCommand}"></Button> -->
+            <!-- <Button Grid.Row="3"  -->
+            <!--         Grid.Column="3" -->
+            <!--         BackgroundColor="DarkGreen" -->
+            <!--         Text="Edit Student" -->
+            <!--         FontSize="20" -->
+            <!--         Command="{Binding GoToCreateCommand}"></Button> -->
+        </Grid>
+    </ContentPage.Content>
+</views:BaseView>
