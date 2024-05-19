@@ -37,6 +37,11 @@
                                                FontSize="15"/>
                                         <Label Text="{Binding Name}"
                                                FontSize="15"/>
+                                        <Button Text="Detail"
+                                                Command="{Binding 
+                                                Source={x:Reference StudentDetailViewRoot},
+                                                Path=BindingContext.GoToCourseDetailCommand}"
+                                                CommandParameter="{Binding Id}"></Button>
                                     </HorizontalStackLayout>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
