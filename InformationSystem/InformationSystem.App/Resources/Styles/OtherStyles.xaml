@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Style TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+        <Setter Property="StrokeThickness" Value="0"/>
+    </Style>
+    
+    <Style TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource PrimaryColor}"/>
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
+
+    <Style x:Key="SecondaryLable" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource SecondaryColor}"/>
+    </Style>
+
+    <Style TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+        <Setter Property="TextColor" Value="{StaticResource SecondaryColor}"/>
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
+</ResourceDictionary>
