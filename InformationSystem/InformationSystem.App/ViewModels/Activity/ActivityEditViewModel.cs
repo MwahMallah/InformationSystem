@@ -10,6 +10,8 @@ using InformationSystem.Common.Enums;
 
 namespace InformationSystem.App.ViewModels.Activity;
 
+[QueryProperty(nameof(Activity), nameof(Activity))]
+[QueryProperty(nameof(CourseFromQuery), nameof(CourseFromQuery))]
 public partial class ActivityEditViewModel(
     IActivityFacade activityFacade,
     ICourseFacade courseFacade,
@@ -25,6 +27,8 @@ public partial class ActivityEditViewModel(
     
     [ObservableProperty]
     private CourseListModel? selectedCourse = null;
+    
+    public CourseListModel? CourseFromQuery {get; set; } = null;
 
     public DateTime StartDate { get; set; } = DateTime.Today;
     public TimeSpan StartTime { get; set; } = DateTime.Now.TimeOfDay;
@@ -47,6 +51,11 @@ public partial class ActivityEditViewModel(
         foreach (var courseListModel in allCourses)
         {
             Courses.Add(courseListModel);
+        }
+
+        if (CourseFromQuery != null)
+        {
+            SelectedCourse = CourseFromQuery;
         }
     }
     
