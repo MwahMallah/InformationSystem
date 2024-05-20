@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using InformationSystem.App.Messages;
 using InformationSystem.App.Services.Interfaces;
 using InformationSystem.App.ViewModels.Activity;
+using InformationSystem.App.ViewModels.Student;
 using InformationSystem.BL.Facades.Interfaces;
 using InformationSystem.BL.Mappers.Interfaces;
 using InformationSystem.BL.Models;
@@ -54,6 +55,15 @@ public partial class CourseDetailViewModel(
         await navigationService.GoToAsync("/edit", new Dictionary<string, object?>()
         {
             [nameof(ActivityEditViewModel.SelectedCourse)] = Course
+        });
+    }
+    
+    [RelayCommand]
+    private async Task GoToStudentDetailAsync(Guid id)
+    {
+        await navigationService.GoToAsync("//students/detail", new Dictionary<string, object?>()
+        {
+            [nameof(StudentDetailViewModel.Id)] = id
         });
     }
     
