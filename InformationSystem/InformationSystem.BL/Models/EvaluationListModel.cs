@@ -1,4 +1,6 @@
-﻿namespace InformationSystem.BL.Models;
+﻿using InformationSystem.Common.Enums;
+
+namespace InformationSystem.BL.Models;
 
 public record EvaluationListModel : BaseModel
 {
@@ -7,7 +9,8 @@ public record EvaluationListModel : BaseModel
     public string? StudentFullName { get; set; }
     public string? CourseAbbreviation { get; set; }
     public Guid? ActivityId { get; set; }
-
+    public ActivityType? ActivityType { get; set; }
+    
     public static EvaluationListModel Empty => new()
     {
         Id = Guid.Empty,

@@ -19,6 +19,7 @@ public class EvaluationModelMapper:
             CourseAbbreviation = entity.Activity?.Course != null?
                                 $"{entity.Activity.Course.Abbreviation}":
                                 string.Empty,
+            ActivityType = entity.Activity?.ActivityType,
             Points = entity.Points
         };
 

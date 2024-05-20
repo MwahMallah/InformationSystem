@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace InformationSystem.BL.Facades;
 
 public class EvaluationFacade(IUnitOfWorkFactory unitOfWorkFactory, 
-    IModelMapper<EvaluationEntity, EvaluationDetailModel, EvaluationListModel> modelMapper) 
+    IEvaluationModelMapper modelMapper) 
     : FacadeBase<EvaluationEntity, EvaluationDetailModel, 
             EvaluationListModel, EvaluationEntityMapper>(unitOfWorkFactory, modelMapper), IEvaluationFacade
 {
