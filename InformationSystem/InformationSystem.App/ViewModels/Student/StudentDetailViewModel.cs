@@ -22,7 +22,10 @@ public partial class StudentDetailViewModel(
     IMessengerService messengerService,
     IAlertService alertService
 ) : ViewModelBase(messengerService), IRecipient<MessageEditStudent>, 
-    IRecipient<MessageAddActivity>, IRecipient<MessageDeleteCourse>, IRecipient<MessageDeleteActivity>
+    IRecipient<MessageAddActivity>, 
+    IRecipient<MessageDeleteCourse>, 
+    IRecipient<MessageEditCourse>,
+    IRecipient<MessageDeleteActivity>
 {
     public Guid Id { get; set; }
     
@@ -48,35 +51,22 @@ public partial class StudentDetailViewModel(
     private DateTime? finishDate = null;
     [ObservableProperty]
     private TimeSpan? finishTime = null;
-    
-    partial void OnStartDateChanged(DateTime? value)
-    {
-        FilterActivitiesAsync();
-    }
-    
-    partial void OnStartTimeChanged(TimeSpan? value)
-    {
-        FilterActivitiesAsync();
-    }
-    
-    partial void OnFinishDateChanged(DateTime? value)
-    {
-        FilterActivitiesAsync();
-    }
-    
-    partial void OnFinishTimeChanged(TimeSpan? value)
-    {
-        FilterActivitiesAsync();
-    }
 
-    partial void OnSelectedCourseChanged(CourseListModel? value)
-    {
-        FilterActivitiesAsync();
-    }
+    partial void OnStartDateChanged(DateTime? value) => FilterActivitiesAsync();
+    partial void OnStartTimeChanged(TimeSpan? value) => FilterActivitiesAsync();
+    partial void OnFinishDateChanged(DateTime? value) => FilterActivitiesAsync();
+    partial void OnFinishTimeChanged(TimeSpan? value) => FilterActivitiesAsync();
+    partial void OnSelectedCourseChanged(CourseListModel? value) => FilterActivitiesAsync();
 
     protected override async Task LoadDataAsync()
     {
         Student = await studentFacade.GetAsync(Id);
+        if (Student == null)
+        {
+            Messenger.Send(new MessageDeleteStudent() {StudentId = Guid.Empty});
+            navigationService.SendBackButtonPressed();
+        }
+        
         Courses = Student.Courses;
         CoursesToPick = new ObservableCollection<CourseListModel>(Courses);
         CoursesToPick.Insert(0, CourseListModel.AllCourses);
@@ -181,6 +171,14 @@ public partial class StudentDetailViewModel(
     }
 
     public async void Receive(MessageDeleteCourse message)
+    {
+        if (Student != null)
+        {
+            await LoadDataAsync();
+        }
+    }
+    
+    public async void Receive(MessageEditCourse message)
     {
         if (Student != null)
         {

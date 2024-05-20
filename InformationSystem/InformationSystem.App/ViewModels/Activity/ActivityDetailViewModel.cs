@@ -24,6 +24,12 @@ public partial class ActivityDetailViewModel(
     protected override async Task LoadDataAsync()
     {
         Activity = await activityFacade.GetAsync(Id);
+        
+        if (Activity == null)
+        {
+            Messenger.Send(new MessageDeleteActivity() {ActivityId = Guid.Empty});
+            navigationService.SendBackButtonPressed();
+        }
     }
     
     [RelayCommand]
