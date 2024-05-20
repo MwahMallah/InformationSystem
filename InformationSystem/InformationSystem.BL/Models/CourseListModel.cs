@@ -6,6 +6,13 @@ public record CourseListModel: BaseModel
     public required string Name { get; set; }
     public int MaxStudents { get; set; }
     public int Credits { get; set; }
+    
+    public static CourseListModel AllCourses => new()
+    {
+        Id = Guid.Empty,
+        Abbreviation = "All",
+        Name = "all"
+    };
 
     public static CourseListModel Empty => new()
     {

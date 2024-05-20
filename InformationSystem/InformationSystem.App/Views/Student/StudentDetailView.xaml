@@ -15,7 +15,7 @@
                 <Button FontSize="30" Text="⟳"
                         Style="{StaticResource SecondaryButtonStyle}" Grid.Column="1"/>
             </Grid>
-            <Grid ColumnDefinitions="1*,1*,1*" Grid.Row="1">
+            <Grid ColumnDefinitions="1*,1*,2.2*" Grid.Row="1">
                 <Grid RowDefinitions="1*,1*,1*,1*,80" ColumnDefinitions="1*,1*">
                     <Image Grid.RowSpan="2" Source="{Binding Student.ImageUrl}" 
                            Margin="10"/>
@@ -44,12 +44,12 @@
                     <Button Text="Delete" Command="{Binding DeleteCommand}" Grid.Row="4" WidthRequest="100"/>
                     <Button Text="Edit" Command="{Binding GoToEditCommand}" Grid.Row="4" Grid.Column="1" WidthRequest="100"/>
                 </Grid>
-                <Grid Padding="20,0,20,0" RowDefinitions="50, *" BackgroundColor="{StaticResource SecondaryColor}" Grid.Column="1">
+                <Grid Padding="20,0,5,0" RowDefinitions="50, *" BackgroundColor="{StaticResource SecondaryColor}" Grid.Column="1">
                     <Grid RowDefinitions="60" ColumnDefinitions="1*">
                         <Entry HeightRequest="40" TextChanged="OnTextChanged" Placeholder="Courses"/>
                     </Grid>
                     <Grid RowDefinitions="40, 1*" Grid.Row="1">
-                        <Grid Margin="0,20,0,20" ColumnDefinitions="2, 3*, 2, 3*, 2, 70, 2"
+                        <Grid Margin="0,20,0,20" ColumnDefinitions="2, 3*, 2, 3*, 2, 40, 2"
                       RowDefinitions="*" BackgroundColor="{StaticResource PrimaryColor}"
                       HeightRequest="40">
                             <Label Text="Abbreviation" Grid.Column="1" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center"/>
@@ -61,18 +61,18 @@
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:CourseListModel">
-                                    <Grid ColumnDefinitions="2, 3*, 2, 3*, 2, 70, 2" RowDefinitions="*, 2">
+                                    <Grid ColumnDefinitions="2, 3*, 2, 3*, 2, 50, 2" RowDefinitions="*, 2">
                                         <Border StrokeThickness="0" VerticalOptions="Fill"/>
                                         <Label Text="{Binding Abbreviation}" Grid.Column="1" Padding="5" VerticalOptions="Center"/>
                                         <Border StrokeThickness="0" Grid.Column="2" VerticalOptions="Fill"/>
                                         <Label Text="{Binding Name}" Grid.Column="3" Padding="5" VerticalOptions="Center"/>
                                         <Border StrokeThickness="0" Grid.Column="4" VerticalOptions="Fill"/>
                                         <Button Text="→" Grid.Column="5" WidthRequest="40"
-                                        HeightRequest="25"
-                                        Style="{StaticResource SecondaryButtonStyle}"
-                                        Command="{Binding Source={x:Reference StudentDetailViewRoot},
-                                        Path=BindingContext.GoToCourseDetailCommand}"
-                                        CommandParameter="{Binding Id}"/>
+                                            HeightRequest="25"
+                                            Style="{StaticResource SecondaryButtonStyle}"
+                                            Command="{Binding Source={x:Reference StudentDetailViewRoot},
+                                            Path=BindingContext.GoToCourseDetailCommand}"
+                                            CommandParameter="{Binding Id}"/>
                                         <Border StrokeThickness="0" Grid.Column="6" Grid.RowSpan="2" VerticalOptions="Fill"/>
                                         <Border StrokeThickness="0" Grid.Row="1" Grid.ColumnSpan="10" HorizontalOptions="Fill"/>
                                     </Grid>
@@ -81,17 +81,32 @@
                         </CollectionView>
                     </Grid>
                 </Grid>
-
                 <Grid Padding="20,0,20,0" RowDefinitions="50,*" BackgroundColor="{StaticResource SecondaryColor}" Grid.Column="2">
                     <Grid RowDefinitions="60">
-                        <Label Style="{StaticResource SecondaryLable}" Padding="5" HeightRequest="40" Text="Activities"/>
+                        <Grid ColumnDefinitions="*, *, 2.5*, *, 2.5*">
+                            <Picker Style="{StaticResource SecondaryLable}" 
+                                   HeightRequest="40" 
+                                   ItemsSource="{Binding CoursesToPick}"
+                                   ItemDisplayBinding="{Binding Abbreviation}"
+                                   SelectedItem="{Binding SelectedCourse}"/>
+                            <DatePicker Grid.Column="1" 
+                                        Date="{Binding StartDate}"/>
+                            <TimePicker Grid.Column="2" Format="HH:mm" 
+                                        Time="{Binding StartTime}"/>
+                            <DatePicker Grid.Column="3"
+                                        Date="{Binding FinishDate}"/>
+                            <TimePicker Grid.Column="4" Format="HH:mm"
+                                        Time="{Binding FinishTime}"/>
+                        </Grid>
                     </Grid>
                     <Grid RowDefinitions="40, 1*" Grid.Row="1">
-                        <Grid ColumnDefinitions="2, 3*, 2, 3*, 2, 70, 2"
+                        <Grid ColumnDefinitions="2, 1.7*, 2, 1*, 2, 2.8*, 2, 2.8*, 2, 40, 2"
                       RowDefinitions="*" BackgroundColor="{StaticResource PrimaryColor}"
                       HeightRequest="40">
                             <Label Text="Abbreviation" Grid.Column="1" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center"/>
                             <Label Text="Type" Grid.Column="3" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center"/>
+                            <Label Text="Start" Grid.Column="5" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center"/>
+                            <Label Text="Finish" Grid.Column="7" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center"/>
                         </Grid>
                         <CollectionView ItemsSource="{Binding Activities}" Grid.ColumnSpan="5" Grid.Row="1">
                             <CollectionView.ItemsLayout>
@@ -99,17 +114,21 @@
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:ActivityListModel">
-                                    <Grid ColumnDefinitions="2, 3*, 2, 3*, 2, 70, 2" RowDefinitions="*, 2">
+                                    <Grid ColumnDefinitions="2, 1.7*, 2, 1*, 2, 2.8*, 2, 2.8*, 2, 50, 2" RowDefinitions="*, 2">
                                         <Border StrokeThickness="0" VerticalOptions="Fill"/>
                                         <Label Text="{Binding CourseAbbreviation}" Grid.Column="1" Padding="5" VerticalOptions="Center"/>
                                         <Border StrokeThickness="0" Grid.Column="2" VerticalOptions="Fill"/>
                                         <Label Text="{Binding ActivityType}" Grid.Column="3" Padding="5" VerticalOptions="Center"/>
                                         <Border StrokeThickness="0" Grid.Column="4" VerticalOptions="Fill"/>
+                                        <Label Text="{Binding StartTime}" Grid.Column="5" Padding="5" VerticalOptions="Center"/>
+                                        <Border StrokeThickness="0" Grid.Column="6" VerticalOptions="Fill"/>
+                                        <Label Text="{Binding FinishTime}" Grid.Column="7" Padding="5" VerticalOptions="Center"/>
+                                        <Border StrokeThickness="0" Grid.Column="8" VerticalOptions="Fill"/>
                                         <Button Text="→" Style="{StaticResource SecondaryButtonStyle}"
-                                        Command="{Binding Source={x:Reference StudentDetailViewRoot}, Path=BindingContext.GoToActivityDetailCommand}"
-                                        CommandParameter="{Binding Id}" Grid.Column="5"
-                                        WidthRequest="40" HeightRequest="25"/>
-                                        <Border StrokeThickness="0" Grid.Column="6" Grid.RowSpan="2" VerticalOptions="Fill"/>
+                                            Command="{Binding Source={x:Reference StudentDetailViewRoot}, Path=BindingContext.GoToActivityDetailCommand}"
+                                            CommandParameter="{Binding Id}" Grid.Column="9"
+                                            WidthRequest="40" HeightRequest="25"/>
+                                        <Border StrokeThickness="0" Grid.Column="10" Grid.RowSpan="2" VerticalOptions="Fill"/>
                                         <Border StrokeThickness="0" Grid.Row="1" Grid.ColumnSpan="10" HorizontalOptions="Fill"/>
                                     </Grid>
                                 </DataTemplate>

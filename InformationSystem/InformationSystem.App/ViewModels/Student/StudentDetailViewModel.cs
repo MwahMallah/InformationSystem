@@ -17,6 +17,7 @@ namespace InformationSystem.App.ViewModels.Student;
 public partial class StudentDetailViewModel(
     IStudentFacade studentFacade,
     ICourseFacade courseFacade,
+    IActivityFacade activityFacade,
     INavigationService navigationService,
     IMessengerService messengerService,
     IAlertService alertService
@@ -33,19 +34,87 @@ public partial class StudentDetailViewModel(
     
     [ObservableProperty]
     private ObservableCollection<CourseListModel> courses = [];
+    [ObservableProperty]
+    private ObservableCollection<CourseListModel> coursesToPick = [];
+
+    [ObservableProperty] 
+    private CourseListModel? selectedCourse = null;
+    
+    [ObservableProperty]
+    private DateTime? startDate = null;
+    [ObservableProperty]
+    private TimeSpan? startTime = null;
+    [ObservableProperty]
+    private DateTime? finishDate = null;
+    [ObservableProperty]
+    private TimeSpan? finishTime = null;
+    
+    partial void OnStartDateChanged(DateTime? value)
+    {
+        FilterActivitiesAsync();
+    }
+    
+    partial void OnStartTimeChanged(TimeSpan? value)
+    {
+        FilterActivitiesAsync();
+    }
+    
+    partial void OnFinishDateChanged(DateTime? value)
+    {
+        FilterActivitiesAsync();
+    }
+    
+    partial void OnFinishTimeChanged(TimeSpan? value)
+    {
+        FilterActivitiesAsync();
+    }
+
+    partial void OnSelectedCourseChanged(CourseListModel? value)
+    {
+        FilterActivitiesAsync();
+    }
 
     protected override async Task LoadDataAsync()
     {
         Student = await studentFacade.GetAsync(Id);
         Courses = Student.Courses;
+        CoursesToPick = new ObservableCollection<CourseListModel>(Courses);
+        CoursesToPick.Insert(0, CourseListModel.AllCourses);
         Activities = Student.Activities;
     }
     
+    private async void FilterActivitiesAsync()
+    {
+        var startDateTime = CombineDateAndTime(StartDate, StartTime);
+        var finishDateTime = CombineDateAndTime(FinishDate, FinishTime);
+        
+        if (SelectedCourse != null && SelectedCourse.Id != Guid.Empty)
+        {
+            Activities = new ObservableCollection<ActivityListModel>(await activityFacade
+                .GetFromCourseAsync(SelectedCourse.Id, startDateTime, finishDateTime));
+        }
+        else
+        {
+            Activities = new ObservableCollection<ActivityListModel>(await activityFacade
+                .FilterByTime(Student.Activities, startDateTime, finishDateTime));
+        }
+    }
+
+    private DateTime? CombineDateAndTime(DateTime? date, TimeSpan? time)
+    {
+        if (date == null)
+        {
+            return null;
+        }
+
+        return date + (time ?? TimeSpan.Zero);
+    }
+
     [RelayCommand]
     private async Task FilterCoursesAsync(string filterText)
     {
         Courses = new ObservableCollection<CourseListModel>(await courseFacade
-            .GetStudentsCoursesAsync(Student!.Id, filterText));
+            .GetStudentsCoursesAsync(Student!.Id, filterText)) { CourseListModel.AllCourses };
     }
 
     [RelayCommand]

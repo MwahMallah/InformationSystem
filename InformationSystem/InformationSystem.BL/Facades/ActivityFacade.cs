@@ -87,7 +87,28 @@ public class ActivityFacade(
         var entities = await query.ToListAsync();
         return modelMapper.MapToListModel(entities);
     }
-    
+
+    public async Task<IEnumerable<ActivityListModel>> FilterByTime(
+        IEnumerable<ActivityListModel> activities, 
+        DateTime? startTime = null, DateTime? finishTime = null)
+    {
+        return await Task.Run(() =>
+        {
+            var query = activities.AsQueryable();
+        
+            if (startTime.HasValue)
+            {
+                query = query.Where(a => a.StartTime >= startTime.Value);
+            }
+            if (finishTime.HasValue)
+            {
+                query = query.Where(a => a.FinishTime <= finishTime.Value);
+            }
+        
+            return query.ToList();
+        });
+    }
+
     public override async Task<ActivityDetailModel?> GetAsync(Guid id)
     {
         await using var uow = unitOfWorkFactory.Create();

@@ -7,4 +7,10 @@ public interface IActivityFacade : IFacade<ActivityEntity, ActivityDetailModel, 
 {
     public Task<IEnumerable<ActivityListModel>> GetAsync(
         string? searchQuery = null, string? orderQuery = null, bool isAscending = true);
+
+    public Task<IEnumerable<ActivityListModel>> GetFromCourseAsync(
+        Guid courseId, DateTime? startTime = null, DateTime? finishTime = null);
+
+    public Task<IEnumerable<ActivityListModel>> FilterByTime(
+        IEnumerable<ActivityListModel> activities, DateTime? startTime = null, DateTime? finishTime = null);
 }
