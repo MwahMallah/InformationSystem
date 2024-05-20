@@ -56,7 +56,7 @@ public class StudentFacade(
         return modelMapper.MapToListModel(entities);
     }
     
-    public async Task<IEnumerable<StudentListModel>> GetCourseStudentsAsync(Guid courseId, string? filterText)
+    public async Task<IEnumerable<StudentListModel>> GetCourseStudentsAsync(Guid courseId, string? filterText = null)
     {
         await using var uow = unitOfWorkFactory.Create();
         var repository = uow.GetRepository<StudentEntity, StudentEntityMapper>();
