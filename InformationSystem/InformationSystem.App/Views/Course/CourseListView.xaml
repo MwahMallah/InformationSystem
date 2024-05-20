@@ -14,11 +14,10 @@
                 <Entry HeightRequest="40" TextChanged="OnTextChanged" Placeholder="Search"/>
                 <Button FontSize="30" Text="⟳"
                         Command="{Binding RefreshCommand}"
-
-                    Style="{StaticResource SecondaryButtonStyle}" Grid.Column="2"/>
+                        Style="{StaticResource SecondaryButtonStyle}" Grid.Column="2"/>
                 <Button Text="+New"
-                    Command="{Binding GoToCreateCommand}"
-                    Grid.Column="4"/>
+                        Command="{Binding GoToCreateCommand}"
+                        Grid.Column="4"/>
             </Grid>
             <Grid RowDefinitions="40, *" Margin="0,20,0,20" Grid.Row="1">
                 <Grid Margin="0,20,0,20"

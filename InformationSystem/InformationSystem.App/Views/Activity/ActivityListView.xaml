@@ -14,14 +14,13 @@
                 <Entry HeightRequest="40" TextChanged="OnTextChanged" Placeholder="Search"/>
                 <Button FontSize="30" Text="⟳"
                         Style="{StaticResource SecondaryButtonStyle}" Grid.Column="2"/>
-                <!--TODO command-->
                 <Button Text="+New"
                         Command="{Binding GoToCreateCommand}"
                         Grid.Column="4"/>
             </Grid>
             <Grid RowDefinitions="40, *" Margin="0,20,0,20" Grid.Row="1">
                 <Grid Margin="0,20,0,20"
-              ColumnDefinitions="2, 3*, 2, 3*, 2, 120, 2, 100, 2, 80, 2, 50, 2"
+              ColumnDefinitions="2, 1.5*, 2, 3*, 2, 3*, 2, 100, 2, 80, 2, 50, 2"
               RowDefinitions="*"
               BackgroundColor="{StaticResource PrimaryColor}"
               HeightRequest="40">
@@ -58,7 +57,8 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:ActivityListModel">
-                            <Grid ColumnDefinitions="2, 3*, 2, 3*, 2, 120, 2, 100, 2, 80, 2, 50, 2" RowDefinitions="*, 2">
+                            <Grid ColumnDefinitions="2, 1.5*, 2, 3*, 2, 3*, 2, 100, 2, 80, 2, 50, 2"
+                                  RowDefinitions="*, 2">
                                 <Border StrokeThickness="0" VerticalOptions="Fill"/>
                                 <Label Text="{Binding CourseAbbreviation}" Grid.Column="1" Padding="5" VerticalOptions="Center"/>
                                 <Border StrokeThickness="0" Grid.Column="2" VerticalOptions="Fill"/>
