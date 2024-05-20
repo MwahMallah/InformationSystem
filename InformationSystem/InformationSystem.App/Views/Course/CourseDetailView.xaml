@@ -16,8 +16,10 @@
                 <Button FontSize="30" Text="⟳"
                         Style="{StaticResource SecondaryButtonStyle}" Grid.Column="1"/>
             </Grid>
-            <Grid BackgroundColor="{StaticResource SecondaryColor}" ColumnDefinitions="2*,1.5*,1.5*" Grid.Row="1">
-                <Grid RowDefinitions="100,1*,80" ColumnDefinitions="1*,1*,1*">
+            <Grid Padding="10,0,0,0" 
+                  BackgroundColor="{StaticResource SecondaryColor}" 
+                  ColumnDefinitions="1*,1*,2.3*" Grid.Row="1">
+                <Grid RowDefinitions="100,1*,80" ColumnDefinitions="1*,1*,0.8*">
                     <VerticalStackLayout>
                         <Label Text="Abbreviation" Style="{StaticResource SecondaryLable}"/>
                         <Label Text="{Binding Course.Abbreviation }"/>
@@ -40,7 +42,7 @@
                         <Button Text="Edit" WidthRequest="100" Command="{Binding GoToEditCommand}" Grid.Column="2"/>
                     </Grid>
                 </Grid>
-                <Grid Padding="20" RowDefinitions="50, *" BackgroundColor="{StaticResource SecondaryColor}" Grid.Column="1">
+                <Grid Padding="10, 20, 10, 20" RowDefinitions="50, *" BackgroundColor="{StaticResource SecondaryColor}" Grid.Column="1">
                     <Grid RowDefinitions="60" ColumnDefinitions="1*">
                         <Entry HeightRequest="40" TextChanged="OnTextChanged" Placeholder="Students"/>
                     </Grid>
@@ -77,15 +79,32 @@
                         </CollectionView>
                     </Grid>
                 </Grid>
-                <Grid Padding="20" RowDefinitions="50,*" BackgroundColor="{StaticResource SecondaryColor}" Grid.Column="2">
+                <Grid Padding="10, 20, 10, 20" RowDefinitions="50,*" BackgroundColor="{StaticResource SecondaryColor}" Grid.Column="2">
                     <Grid RowDefinitions="60">
-                        <Label Style="{StaticResource SecondaryLable}" Padding="5" HeightRequest="40" Text="Activities"/>
+                        <HorizontalStackLayout>
+                            <Label Style="{StaticResource SecondaryLable}" 
+                                   Padding="5" HeightRequest="40" Text="Activities"/>
+                            <DatePicker Date="{Binding StartDate}"/>
+                            <TimePicker Format="HH:mm" 
+                                        Time="{Binding StartTime}"/>
+                            <DatePicker Date="{Binding FinishDate}"/>
+                            <TimePicker Format="HH:mm"
+                                        Time="{Binding FinishTime}"/>
+                        </HorizontalStackLayout>
                     </Grid>
                     <Grid RowDefinitions="40, 1*" Grid.Row="1">
-                        <Grid ColumnDefinitions="2,1*,2,70,2"
+                        <Grid ColumnDefinitions="2,1*,2,1*,2,1*,2,70,2"
                               RowDefinitions="*" BackgroundColor="{StaticResource PrimaryColor}"
                               HeightRequest="40">
-                            <Label Text="Type" Grid.Column="1" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center"/>
+                            <Label Text="Type" Grid.Column="1" 
+                                   Style="{StaticResource SecondaryLable}" 
+                                   Padding="5" VerticalOptions="Center"/>
+                            <Label Text="Start" Grid.Column="3" 
+                                   Style="{StaticResource SecondaryLable}" 
+                                   Padding="5" VerticalOptions="Center"/>
+                            <Label Text="Finish" Grid.Column="5" 
+                                   Style="{StaticResource SecondaryLable}" 
+                                   Padding="5" VerticalOptions="Center"/>
                         </Grid>
                         <CollectionView ItemsSource="{Binding Activities}" Grid.ColumnSpan="5" Grid.Row="1">
                             <CollectionView.ItemsLayout>
@@ -93,16 +112,20 @@
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:ActivityListModel">
-                                    <Grid ColumnDefinitions="2,1*,2,70,2" RowDefinitions="*, 2">
+                                    <Grid ColumnDefinitions="2,1*,2,1*,2,1*,2,70,2" RowDefinitions="*, 2">
                                         <Border StrokeThickness="0" VerticalOptions="Fill"/>
                                         <Label Text="{Binding ActivityType}" Grid.Column="1" Padding="5" VerticalOptions="Center"/>
                                         <Border StrokeThickness="0" Grid.Column="2" VerticalOptions="Fill"/>
-                                        <Button Text="→" WidthRequest="40" HeightRequest="25" Grid.Column="3"
+                                        <Label Text="{Binding StartTime}" Grid.Column="3" Padding="5" VerticalOptions="Center"/>
+                                        <Border StrokeThickness="0" Grid.Column="4" VerticalOptions="Fill"/>
+                                        <Label Text="{Binding FinishTime}" Grid.Column="5" Padding="5" VerticalOptions="Center"/>
+                                        <Border StrokeThickness="0" Grid.Column="6" VerticalOptions="Fill"/>
+                                        <Button Text="→" WidthRequest="40" HeightRequest="25" Grid.Column="7"
                                                 Style="{StaticResource SecondaryButtonStyle}"
                                                 Command="{Binding Source={x:Reference CourseDetailViewRoot},
                                                 Path=BindingContext.GoToActivityDetailCommand}"
                                                 CommandParameter="{Binding Id}"/>
-                                        <Border StrokeThickness="0" Grid.Column="4" Grid.RowSpan="2" VerticalOptions="Fill"/>
+                                        <Border StrokeThickness="0" Grid.Column="8" Grid.RowSpan="2" VerticalOptions="Fill"/>
                                         <Border StrokeThickness="0" Grid.Row="1" Grid.ColumnSpan="10" HorizontalOptions="Fill"/>
                                     </Grid>
                                 </DataTemplate>

@@ -16,12 +16,16 @@ namespace InformationSystem.App.ViewModels.Course;
 public partial class CourseDetailViewModel(
     IStudentFacade studentFacade,
     ICourseFacade courseFacade,
+    IActivityFacade activityFacade,
     ICourseModelMapper modelMapper,
     INavigationService navigationService,
     IMessengerService messengerService,
     IAlertService alertService
 ) : ViewModelBase(messengerService), IRecipient<MessageDeleteStudent>, 
-    IRecipient<MessageEditStudent>, IRecipient<MessageAddActivity>, IRecipient<MessageDeleteActivity>
+    IRecipient<MessageEditStudent>, 
+    IRecipient<MessageAddActivity>, 
+    IRecipient<MessageDeleteActivity>,
+    IRecipient<MessageEditCourse>
 {
     public Guid Id { get; set; }
     
@@ -33,12 +37,52 @@ public partial class CourseDetailViewModel(
     
     [ObservableProperty]
     private ObservableCollection<StudentListModel> students = [];
+    
+    [ObservableProperty]
+    private DateTime? startDate = null;
+    [ObservableProperty]
+    private TimeSpan? startTime = null;
+    [ObservableProperty]
+    private DateTime? finishDate = null;
+    [ObservableProperty]
+    private TimeSpan? finishTime = null;
+    
+    partial void OnStartDateChanged(DateTime? value) => FilterActivitiesAsync();
+    partial void OnStartTimeChanged(TimeSpan? value) => FilterActivitiesAsync();
+    partial void OnFinishDateChanged(DateTime? value) => FilterActivitiesAsync();
+    partial void OnFinishTimeChanged(TimeSpan? value) => FilterActivitiesAsync();
 
     protected override async Task LoadDataAsync()
     {
         Course = await courseFacade.GetAsync(Id);
+        
+        if (Course == null)
+        {
+            Messenger.Send(new MessageDeleteCourse() {CourseId = Guid.Empty});
+            navigationService.SendBackButtonPressed();
+        }
+        
         Students = Course.Students;
         Activities = Course.Activities;
+    }
+    
+    private async void FilterActivitiesAsync()
+    {
+        var startDateTime = CombineDateAndTime(StartDate, StartTime);
+        var finishDateTime = CombineDateAndTime(FinishDate, FinishTime);
+        
+        Activities = new ObservableCollection<ActivityListModel>(await activityFacade
+            .GetFromCourseAsync(Course.Id, startDateTime, finishDateTime));
+    }
+    
+    private DateTime? CombineDateAndTime(DateTime? date, TimeSpan? time)
+    {
+        if (date == null)
+        {
+            return null;
+        }
+
+        return date + (time ?? TimeSpan.Zero);
     }
     
     [RelayCommand]
@@ -51,10 +95,9 @@ public partial class CourseDetailViewModel(
     [RelayCommand]
     private async Task GoToEditAsync()
     {
-        
         await navigationService.GoToAsync("/edit", new Dictionary<string, object?>()
         {
-            [nameof(ActivityEditViewModel.SelectedCourse)] = Course
+            [nameof(CourseEditViewModel.Course)] = Course
         });
     }
     
@@ -129,6 +172,14 @@ public partial class CourseDetailViewModel(
     }
 
     public async void Receive(MessageDeleteActivity message)
+    {
+        if (Course != null)
+        {
+            await LoadDataAsync();
+        }
+    }
+
+    public async void Receive(MessageEditCourse message)
     {
         if (Course != null)
         {
