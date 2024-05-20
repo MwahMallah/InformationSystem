@@ -3,9 +3,11 @@ using InformationSystem.App.Services.Interfaces;
 using InformationSystem.App.ViewModels;
 using InformationSystem.App.ViewModels.Activity;
 using InformationSystem.App.ViewModels.Course;
+using InformationSystem.App.ViewModels.Evaluation;
 using InformationSystem.App.ViewModels.Student;
 using InformationSystem.App.Views.Activity;
 using InformationSystem.App.Views.Course;
+using InformationSystem.App.Views.Evaluation;
 using InformationSystem.App.Views.Student;
 using InformationSystem.BL.Models;
 
@@ -24,12 +26,15 @@ public class NavigationService : INavigationService
         new("//activities", typeof(ActivityListView), typeof(ActivityListViewModel)),
         new("//activities/detail", typeof(ActivityDetailView), typeof(ActivityDetailViewModel)),
         new("//activities/edit", typeof(ActivityEditView), typeof(ActivityEditViewModel)),
-
+        
+        new("//evaluations", typeof(EvaluationListView), typeof(EvaluationListViewModel)),
+        new("//evaluations/edit", typeof(EvaluationEditView), typeof(EvaluationEditViewModel)),
         
         new("//courses", typeof(CourseListView), typeof(CourseListViewModel)),
         new("//courses/detail", typeof(CourseDetailView), typeof(CourseDetailViewModel)),
-        new("//courses/edit", typeof(CourseEditView), typeof(CourseEditViewModel)),
         
+        new("//courses/edit", typeof(CourseEditView), typeof(CourseEditViewModel)),
+        new("//courses/detail/students", typeof(CourseStudentEditView), typeof(CourseStudentEditViewModel)),
     };
     
     public async Task GoToAsync(string route)
