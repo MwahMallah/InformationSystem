@@ -9,7 +9,84 @@
              x:DataType="vm:ActivityListViewModel"
              x:Name="ActivityListViewRoot">
     <ContentPage.Content>
-        <VerticalStackLayout>
+        <Grid Padding="20" RowDefinitions="50, *" BackgroundColor="{StaticResource SecondaryColor}">
+            <Grid RowDefinitions="50" ColumnDefinitions="3*, 5*, 50, 10, 100">
+                <Entry HeightRequest="40" TextChanged="OnTextChanged" Placeholder="Search"/>
+                <Button FontSize="30" Text="⟳"
+                        Style="{StaticResource SecondaryButtonStyle}" Grid.Column="2"/>
+                <!--TODO command-->
+                <Button Text="+New"
+                        Command="{Binding GoToCreateCommand}"
+                        Grid.Column="4"/>
+            </Grid>
+            <Grid RowDefinitions="40, *" Margin="0,20,0,20" Grid.Row="1">
+                <Grid Margin="0,20,0,20"
+              ColumnDefinitions="2, 3*, 2, 3*, 2, 120, 2, 100, 2, 80, 2, 50, 2"
+              RowDefinitions="*"
+              BackgroundColor="{StaticResource PrimaryColor}"
+              HeightRequest="40">
+                    <Label Text="Abbreviation" Grid.Column="1" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SortCommand}" CommandParameter="course_abbreviation"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Start Time" Grid.Column="3" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SortCommand}" CommandParameter="start_time"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Finish Time" Grid.Column="5" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SortCommand}" CommandParameter="finish_time"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Type" Grid.Column="7" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SortCommand}" CommandParameter="activity_type"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Points" Grid.Column="9" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SortCommand}" CommandParameter="max_points"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="" Grid.Column="11" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center"/>
+                </Grid>
+                <CollectionView ItemsSource="{Binding Activities}" Grid.ColumnSpan="5" Grid.Row="1">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:ActivityListModel">
+                            <Grid ColumnDefinitions="2, 3*, 2, 3*, 2, 120, 2, 100, 2, 80, 2, 50, 2" RowDefinitions="*, 2">
+                                <Border StrokeThickness="0" VerticalOptions="Fill"/>
+                                <Label Text="{Binding CourseAbbreviation}" Grid.Column="1" Padding="5" VerticalOptions="Center"/>
+                                <Border StrokeThickness="0" Grid.Column="2" VerticalOptions="Fill"/>
+                                <Label Text="{Binding StartTime}" Grid.Column="3" Padding="5" VerticalOptions="Center"/>
+                                <Border StrokeThickness="0" Grid.Column="4" VerticalOptions="Fill"/>
+                                <Label Text="{Binding FinishTime}" Grid.Column="5" Padding="5" VerticalOptions="Center"/>
+                                <Border StrokeThickness="0" Grid.Column="6" VerticalOptions="Fill"/>
+                                <Label Text="{Binding ActivityType}" Grid.Column="7" Padding="5" VerticalOptions="Center"/>
+                                <Border StrokeThickness="0" Grid.Column="8" VerticalOptions="Fill"/>
+                                <Label Text="{Binding MaxPoints}" Grid.Column="9" Padding="5" VerticalOptions="Center"/>
+                                <Border StrokeThickness="0" Grid.Column="10" VerticalOptions="Fill"/>
+                                <Button Text="→" Style="{StaticResource SecondaryButtonStyle}"
+                                        Grid.Column="11" HeightRequest="25" WidthRequest="40"
+                                        Command="{Binding Source={x:Reference ActivityListViewRoot},
+                                        Path=BindingContext.GoToDetailCommand}"
+                                        CommandParameter="{Binding Id}"/>
+                                <Border StrokeThickness="0" Grid.Column="12" Grid.RowSpan="2" VerticalOptions="FillAndExpand"/>
+                                <Border StrokeThickness="0" Grid.Row="1" Grid.ColumnSpan="12" HorizontalOptions="Fill"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </Grid>
+
+
+
+        <!--<VerticalStackLayout>
             <Button Text="Add Activity" 
                     Command="{Binding GoToCreateCommand}"
                     BackgroundColor="Green"/>
@@ -74,6 +151,6 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </VerticalStackLayout>
+        </VerticalStackLayout>-->
     </ContentPage.Content>
 </views:BaseView>
