@@ -28,26 +28,22 @@
               HeightRequest="40">
                     <Label Text="Abbreviation" Grid.Column="1" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SortCommand}" 
-                      CommandParameter="abbreviation"></TapGestureRecognizer>
+                            <TapGestureRecognizer Command="{Binding SortCommand}" CommandParameter="abbreviation"/>
                         </Label.GestureRecognizers>
                     </Label>
                     <Label Text="Name" Grid.Column="3" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SortCommand}" 
-                      CommandParameter="name"></TapGestureRecognizer>
+                            <TapGestureRecognizer Command="{Binding SortCommand}" CommandParameter="name"/>
                         </Label.GestureRecognizers>
                     </Label>
                     <Label Text="Max Students" Grid.Column="5" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SortCommand}" 
-                      CommandParameter="max_students"></TapGestureRecognizer>
+                            <TapGestureRecognizer Command="{Binding SortCommand}" CommandParameter="max_students"/>
                         </Label.GestureRecognizers>
                     </Label>
                     <Label Text="Credits" Grid.Column="7" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SortCommand}" 
-                      CommandParameter="credits"></TapGestureRecognizer>
+                            <TapGestureRecognizer Command="{Binding SortCommand}" CommandParameter="credits"/>
                         </Label.GestureRecognizers>
                     </Label>
                     <Label Text="" Grid.Column="9" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center"/>
