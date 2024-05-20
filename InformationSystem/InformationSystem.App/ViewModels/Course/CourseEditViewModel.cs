@@ -51,4 +51,19 @@ public partial class CourseEditViewModel(
         return !string.IsNullOrEmpty(Abbreviation) 
                && !string.IsNullOrEmpty(Name);
     }
+    
+    [RelayCommand(CanExecute = nameof(CanAddStudents))]
+    private async Task GoToCourseStudentEditAsync()
+    {
+        await navigationService.GoToAsync("/students", 
+            new Dictionary<string, object?>()
+            {
+                [nameof(CourseStudentEditViewModel.Course)] = Course
+            });
+    }
+
+    private bool CanAddStudents()
+    {
+        return Course.Id != Guid.Empty;
+    }
 }

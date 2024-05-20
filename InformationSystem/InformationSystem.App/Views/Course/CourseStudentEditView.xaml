@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<views:BaseView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="using:InformationSystem.App.Views"
+             xmlns:models="clr-namespace:InformationSystem.BL.Models;assembly=InformationSystem.BL"
+             xmlns:course="using:InformationSystem.App.ViewModels.Course"
+             x:Class="InformationSystem.App.Views.Course.CourseStudentEditView"
+             x:Name="CourseStudentEditViewRoot"
+             x:DataType="course:CourseStudentEditViewModel">
+    <ContentPage.Content>
+        <VerticalStackLayout>
+            <HorizontalStackLayout>
+                <Picker ItemsSource="{Binding StudentsToShow}"
+                        ItemDisplayBinding="{Binding LastName}"
+                        SelectedItem="{Binding SelectedStudent}">
+                </Picker>
+                <Button Text="Add Student" 
+                        FontSize="20" 
+                        BackgroundColor="Green"
+                        Command="{Binding AddStudentToCourseCommand}"></Button>
+            </HorizontalStackLayout>
+            <Label HorizontalOptions="Center" FontSize="20" Text="Current Students" FontAttributes="Bold"></Label>
+            <CollectionView ItemsSource="{Binding Course.Students}"
+                            Margin="20">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:StudentListModel">
+                        <HorizontalStackLayout Spacing="15">
+                            <Label Text="{Binding FirstName}" 
+                                   FontSize="20"
+                                   Margin="0,0,5,0"></Label>
+                            <Label Text="{Binding LastName}" 
+                                   FontSize="20"></Label>
+                            <Label Text="{Binding Group}" 
+                                   FontSize="20"></Label>
+                            <Label Text="{Binding CurrentYear}" 
+                                   FontSize="20"></Label>
+                            <Button Text="Remove Student" 
+                                    BackgroundColor="DarkRed"
+                                    FontSize="20"
+                                    Command="{Binding 
+                                    Source={x:Reference Name=CourseStudentEditViewRoot},
+                                    Path=BindingContext.RemoveStudentCommand}"
+                                    CommandParameter="{Binding .}"/>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</views:BaseView>
