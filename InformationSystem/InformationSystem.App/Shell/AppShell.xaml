@@ -7,13 +7,13 @@
        x:Class="InformationSystem.App.AppShell"
        Shell.FlyoutBehavior="Disabled">
     <TabBar>
-        <Tab Title="Students">
+        <Tab Title="Students" Style="{StaticResource SelectedTabStyle}">
             <ShellContent Route="students" ContentTemplate="{DataTemplate student:StudentListView}"/>
         </Tab>
-        <Tab Title="Courses">
+        <Tab Title="Courses" Style="{StaticResource DefaultTabStyle}">
             <ShellContent Route="courses" ContentTemplate="{DataTemplate course:CourseListView}"/>
         </Tab>
-        <Tab Title="Activities">
+        <Tab Title="Activities" Style="{StaticResource DefaultTabStyle}">
             <ShellContent Route="activities" ContentTemplate="{DataTemplate activity:ActivityListView}"/>
         </Tab>
     </TabBar>
