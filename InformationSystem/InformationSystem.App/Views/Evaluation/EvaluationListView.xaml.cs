@@ -13,4 +13,10 @@ public partial class EvaluationListView
     {
         InitializeComponent();
     }
+
+    private void OnTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        var evaluationListViewModel = ViewModel as EvaluationListViewModel;
+        evaluationListViewModel?.FilterCommand.Execute(e.NewTextValue);
+    }
 }

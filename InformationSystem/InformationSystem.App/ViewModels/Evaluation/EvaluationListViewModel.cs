@@ -16,17 +16,17 @@ public partial class EvaluationListViewModel(
     IEvaluationFacade evaluationFacade,
     INavigationService navigationService,
     IMessengerService messengerService
-) : ViewModelBase(messengerService)
+) : ViewModelBase(messengerService), 
+    IRecipient<MessageAddEvaluation>
 {
     private string? _filterText = null;
 
     [ObservableProperty] 
     private IEnumerable<EvaluationListModel> evaluations = [];
 
-    private bool _isCourseAbbreviationAscending = false;
-    private bool _isMaxPointsAscending;
-    private bool _isStartTimeAscending;
-    private bool _isFinishTimeAscending;
+    private bool _isCourseAbbreviationAscending;
+    private bool _isPointsAscending;
+    private bool _isFullNameAscending;
     private bool _isActivityTypeAscending;
 
     protected override async Task LoadDataAsync()
@@ -37,40 +37,36 @@ public partial class EvaluationListViewModel(
     [RelayCommand]
     private async Task SortAsync(string sortingQuery)
     {
-        // var isAscending = true;
-        // switch (sortingQuery)
-        // {
-        //     case "course_abbreviation":
-        //         _isCourseAbbreviationAscending = !_isCourseAbbreviationAscending;
-        //         isAscending = _isCourseAbbreviationAscending;
-        //         break;
-        //     case "max_points":
-        //         _isMaxPointsAscending = !_isMaxPointsAscending;
-        //         isAscending = _isMaxPointsAscending;
-        //         break;
-        //     case "start_time":
-        //         _isStartTimeAscending = !_isStartTimeAscending;
-        //         isAscending = _isStartTimeAscending;
-        //         break;
-        //     case "finish_time":
-        //         _isFinishTimeAscending = !_isFinishTimeAscending;
-        //         isAscending = _isFinishTimeAscending;
-        //         break;
-        //     case "activity_type":
-        //         _isActivityTypeAscending = !_isActivityTypeAscending;
-        //         isAscending = _isActivityTypeAscending;
-        //         break;
-        // }
-        //
-        // Evaluations = await evaluationFacade.GetAsync(searchQuery: _filterText,
-        //     orderQuery: sortingQuery, isAscending: isAscending);
+        var isAscending = true;
+        switch (sortingQuery)
+        {
+            case "course_abbreviation":
+                _isCourseAbbreviationAscending = !_isCourseAbbreviationAscending;
+                isAscending = _isCourseAbbreviationAscending;
+                break;
+            case "activity_type":
+                _isActivityTypeAscending = !_isActivityTypeAscending;
+                isAscending = _isActivityTypeAscending;
+                break;
+            case "full_name":
+                _isFullNameAscending = !_isFullNameAscending;
+                isAscending = _isFullNameAscending;
+                break;
+            case "points":
+                _isPointsAscending = !_isPointsAscending;
+                isAscending = _isPointsAscending;
+                break;
+        }
+        
+        Evaluations = await evaluationFacade.GetAsync(searchQuery: _filterText,
+            orderQuery: sortingQuery, isAscending: isAscending);
     }
 
     [RelayCommand]
     private async Task FilterAsync(string filterText)
     {
-        // _filterText = filterText;
-        // Activities = await activityFacade.GetAsync(searchQuery: filterText);
+        _filterText = filterText;
+        Evaluations = await evaluationFacade.GetAsync(searchQuery: filterText);
     }
 
     [RelayCommand]
@@ -85,5 +81,10 @@ public partial class EvaluationListViewModel(
     private async Task GoToCreateAsync()
     {
         await navigationService.GoToAsync("/edit");
+    }
+
+    public async void Receive(MessageAddEvaluation message)
+    {
+        await LoadDataAsync();
     }
 }

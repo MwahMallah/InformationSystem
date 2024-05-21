@@ -12,7 +12,7 @@
         <Grid Padding="20" RowDefinitions="50, *" 
               BackgroundColor="{StaticResource SecondaryColor}">
             <Grid RowDefinitions="50" ColumnDefinitions="3*, 5*, 50, 10, 100">
-                <Entry HeightRequest="40" Placeholder="Search"/>
+                <Entry HeightRequest="40" TextChanged="OnTextChanged" Placeholder="Search"/>
                 <Button FontSize="30" Text="⟳"
                         Style="{StaticResource SecondaryButtonStyle}" Grid.Column="2"/>
                 <Button Text="+New"
@@ -27,24 +27,27 @@
               HeightRequest="40">
                     <Label Text="Abbreviation" Grid.Column="1" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SortCommand}" CommandParameter="course_abbreviation"/>
+                            <TapGestureRecognizer Command="{Binding SortCommand}" 
+                                                  CommandParameter="course_abbreviation"/>
                         </Label.GestureRecognizers>
                     </Label>
-                    <Label Text="Type" Grid.Column="3" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center">
+                    <Label Text="Activity Type" Grid.Column="3" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SortCommand}" CommandParameter="start_time"/>
+                            <TapGestureRecognizer Command="{Binding SortCommand}" 
+                                                  CommandParameter="activity_type"/>
                         </Label.GestureRecognizers>
                     </Label>
                     <Label Text="Student Name" Grid.Column="5" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SortCommand}" CommandParameter="finish_time"/>
+                            <TapGestureRecognizer Command="{Binding SortCommand}" 
+                                                  CommandParameter="full_name"/>
                         </Label.GestureRecognizers>
                     </Label>
                     <Label Text="Points" Grid.Column="7" Style="{StaticResource SecondaryLable}" 
                            Padding="5" VerticalOptions="Center">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding SortCommand}" 
-                                                  CommandParameter="activity_type"/>
+                                                  CommandParameter="points"/>
                         </Label.GestureRecognizers>
                     </Label>
                     <Label Text="" Grid.Column="9" Style="{StaticResource SecondaryLable}" 
