@@ -10,6 +10,7 @@
     <Style TargetType="Label">
         <Setter Property="TextColor" Value="{StaticResource PrimaryColor}"/>
         <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontFamily" Value="RobotoCondensedLight"/>
     </Style>
 
     <Style x:Key="SecondaryLable" TargetType="Label">
@@ -21,22 +22,27 @@
         <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
         <Setter Property="TextColor" Value="{StaticResource SecondaryColor}"/>
         <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontFamily" Value="RobotoCondensedLight"/>
     </Style>
     <Style TargetType="Editor">
         <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
         <Setter Property="TextColor" Value="{StaticResource SecondaryColor}"/>
         <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontFamily" Value="RobotoCondensedLight"/>
     </Style>
     <Style TargetType="DatePicker">
         <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
         <Setter Property="TextColor" Value="{StaticResource SecondaryColor}"/>
+        <Setter Property="FontFamily" Value="RobotoCondensedLight"/>
     </Style>
     <Style TargetType="TimePicker">
         <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
         <Setter Property="TextColor" Value="{StaticResource SecondaryColor}"/>
+        <Setter Property="FontFamily" Value="RobotoCondensedLight"/>
     </Style>
     <Style TargetType="Picker">
         <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
         <Setter Property="TextColor" Value="{StaticResource SecondaryColor}"/>
+        <Setter Property="FontFamily" Value="RobotoCondensedLight"/>
     </Style>
 </ResourceDictionary>
