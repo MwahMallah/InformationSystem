@@ -34,9 +34,9 @@
                 </VerticalStackLayout>
 
             </Grid>
-            <Grid ColumnDefinitions="100,1*,180" Grid.Row="1">
+            <Grid ColumnDefinitions="100,1*,80" Grid.Row="1">
                 <Button Text="Delete" Command="{Binding DeleteCommand}"/>
-                <Button Text="Edit Activity" Command="{Binding GoToEditCommand}" Grid.Column="2"/>
+                <Button Text="Edit" Command="{Binding GoToEditCommand}" Grid.Column="2"/>
             </Grid>
         </Grid>
     </ContentPage.Content>

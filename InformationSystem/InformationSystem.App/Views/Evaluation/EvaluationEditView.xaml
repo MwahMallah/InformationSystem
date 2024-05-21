@@ -9,29 +9,43 @@
              x:DataType="vm:EvaluationEditViewModel"
              BackgroundColor="{StaticResource SecondaryColor}">
     <ContentPage.Content>
-        <VerticalStackLayout Margin="10">
-            <Label Text="Course Abbreviation" FontSize="20"></Label>
-            <Picker ItemsSource="{Binding Courses}"
-                    ItemDisplayBinding="{Binding Abbreviation}"
-                    SelectedItem="{Binding SelectedCourse}"
-                    IsEnabled="{Binding ArePickersEnabled}"></Picker>
-            <Label Text="Activity" FontSize="20"></Label>
-            <Picker ItemsSource="{Binding Activities}"
-                    ItemDisplayBinding="{Binding ActivityType}"
-                    SelectedItem="{Binding SelectedActivity}"
-                    IsEnabled="{Binding ArePickersEnabled}"></Picker>
-            <Label Text="Student" FontSize="20"></Label>
-            <Picker ItemsSource="{Binding Students}"
-                    ItemDisplayBinding="{Binding LastName}"
-                    SelectedItem="{Binding SelectedStudent}"
-                    IsEnabled="{Binding ArePickersEnabled}"></Picker>
-            <Label Text="Description"></Label>
-            <Entry Text="{Binding Evaluation.Description}"></Entry>
-            <Label Text="Points" FontSize="20"></Label>   
-            <Entry Text="{Binding Evaluation.Points}"></Entry>
-            <Button HorizontalOptions="Fill" 
-                    Text="Save"
-                    Command="{Binding SaveCommand}"></Button>
-        </VerticalStackLayout>
+        <Grid Padding="20" Background="{StaticResource SecondaryColor}" RowDefinitions="1*,50">
+            <Grid RowDefinitions="100,20,1*" ColumnDefinitions="1*,20,1*">
+                <VerticalStackLayout>
+                    <Label Text="Course Abbreviation"/>
+                    <Picker ItemsSource="{Binding Courses}"
+                            ItemDisplayBinding="{Binding Abbreviation}"
+                            SelectedItem="{Binding SelectedCourse}"
+                            IsEnabled="{Binding ArePickersEnabled}"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="2">
+                    <Label Text="Activity"/>
+                    <Picker ItemsSource="{Binding Activities}"
+                            ItemDisplayBinding="{Binding ActivityType}"
+                            SelectedItem="{Binding SelectedActivity}"
+                            IsEnabled="{Binding ArePickersEnabled}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Row="2">
+                    <Label Text="Description"/>
+                    <Entry Text="{Binding Evaluation.Description}"/>
+                </VerticalStackLayout>
+
+
+                <VerticalStackLayout Grid.Row="2" Grid.Column="2">
+                    <Label Text="Student Name"/>
+                    <Picker ItemsSource="{Binding Students}"
+                            ItemDisplayBinding="{Binding LastName}"
+                            SelectedItem="{Binding SelectedStudent}"
+                            IsEnabled="{Binding ArePickersEnabled}"/>
+                    <Label Text="Points"/>
+                    <Entry Text="{Binding Evaluation.Points}"/>
+                </VerticalStackLayout>
+
+            </Grid>
+            <Grid ColumnDefinitions="1*,100" Grid.Row="1">
+                <Button Text="Save" Command="{Binding SaveCommand}" Grid.Column="1"/>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </views:BaseView>
