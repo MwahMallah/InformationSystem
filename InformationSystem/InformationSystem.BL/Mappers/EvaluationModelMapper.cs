@@ -34,6 +34,9 @@ public class EvaluationModelMapper:
             CourseAbbreviation = entity.Activity?.Course != null?
                 entity.Activity.Course.Abbreviation:
                 string.Empty,
+            ActivityType = entity.Activity?.ActivityType,
+            StartTime = entity.Activity?.StartTime,
+            FinishTime = entity.Activity?.FinishTime,
             ActivityId = entity.ActivityId,
             Points = entity.Points,
             Description = entity.Description
