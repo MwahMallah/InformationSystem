@@ -7,7 +7,8 @@
              xmlns:models="clr-namespace:InformationSystem.BL.Models;assembly=InformationSystem.BL"
              x:Class="InformationSystem.App.Views.Student.StudentCoursesEditView"
              x:Name="StudentCourseEditViewRoot"
-             x:DataType="student:StudentCoursesEditViewModel">
+             x:DataType="student:StudentCoursesEditViewModel"
+             BackgroundColor="{StaticResource SecondaryColor}" >
     <ContentPage.Content>
         <VerticalStackLayout>
             <HorizontalStackLayout>
