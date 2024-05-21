@@ -9,9 +9,48 @@
         <Setter Property="CornerRadius" Value="0"/>
         <Setter Property="BorderWidth" Value="0"/>
         <Setter Property="HeightRequest" Value="40"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="Normal"/>
+                    <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryLightColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryDarkColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+        <Style.Triggers>
+            <Trigger TargetType="Button" Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{StaticResource UnactiveColor}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
     <Style x:Key="SecondaryButtonStyle" TargetType="Button">
         <Setter Property="TextColor" Value="{StaticResource PrimaryColor}"/>
         <Setter Property="BackgroundColor" Value="{StaticResource SecondaryColor}"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="Normal"/>
+                    <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{StaticResource PrimaryLightColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{StaticResource PrimaryDarkColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
     </Style>
 </ResourceDictionary>
