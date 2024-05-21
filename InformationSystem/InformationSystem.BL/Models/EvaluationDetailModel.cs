@@ -1,4 +1,6 @@
-﻿namespace InformationSystem.BL.Models;
+﻿using InformationSystem.Common.Enums;
+
+namespace InformationSystem.BL.Models;
 
 public record EvaluationDetailModel : BaseModel
 {
@@ -6,6 +8,9 @@ public record EvaluationDetailModel : BaseModel
     public Guid? StudentId { get; set; }
     public string? StudentFullName { get; set; }
     public Guid? ActivityId { get; set; }
+    public ActivityType? ActivityType { get; set; }
+    public DateTime? StartTime { get; set; }
+    public DateTime? FinishTime { get; set; }
     public string? CourseAbbreviation { get; set; }
     public string? Description { get; set; }
     

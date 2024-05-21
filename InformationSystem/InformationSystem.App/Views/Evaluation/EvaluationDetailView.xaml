@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<views:BaseView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:views="using:InformationSystem.App.Views"
+                xmlns:evaluation="using:InformationSystem.App.ViewModels.Evaluation"
+                x:Class="InformationSystem.App.Views.Evaluation.EvaluationDetailView"
+                x:DataType="evaluation:EvaluationDetailViewModel"
+                BackgroundColor="{StaticResource SecondaryColor}">
+    <ContentPage.Content>
+        <VerticalStackLayout>
+            <Label Text="Course Abbreviation" FontSize="20"></Label>
+            <Label Text="{Binding Evaluation.CourseAbbreviation}" FontSize="20"></Label>
+            <Label Text="Activity Type" FontSize="20"></Label>
+            <Label Text="{Binding Evaluation.ActivityType}" FontSize="20"></Label>
+            <Label Text="Student Full Name" FontSize="20"></Label>
+            <Label Text="{Binding Evaluation.StudentFullName}" FontSize="20"></Label>
+            <Label Text="Start Time" FontSize="20"></Label>
+            <Label Text="{Binding Evaluation.StartTime}" FontSize="20"></Label>
+            <Label Text="Finish Time" FontSize="20"></Label>
+            <Label Text="{Binding Evaluation.FinishTime}" FontSize="20"></Label>
+            <Label Text="Points" FontSize="20"></Label>
+            <Label Text="{Binding Evaluation.Points}" FontSize="20"></Label>
+            <Label Text="Description" FontSize="20"></Label>
+            <Label Text="{Binding Evaluation.Description}" FontSize="20"></Label>
+            <Button Text="Delete Evaluation"
+                    FontSize="20"
+                    Command="{Binding DeleteCommand}"></Button>
+            <Button Text="Edit Evaluation"
+                    FontSize="20"
+                    Command="{Binding GoToEditCommand}"></Button>
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</views:BaseView>
