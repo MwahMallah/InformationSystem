@@ -30,9 +30,9 @@ public class StudentFacade(
     
         if (!string.IsNullOrEmpty(searchQuery))
         {
-            query = query.Where(c => c.FirstName.ToLower().StartsWith(searchQuery)
-                                     || c.LastName.ToLower().StartsWith(searchQuery)
-                                     || c.Group.ToLower().StartsWith(searchQuery));
+            query = query.Where(s => s.FirstName.ToLower().StartsWith(searchQuery)
+                                     || s.LastName.ToLower().StartsWith(searchQuery)
+                                     || s.Group.ToLower().StartsWith(searchQuery));
         }
     
         if (!string.IsNullOrEmpty(orderQuery))
