@@ -15,17 +15,18 @@
                     SelectedItem="{Binding SelectedCourse}"></Picker>
             <Label Text="Activity" FontSize="20"></Label>
             <Picker ItemsSource="{Binding Activities}"
-                    ItemDisplayBinding="{Binding ActivityType}"></Picker>
+                    ItemDisplayBinding="{Binding ActivityType}"
+                    SelectedItem="{Binding SelectedActivity}"></Picker>
             <Label Text="Student" FontSize="20"></Label>
             <Picker ItemsSource="{Binding Students}"
-                    ItemDisplayBinding="{Binding LastName}"></Picker>
+                    ItemDisplayBinding="{Binding LastName}"
+                    SelectedItem="{Binding SelectedStudent}"></Picker>
             <Label Text="Description"></Label>
             <Entry Text="{Binding Evaluation.Description}"></Entry>
             <Label Text="Points" FontSize="20"></Label>   
             <Entry Text="{Binding Evaluation.Points}"></Entry>
             <Button HorizontalOptions="Fill" 
-                    Text="Save" 
-                    BackgroundColor="Green"
+                    Text="Save"
                     Command="{Binding SaveCommand}"></Button>
         </VerticalStackLayout>
     </ContentPage.Content>

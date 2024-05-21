@@ -24,15 +24,22 @@ public partial class EvaluationEditViewModel(
     
     [ObservableProperty] 
     private ObservableCollection<CourseListModel> courses = [];
+    
+    [ObservableProperty]
+    private CourseListModel? selectedCourse = null;
 
     [ObservableProperty] 
     private ObservableCollection<ActivityListModel> activities = [];
+
+    [ObservableProperty]
+    private ActivityListModel? selectedActivity = null;
     
     [ObservableProperty] 
     private ObservableCollection<StudentListModel> students = [];
     
     [ObservableProperty]
-    private CourseListModel? selectedCourse = null;
+    private StudentListModel? selectedStudent = null;
+
     
     public CourseListModel? CourseFromQuery {get; set; } = null;
 
@@ -42,8 +49,13 @@ public partial class EvaluationEditViewModel(
         ChangeAvailableStudents();
         SaveCommand.NotifyCanExecuteChanged();
     }
-    
-    
+
+    partial void OnSelectedActivityChanged(ActivityListModel? value) 
+        => SaveCommand.NotifyCanExecuteChanged();
+
+    partial void OnSelectedStudentChanged(StudentListModel? value) 
+        => SaveCommand.NotifyCanExecuteChanged();
+
     protected override async Task LoadDataAsync()
     {
         var allCourses = await courseFacade.GetAsync();
@@ -73,15 +85,22 @@ public partial class EvaluationEditViewModel(
     [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
-        if (SelectedCourse != null)
+        if (SelectedCourse != null && SelectedStudent != null && SelectedActivity != null)
         {
-         
+            Evaluation.StudentId  = SelectedStudent.Id;
+            Evaluation.ActivityId = SelectedActivity.Id;
+            
+            await evaluationFacade.SaveAsync(Evaluation);
+            
+            MessengerService.Send(new MessageAddEvaluation() {EvaluationId = Evaluation.Id});
             navigationService.SendBackButtonPressed();
         }
     }
     
     private bool CanSave()
     {
-        return SelectedCourse != null;
+        return SelectedCourse != null 
+               && SelectedActivity != null 
+               && SelectedStudent  != null;
     }
 }
