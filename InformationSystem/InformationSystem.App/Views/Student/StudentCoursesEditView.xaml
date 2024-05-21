@@ -55,47 +55,5 @@
             </Grid>
 
         </Grid>
-        
-        
-        
-        
-        
-        
-        
-        
-        <!--<VerticalStackLayout>
-            <HorizontalStackLayout>
-                <Picker ItemsSource="{Binding CoursesToShow}"
-                        ItemDisplayBinding="{Binding Abbreviation}"
-                        SelectedItem="{Binding SelectedCourse}">
-                </Picker>
-                <Button Text="Add Course" 
-                        FontSize="20" 
-                        BackgroundColor="Green"
-                        Command="{Binding AddCourseToStudentCommand}"></Button>
-            </HorizontalStackLayout>
-            <Label HorizontalOptions="Center" FontSize="20" Text="Current Courses" FontAttributes="Bold"></Label>
-            <CollectionView ItemsSource="{Binding Student.Courses}"
-                            Margin="20">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:CourseListModel">
-                        <HorizontalStackLayout>
-                            <Label Text="{Binding Abbreviation}" 
-                                   FontSize="20"
-                                   Margin="0,0,5,0"></Label>
-                            <Label Text="{Binding Name}" 
-                                   FontSize="20"></Label>
-                            <Button Text="Remove Course" 
-                                    BackgroundColor="DarkRed"
-                                    FontSize="20"
-                                    Command="{Binding 
-                                    Source={x:Reference Name=StudentCourseEditViewRoot},
-                                    Path=BindingContext.RemoveCourseCommand}"
-                                    CommandParameter="{Binding .}"/>
-                        </HorizontalStackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>-->
     </ContentPage.Content>
 </views:BaseView>
