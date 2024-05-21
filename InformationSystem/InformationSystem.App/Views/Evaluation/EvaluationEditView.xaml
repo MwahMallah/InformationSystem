@@ -6,21 +6,25 @@
              xmlns:models="clr-namespace:InformationSystem.BL.Models;assembly=InformationSystem.BL"
              xmlns:vm="clr-namespace:InformationSystem.App.ViewModels.Evaluation"
              x:Class="InformationSystem.App.Views.Evaluation.EvaluationEditView"
-             x:DataType="vm:EvaluationEditViewModel">
+             x:DataType="vm:EvaluationEditViewModel"
+             BackgroundColor="{StaticResource SecondaryColor}">
     <ContentPage.Content>
         <VerticalStackLayout Margin="10">
             <Label Text="Course Abbreviation" FontSize="20"></Label>
             <Picker ItemsSource="{Binding Courses}"
                     ItemDisplayBinding="{Binding Abbreviation}"
-                    SelectedItem="{Binding SelectedCourse}"></Picker>
+                    SelectedItem="{Binding SelectedCourse}"
+                    IsEnabled="{Binding ArePickersEnabled}"></Picker>
             <Label Text="Activity" FontSize="20"></Label>
             <Picker ItemsSource="{Binding Activities}"
                     ItemDisplayBinding="{Binding ActivityType}"
-                    SelectedItem="{Binding SelectedActivity}"></Picker>
+                    SelectedItem="{Binding SelectedActivity}"
+                    IsEnabled="{Binding ArePickersEnabled}"></Picker>
             <Label Text="Student" FontSize="20"></Label>
             <Picker ItemsSource="{Binding Students}"
                     ItemDisplayBinding="{Binding LastName}"
-                    SelectedItem="{Binding SelectedStudent}"></Picker>
+                    SelectedItem="{Binding SelectedStudent}"
+                    IsEnabled="{Binding ArePickersEnabled}"></Picker>
             <Label Text="Description"></Label>
             <Entry Text="{Binding Evaluation.Description}"></Entry>
             <Label Text="Points" FontSize="20"></Label>   

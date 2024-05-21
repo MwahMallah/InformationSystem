@@ -8,8 +8,7 @@ using InformationSystem.BL.Models;
 
 namespace InformationSystem.App.ViewModels.Evaluation;
 
-[QueryProperty(nameof(Activity), nameof(Activity))]
-[QueryProperty(nameof(CourseFromQuery), nameof(CourseFromQuery))]
+[QueryProperty(nameof(Evaluation), nameof(Evaluation))]
 public partial class EvaluationEditViewModel(
     IActivityFacade activityFacade,
     IStudentFacade studentFacade,
@@ -39,9 +38,10 @@ public partial class EvaluationEditViewModel(
     
     [ObservableProperty]
     private StudentListModel? selectedStudent = null;
-
     
     public CourseListModel? CourseFromQuery {get; set; } = null;
+
+    public bool ArePickersEnabled { get; set; }
 
     partial void OnSelectedCourseChanged(CourseListModel? value)
     {
@@ -64,10 +64,7 @@ public partial class EvaluationEditViewModel(
             Courses.Add(courseListModel);
         }
 
-        if (CourseFromQuery != null)
-        {
-            SelectedCourse = CourseFromQuery;
-        }
+        ArePickersEnabled = Evaluation.Id == Guid.Empty;
     }
 
     private async void ChangeAvailableActivities()
