@@ -22,12 +22,10 @@
             <Entry HorizontalOptions="Fill" Text="{Binding Course.MaxStudents}"/>
             <Button HorizontalOptions="Fill" 
                     Text="Save" 
-                    BackgroundColor="Green"
                     Command="{Binding SaveCommand}"></Button>
             <Button HorizontalOptions="Fill" 
                     Margin="0, 10"
                     Text="Change Students" 
-                    BackgroundColor="MidnightBlue"
                     Command="{Binding GoToCourseStudentEditCommand}"></Button>
         </VerticalStackLayout>
     </ContentPage.Content>

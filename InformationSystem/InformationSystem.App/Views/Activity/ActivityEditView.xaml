@@ -38,7 +38,6 @@
             <Entry Text="{Binding Activity.MaxPoints}"></Entry>
             <Button HorizontalOptions="Fill" 
                     Text="Save" 
-                    BackgroundColor="Green"
                     Command="{Binding SaveCommand}"></Button>
         </VerticalStackLayout>
     </ContentPage.Content>
