@@ -17,7 +17,8 @@ public partial class EvaluationListViewModel(
     INavigationService navigationService,
     IMessengerService messengerService
 ) : ViewModelBase(messengerService), 
-    IRecipient<MessageAddEvaluation>
+    IRecipient<MessageAddEvaluation>,
+    IRecipient<MessageDeleteEvaluation>
 {
     private string? _filterText = null;
 
@@ -72,8 +73,8 @@ public partial class EvaluationListViewModel(
     [RelayCommand]
     private async Task GoToDetailAsync(Guid id)
     {
-        await navigationService.GoToAsync<ActivityDetailViewModel>(
-            new Dictionary<string, object?>() { [nameof(ActivityDetailViewModel.Id)] = id }
+        await navigationService.GoToAsync<EvaluationDetailViewModel>(
+            new Dictionary<string, object?>() { [nameof(EvaluationDetailViewModel.Id)] = id }
         );
     }
 
@@ -84,6 +85,11 @@ public partial class EvaluationListViewModel(
     }
 
     public async void Receive(MessageAddEvaluation message)
+    {
+        await LoadDataAsync();
+    }
+
+    public async void Receive(MessageDeleteEvaluation message)
     {
         await LoadDataAsync();
     }

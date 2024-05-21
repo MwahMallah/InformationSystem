@@ -29,6 +29,7 @@ public class NavigationService : INavigationService
         
         new("//evaluations", typeof(EvaluationListView), typeof(EvaluationListViewModel)),
         new("//evaluations/edit", typeof(EvaluationEditView), typeof(EvaluationEditViewModel)),
+        new("//evaluations/detail", typeof(EvaluationDetailView), typeof(EvaluationDetailViewModel)),
         
         new("//courses", typeof(CourseListView), typeof(CourseListViewModel)),
         new("//courses/detail", typeof(CourseDetailView), typeof(CourseDetailViewModel)),
