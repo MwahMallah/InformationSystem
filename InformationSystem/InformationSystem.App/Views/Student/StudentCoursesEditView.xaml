@@ -10,7 +10,60 @@
              x:DataType="student:StudentCoursesEditViewModel"
              BackgroundColor="{StaticResource SecondaryColor}" >
     <ContentPage.Content>
-        <VerticalStackLayout>
+        <Grid Padding="20" RowDefinitions="50, *" BackgroundColor="{StaticResource SecondaryColor}">
+            <Grid RowDefinitions="50" ColumnDefinitions="150, 1*, 100">
+                <Picker ItemsSource="{Binding CoursesToShow}"
+                        ItemDisplayBinding="{Binding Abbreviation}"
+                        SelectedItem="{Binding SelectedCourse}"/>
+                <Button Text="+Course"
+                Command="{Binding AddCourseToStudentCommand}"
+                Grid.Column="2"/>
+            </Grid>
+            <Grid RowDefinitions="40, *" Margin="0,20,0,20" Grid.Row="1">
+                <Grid Margin="0,20,0,20"
+                      ColumnDefinitions="2, 150, 2, 3*, 2, 50, 2"
+                      RowDefinitions="*"
+                      BackgroundColor="{StaticResource PrimaryColor}"
+                      HeightRequest="40">
+                    <Label Text="Abbreviation" Grid.Column="1" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center"/>
+                    <Label Text="Name" Grid.Column="3" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center"/>
+                    <Label Text="" Grid.Column="5" Style="{StaticResource SecondaryLable}" Padding="5" VerticalOptions="Center"/>
+                </Grid>
+                <CollectionView ItemsSource="{Binding Student.Courses}" Grid.ColumnSpan="5" Grid.Row="1">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:CourseListModel">
+                            <Grid ColumnDefinitions="2, 150, 2, 3*, 2, 50, 2" RowDefinitions="*, 2">
+                                <Border StrokeThickness="0" VerticalOptions="Fill"/>
+                                <Label Text="{Binding Abbreviation}" Grid.Column="1" Padding="5" VerticalOptions="Center"/>
+                                <Border StrokeThickness="0" Grid.Column="2" VerticalOptions="Fill"/>
+                                <Label Text="{Binding Name}" Grid.Column="3" Padding="5" VerticalOptions="Center"/>
+                                <Border StrokeThickness="0" Grid.Column="4" VerticalOptions="Fill"/>
+                                <Button Text="X" Style="{StaticResource SecondaryButtonStyle}"
+                                        Grid.Column="5" HeightRequest="30" WidthRequest="40"
+                                        Command="{Binding Source={x:Reference Name=StudentCourseEditViewRoot},
+                                        Path=BindingContext.RemoveCourseCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                <Border StrokeThickness="0" Grid.Column="6" VerticalOptions="Fill"/>
+                                <Border StrokeThickness="0" Grid.Row="1" Grid.ColumnSpan="10" HorizontalOptions="Fill"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+
+        </Grid>
+        
+        
+        
+        
+        
+        
+        
+        
+        <!--<VerticalStackLayout>
             <HorizontalStackLayout>
                 <Picker ItemsSource="{Binding CoursesToShow}"
                         ItemDisplayBinding="{Binding Abbreviation}"
@@ -43,6 +96,6 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </VerticalStackLayout>
+        </VerticalStackLayout>-->
     </ContentPage.Content>
 </views:BaseView>
