@@ -10,16 +10,17 @@
                 x:DataType="course:CourseDetailViewModel"
                 x:Name="CourseDetailViewRoot">
     <ContentPage.Content>
-        <Grid BackgroundColor="{StaticResource SecondaryColor}"
-              RowDefinitions="30,1*">
+        <Grid Padding="20"
+              BackgroundColor="{StaticResource SecondaryColor}"
+              RowDefinitions="30,1*,50">
             <Grid ColumnDefinitions="*,100">
                 <Button FontSize="30" Text="⟳"
                         Style="{StaticResource SecondaryButtonStyle}" Grid.Column="1"/>
             </Grid>
-            <Grid Padding="10,0,0,0" 
-                  BackgroundColor="{StaticResource SecondaryColor}" 
-                  ColumnDefinitions="1*,1*,2.3*" Grid.Row="1">
-                <Grid RowDefinitions="100,1*,80" ColumnDefinitions="1*,1*,0.8*">
+            <Grid BackgroundColor="{StaticResource SecondaryColor}" 
+                  ColumnDefinitions="1*,1*,2.3*"
+                  RowDefinitions="1*" Grid.Row="1">
+                <Grid RowDefinitions="100,1*" ColumnDefinitions="1*,1*,0.8*">
                     <VerticalStackLayout>
                         <Label Text="Abbreviation" Style="{StaticResource SecondaryLable}"/>
                         <Label Text="{Binding Course.Abbreviation }"/>
@@ -36,11 +37,6 @@
                         <Label Text="Description" Style="{StaticResource SecondaryLable}"/>
                         <Label Text="{Binding Course.Description}"/>
                     </VerticalStackLayout>
-                    <Grid Grid.Row="2" Grid.ColumnSpan="3"  ColumnDefinitions="1*,1*,1*">
-                        <Button Text="+Activity" WidthRequest="100" Command="{Binding AddActivityCommand}"/>
-                        <Button Text="Delete" WidthRequest="100" Command="{Binding DeleteCommand}" Grid.Column="1"/>
-                        <Button Text="Edit" WidthRequest="100" Command="{Binding GoToEditCommand}" Grid.Column="2"/>
-                    </Grid>
                 </Grid>
                 <Grid Padding="10, 20, 10, 20" RowDefinitions="50, *" Grid.Column="1">
                     <Grid RowDefinitions="60" ColumnDefinitions="1*">
@@ -133,6 +129,11 @@
                         </CollectionView>
                     </Grid>
                 </Grid>
+            </Grid>
+            <Grid Grid.Row="2" ColumnDefinitions="100,20,100,1*,100">
+                <Button Text="Edit" Command="{Binding GoToEditCommand}"/>
+                <Button Text="Delete" Command="{Binding DeleteCommand}" Grid.Column="2"/>
+                <Button Text="+Activity" Command="{Binding AddActivityCommand}" Grid.Column="4"/>
             </Grid>
         </Grid>
     </ContentPage.Content>
