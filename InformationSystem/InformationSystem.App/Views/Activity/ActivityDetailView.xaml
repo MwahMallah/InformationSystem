@@ -7,7 +7,7 @@
              x:Class="InformationSystem.App.Views.Activity.ActivityDetailView"
              x:DataType="activity:ActivityDetailViewModel">
     <ContentPage.Content>
-        <VerticalStackLayout>
+        <VerticalStackLayout BackgroundColor="{StaticResource SecondaryColor}">
             <Label Text="Course Abbreviation" FontSize="20"></Label>
             <Label Text="{Binding Activity.CourseAbbreviation}" FontSize="20"></Label>
             <Label Text="Activity Type" FontSize="20"></Label>

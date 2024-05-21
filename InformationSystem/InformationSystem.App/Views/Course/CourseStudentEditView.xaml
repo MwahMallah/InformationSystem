@@ -7,7 +7,8 @@
              xmlns:course="using:InformationSystem.App.ViewModels.Course"
              x:Class="InformationSystem.App.Views.Course.CourseStudentEditView"
              x:Name="CourseStudentEditViewRoot"
-             x:DataType="course:CourseStudentEditViewModel">
+             x:DataType="course:CourseStudentEditViewModel"
+             BackgroundColor="{StaticResource SecondaryColor}">
     <ContentPage.Content>
         <VerticalStackLayout>
             <HorizontalStackLayout>

@@ -6,7 +6,8 @@
              xmlns:models="clr-namespace:InformationSystem.BL.Models;assembly=InformationSystem.BL"
              xmlns:vm="clr-namespace:InformationSystem.App.ViewModels.Activity"
              x:Class="InformationSystem.App.Views.Activity.ActivityEditView"
-             x:DataType="vm:ActivityEditViewModel">
+             x:DataType="vm:ActivityEditViewModel"
+             BackgroundColor="{StaticResource SecondaryColor}" >
     <ContentPage.Content>
         <VerticalStackLayout Margin="10">
             <Label Text="Course Abbreviation" FontSize="20"></Label>
