@@ -22,6 +22,11 @@
         <Setter Property="TextColor" Value="{StaticResource SecondaryColor}"/>
         <Setter Property="FontSize" Value="20"/>
     </Style>
+    <Style TargetType="Editor">
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+        <Setter Property="TextColor" Value="{StaticResource SecondaryColor}"/>
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
     <Style TargetType="DatePicker">
         <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
         <Setter Property="TextColor" Value="{StaticResource SecondaryColor}"/>
