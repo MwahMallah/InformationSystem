@@ -15,6 +15,7 @@ public class ActivityModelMapper(IEvaluationModelMapper evaluationModelMapper):
                 FinishTime = entity.FinishTime,
                 ActivityType = entity.ActivityType,
                 CourseAbbreviation = entity?.Course?.Abbreviation ?? string.Empty,
+                CourseId = entity?.Course?.Id ?? Guid.Empty,
                 MaxPoints = entity.MaxPoints
             };
     

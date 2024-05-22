@@ -6,6 +6,7 @@ using InformationSystem.App.Messages;
 using InformationSystem.App.Services.Interfaces;
 using InformationSystem.App.ViewModels.Activity;
 using InformationSystem.App.ViewModels.Course;
+using InformationSystem.App.ViewModels.Evaluation;
 using InformationSystem.BL.Facades.Interfaces;
 using InformationSystem.BL.Mappers;
 using InformationSystem.BL.Models;
@@ -18,14 +19,18 @@ public partial class StudentDetailViewModel(
     IStudentFacade studentFacade,
     ICourseFacade courseFacade,
     IActivityFacade activityFacade,
+    IEvaluationFacade evaluationFacade,
     INavigationService navigationService,
     IMessengerService messengerService,
     IAlertService alertService
-) : ViewModelBase(messengerService), IRecipient<MessageEditStudent>, 
-    IRecipient<MessageAddActivity>, 
-    IRecipient<MessageDeleteCourse>, 
+) : ViewModelBase(messengerService), 
+    IRecipient<MessageEditStudent>, 
     IRecipient<MessageEditCourse>,
-    IRecipient<MessageDeleteActivity>
+    IRecipient<MessageAddActivity>, 
+    IRecipient<MessageAddEvaluation>,
+    IRecipient<MessageDeleteCourse>, 
+    IRecipient<MessageDeleteActivity>,
+    IRecipient<MessageDeleteEvaluation>
 {
     public Guid Id { get; set; }
     
@@ -34,6 +39,9 @@ public partial class StudentDetailViewModel(
 
     [ObservableProperty] 
     private ObservableCollection<ActivityListModel> activities = [];
+
+    [ObservableProperty] 
+    private ObservableCollection<ActivityEvaluationListModel> activityEvaluationList = [];
     
     [ObservableProperty]
     private ObservableCollection<CourseListModel> courses = [];
@@ -66,11 +74,14 @@ public partial class StudentDetailViewModel(
             Messenger.Send(new MessageDeleteStudent() {StudentId = Guid.Empty});
             navigationService.SendBackButtonPressed();
         }
-        
-        Courses = Student.Courses;
-        CoursesToPick = new ObservableCollection<CourseListModel>(Courses);
-        CoursesToPick.Insert(0, CourseListModel.AllCourses);
-        Activities = Student.Activities;
+        else
+        {
+            Courses = Student.Courses;
+            CoursesToPick = new ObservableCollection<CourseListModel>(Courses);
+            CoursesToPick.Insert(0, CourseListModel.AllCourses);
+            Activities = Student.Activities;
+            LoadActivitiesWithEvaluationsAsync();
+        }
     }
     
     private async void FilterActivitiesAsync()
@@ -87,6 +98,28 @@ public partial class StudentDetailViewModel(
         {
             Activities = new ObservableCollection<ActivityListModel>(await activityFacade
                 .FilterByTime(Student.Activities, startDateTime, finishDateTime));
+        }
+
+        LoadActivitiesWithEvaluationsAsync();
+    }
+
+    private async void LoadActivitiesWithEvaluationsAsync()
+    {
+        ActivityEvaluationList = new();
+        
+        var evaluations 
+            = await evaluationFacade.GetStudentEvaluationsAsync(Student.Id);
+            
+        foreach (var activity in Activities)
+        {
+            var evaluation = evaluations
+                .FirstOrDefault(e => e.ActivityId == activity.Id);
+            
+            ActivityEvaluationList.Add(new ActivityEvaluationListModel()
+            {
+                Activity = activity,
+                Evaluation = evaluation
+            });
         }
     }
 
@@ -135,13 +168,25 @@ public partial class StudentDetailViewModel(
     }
 
     [RelayCommand]
-    private async Task GoToActivityDetailAsync(Guid id)
+    private async Task GoToActivityDetailAsync(ActivityListModel activityListModel)
     {
         await navigationService.GoToAsync("//activities/detail", new Dictionary<string, object?>()
         {
-            {nameof(ActivityDetailViewModel.Id), id},
+            {nameof(ActivityDetailViewModel.Id), activityListModel.Id},
             {"ViewModel", typeof(ActivityDetailViewModel)}
         });
+    }
+    
+    [RelayCommand]
+    private async Task GoToEvaluationAsync(ActivityEvaluationListModel activityEvaluationListModel)
+    {
+        if (activityEvaluationListModel.Evaluation != null)
+        {
+            await navigationService.GoToAsync("//evaluations/detail", new Dictionary<string, object?>()
+            {
+                {nameof(EvaluationDetailViewModel.Id), activityEvaluationListModel.Evaluation.Id},
+            });
+        }
     }
     
     [RelayCommand]
@@ -187,6 +232,22 @@ public partial class StudentDetailViewModel(
     }
 
     public async void Receive(MessageDeleteActivity message)
+    {
+        if (Student != null)
+        {
+            await LoadDataAsync();
+        }
+    }
+
+    public async void Receive(MessageAddEvaluation message)
+    {
+        if (Student != null)
+        {
+            await LoadDataAsync();
+        }
+    }
+
+    public async void Receive(MessageDeleteEvaluation message)
     {
         if (Student != null)
         {

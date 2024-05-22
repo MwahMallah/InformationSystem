@@ -10,6 +10,7 @@ public record ActivityListModel : BaseModel
     public ActivityType ActivityType { get; set; }
     public int? MaxPoints { get; set; }
     public required string CourseAbbreviation { get; set; }
+    public Guid? CourseId { get; set; }
     public int? Points { get; set; }
     
     public static ActivityListModel Empty => new()
