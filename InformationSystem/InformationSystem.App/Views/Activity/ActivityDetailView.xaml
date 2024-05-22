@@ -7,27 +7,37 @@
              x:Class="InformationSystem.App.Views.Activity.ActivityDetailView"
              x:DataType="activity:ActivityDetailViewModel">
     <ContentPage.Content>
-        <VerticalStackLayout BackgroundColor="{StaticResource SecondaryColor}">
-            <Label Text="Course Abbreviation" FontSize="20"></Label>
-            <Label Text="{Binding Activity.CourseAbbreviation}" FontSize="20"></Label>
-            <Label Text="Activity Type" FontSize="20"></Label>
-            <Label Text="{Binding Activity.ActivityType}" FontSize="20"></Label>
-            <Label Text="Start Time" FontSize="20"></Label>
-            <Label Text="{Binding Activity.StartTime}" FontSize="20"></Label>
-            <Label Text="Finish Time" FontSize="20"></Label>
-            <Label Text="{Binding Activity.FinishTime}" FontSize="20"></Label>
-            <Label Text="Description" FontSize="20"></Label>
-            <Label Text="{Binding Activity.Description}" FontSize="20"></Label>
-            <Label Text="Max Points" FontSize="20"></Label>
-            <Label Text="{Binding Activity.MaxPoints}" FontSize="20"></Label>
-            <Button BackgroundColor="DarkRed"
-                    Text="Delete Activity"
-                    FontSize="20"
-                    Command="{Binding DeleteCommand}"></Button>
-            <Button BackgroundColor="DarkGreen"
-                    Text="Edit Activity"
-                    FontSize="20"
-                    Command="{Binding GoToEditCommand}"></Button>
-        </VerticalStackLayout>
+        <Grid Padding="20" Background="{StaticResource SecondaryColor}" RowDefinitions="1*,50">
+            <Grid RowDefinitions="100,20,1*" ColumnDefinitions="1*,20,1*">
+                <VerticalStackLayout>
+                    <Label Text="Course Abbreviation" Style="{StaticResource SecondaryLable}"/>
+                    <Label Text="{Binding Activity.CourseAbbreviation}"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="2">
+                    <Label Text="Activity Type" Style="{StaticResource SecondaryLable}"/>
+                    <Label Text="{Binding Activity.ActivityType}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Row="2">
+                    <Label Text="Description" Style="{StaticResource SecondaryLable}"/>
+                    <Label Text="{Binding Activity.Description}"/>
+                    <Label Text="Max Points" Style="{StaticResource SecondaryLable}"/>
+                    <Label Text="{Binding Activity.MaxPoints}"/>
+                </VerticalStackLayout>
+
+
+                <VerticalStackLayout Grid.Row="2" Grid.Column="2">
+                    <Label Text="Start Time" Style="{StaticResource SecondaryLable}"/>
+                    <Label Text="{Binding Activity.StartTime}"/>
+                    <Label Text="Finish Time" Style="{StaticResource SecondaryLable}"/>
+                    <Label Text="{Binding Activity.FinishTime}"/>
+                </VerticalStackLayout>
+
+            </Grid>
+            <Grid ColumnDefinitions="100,1*,80" Grid.Row="1">
+                <Button Text="Delete" Command="{Binding DeleteCommand}"/>
+                <Button Text="Edit" Command="{Binding GoToEditCommand}" Grid.Column="2"/>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </views:BaseView>

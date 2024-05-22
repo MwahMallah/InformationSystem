@@ -15,7 +15,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid Padding="0" BackgroundColor="{StaticResource SecondaryColor}"
+        <Grid Padding="20" BackgroundColor="{StaticResource SecondaryColor}"
               RowDefinitions="50,1*">
             <Grid ColumnDefinitions="*,100">
                 <Button FontSize="30" Text="⟳"

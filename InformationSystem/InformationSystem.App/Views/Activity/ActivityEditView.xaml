@@ -9,37 +9,45 @@
              x:DataType="vm:ActivityEditViewModel"
              BackgroundColor="{StaticResource SecondaryColor}" >
     <ContentPage.Content>
-        <VerticalStackLayout Margin="10">
-            <Label Text="Course Abbreviation" FontSize="20"></Label>
-            <Picker ItemsSource="{Binding Courses}"
-                    ItemDisplayBinding="{Binding Abbreviation}"
-                    SelectedItem="{Binding SelectedCourse}"></Picker>
-            <Grid ColumnDefinitions="*, *" RowDefinitions="*,*">
-                <Label Text="Start Time" FontSize="20" Grid.Column="0"></Label>
-                <HorizontalStackLayout Grid.Column="0" Grid.Row="1" Spacing="10">
-                    <DatePicker 
-                        Date="{Binding StartDate}"></DatePicker>
-                    <TimePicker 
-                        Time="{Binding StartTime}"></TimePicker>
-                </HorizontalStackLayout>
-                <Label Text="Finish Time" FontSize="20" Grid.Column="1"></Label>
-                <HorizontalStackLayout Grid.Column="1" Grid.Row="1" Spacing="10">
-                    <DatePicker 
-                        Date="{Binding FinishDate}"></DatePicker>
-                    <TimePicker 
-                        Time="{Binding FinishTime}"></TimePicker>
-                </HorizontalStackLayout>
+        <Grid Padding="20" Background="{StaticResource SecondaryColor}" RowDefinitions="1*,50">
+            <Grid RowDefinitions="100,20,1*" ColumnDefinitions="1*,20,1*">
+                <VerticalStackLayout>
+                    <Label Text="Course Abbreviation"/>
+                    <Picker ItemsSource="{Binding Courses}"
+                            ItemDisplayBinding="{Binding Abbreviation}"
+                            SelectedItem="{Binding SelectedCourse}"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="2">
+                    <Label Text="Activity Type"/>
+                    <Picker ItemsSource="{Binding ActivityTypes}"
+                            SelectedItem="{Binding Activity.ActivityType}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Row="2">
+                    <Label Text="Description"/>
+                    <Entry Text="{Binding Activity.Description}"/>
+                    <Label Text="Max Points"/>
+                    <Entry Text="{Binding Activity.MaxPoints}"/>
+                </VerticalStackLayout>
+
+
+                <VerticalStackLayout Grid.Row="2" Grid.Column="2">
+                    <Label Text="Start Time"/>
+                    <HorizontalStackLayout>
+                        <DatePicker Date="{Binding StartDate}"/>
+                        <TimePicker Time="{Binding StartTime}"/>
+                    </HorizontalStackLayout>
+                    <Label Text="Finish Time"/>
+                    <HorizontalStackLayout>
+                        <DatePicker Date="{Binding FinishDate}"/>
+                        <TimePicker Time="{Binding FinishTime}"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
             </Grid>
-            <Label Text="Activity type" FontSize="20"></Label>
-            <Picker ItemsSource="{Binding ActivityTypes}"
-                    SelectedItem="{Binding Activity.ActivityType}"></Picker>
-            <Label Text="Description"></Label>
-            <Entry Text="{Binding Activity.Description}"></Entry>
-            <Label Text="Max Points" FontSize="20"></Label>   
-            <Entry Text="{Binding Activity.MaxPoints}"></Entry>
-            <Button HorizontalOptions="Fill" 
-                    Text="Save" 
-                    Command="{Binding SaveCommand}"></Button>
-        </VerticalStackLayout>
+            <Grid ColumnDefinitions="1*,100" Grid.Row="1">
+                <Button Text="Save" Command="{Binding SaveCommand}" Grid.Column="1"/>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </views:BaseView>

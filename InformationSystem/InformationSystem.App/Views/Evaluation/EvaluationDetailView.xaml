@@ -8,27 +8,39 @@
                 x:DataType="evaluation:EvaluationDetailViewModel"
                 BackgroundColor="{StaticResource SecondaryColor}">
     <ContentPage.Content>
-        <VerticalStackLayout>
-            <Label Text="Course Abbreviation" FontSize="20"></Label>
-            <Label Text="{Binding Evaluation.CourseAbbreviation}" FontSize="20"></Label>
-            <Label Text="Activity Type" FontSize="20"></Label>
-            <Label Text="{Binding Evaluation.ActivityType}" FontSize="20"></Label>
-            <Label Text="Student Full Name" FontSize="20"></Label>
-            <Label Text="{Binding Evaluation.StudentFullName}" FontSize="20"></Label>
-            <Label Text="Start Time" FontSize="20"></Label>
-            <Label Text="{Binding Evaluation.StartTime}" FontSize="20"></Label>
-            <Label Text="Finish Time" FontSize="20"></Label>
-            <Label Text="{Binding Evaluation.FinishTime}" FontSize="20"></Label>
-            <Label Text="Points" FontSize="20"></Label>
-            <Label Text="{Binding Evaluation.Points}" FontSize="20"></Label>
-            <Label Text="Description" FontSize="20"></Label>
-            <Label Text="{Binding Evaluation.Description}" FontSize="20"></Label>
-            <Button Text="Delete Evaluation"
-                    FontSize="20"
-                    Command="{Binding DeleteCommand}"></Button>
-            <Button Text="Edit Evaluation"
-                    FontSize="20"
-                    Command="{Binding GoToEditCommand}"></Button>
-        </VerticalStackLayout>
+        <Grid Padding="20" Background="{StaticResource SecondaryColor}" RowDefinitions="1*,50">
+            <Grid RowDefinitions="100,20,1*" ColumnDefinitions="1*,20,1*">
+                <VerticalStackLayout>
+                    <Label Text="Course Abbreviation" Style="{StaticResource SecondaryLable}"/>
+                    <Label Text="{Binding Evaluation.CourseAbbreviation}"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="2">
+                    <Label Text="Activity Type" Style="{StaticResource SecondaryLable}"/>
+                    <Label Text="{Binding Evaluation.ActivityType}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Row="2">
+                    <Label Text="Description" Style="{StaticResource SecondaryLable}"/>
+                    <Label Text="{Binding Evaluation.Description}"/>
+                    <Label Text="Start Time" Style="{StaticResource SecondaryLable}"/>
+                    <Label Text="{Binding Evaluation.StartTime}"/>
+                    <Label Text="Finish Time" Style="{StaticResource SecondaryLable}"/>
+                    <Label Text="{Binding Evaluation.FinishTime}"/>
+                </VerticalStackLayout>
+
+
+                <VerticalStackLayout Grid.Row="2" Grid.Column="2">
+                    <Label Text="Student Name" Style="{StaticResource SecondaryLable}"/>
+                    <Label Text="{Binding Evaluation.StudentFullName}"/>
+                    <Label Text="Points" Style="{StaticResource SecondaryLable}"/>
+                    <Label Text="{Binding Evaluation.Points}"/>
+                </VerticalStackLayout>
+
+            </Grid>
+            <Grid ColumnDefinitions="100,1*,100" Grid.Row="1">
+                <Button Text="Delete" Command="{Binding DeleteCommand}"/>
+                <Button Text="Edit" Command="{Binding GoToEditCommand}" Grid.Column="2"/>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </views:BaseView>

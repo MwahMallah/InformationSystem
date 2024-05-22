@@ -10,24 +10,35 @@
                 x:DataType="vm:CourseEditViewModel"
                 BackgroundColor="{StaticResource SecondaryColor}" >
     <ContentPage.Content>
-        <VerticalStackLayout Margin="10">
-            <Label Text="Abbreviation" FontSize="20"></Label>
-            <Entry HorizontalOptions="Fill" Text="{Binding Abbreviation}"/>
-            <Label Text="Name" FontSize="20"></Label>
-            <Entry HorizontalOptions="Fill" Text="{Binding Name}"/>
-            <Label Text="Description" FontSize="20"></Label>
-            <Entry HorizontalOptions="Fill" Text="{Binding Course.Description}"/>
-            <Label Text="Credits" FontSize="20"></Label>
-            <Entry HorizontalOptions="Fill" Text="{Binding Course.Credits}"/>
-            <Label Text="Max Students" FontSize="20"></Label>
-            <Entry HorizontalOptions="Fill" Text="{Binding Course.MaxStudents}"/>
-            <Button HorizontalOptions="Fill" 
-                    Text="Save" 
-                    Command="{Binding SaveCommand}"></Button>
-            <Button HorizontalOptions="Fill" 
-                    Margin="0, 10"
-                    Text="Change Students" 
-                    Command="{Binding GoToCourseStudentEditCommand}"></Button>
-        </VerticalStackLayout>
+        <Grid Padding="20" Background="{StaticResource SecondaryColor}" RowDefinitions="1*,50">
+            <Grid RowDefinitions="100,20,1*" ColumnDefinitions="1*,20,1*">
+                <VerticalStackLayout>
+                    <Label Text="Abbreviation"/>
+                    <Entry Text="{Binding Abbreviation}"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="2">
+                    <Label Text="Name"/>
+                    <Entry Text="{Binding Name}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Row="2">
+                    <Label Text="Description"/>
+                    <Entry Text="{Binding Course.Description}"/>
+                </VerticalStackLayout>
+
+
+                <VerticalStackLayout Grid.Row="2" Grid.Column="2">
+                    <Label Text="Credits"/>
+                    <Entry Text="{Binding Course.Credits}"/>
+                    <Label Text="Max Students"/>
+                    <Entry Text="{Binding Course.MaxStudents}"/>
+                </VerticalStackLayout>
+
+            </Grid>
+            <Grid ColumnDefinitions="180,1*,100" Grid.Row="1">
+                <Button Text="Change Students" Command="{Binding GoToCourseStudentEditCommand}"/>
+                <Button Text="Save" Command="{Binding SaveCommand}" Grid.Column="2"/>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </views:BaseView>
