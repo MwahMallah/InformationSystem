@@ -65,7 +65,22 @@ public class EvaluationFacade(IUnitOfWorkFactory unitOfWorkFactory,
         var entities = await query.ToListAsync();
         return modelMapper.MapToListModel(entities);
     }
-    
+
+    public async Task<IEnumerable<EvaluationListModel>> GetStudentEvaluationsAsync(Guid studentId)
+    {
+        await using var uow = unitOfWorkFactory.Create();
+        var repository = uow.GetRepository<EvaluationEntity, EvaluationEntityMapper>();
+        
+        IQueryable<EvaluationEntity> query = 
+            repository.Get().Include(e => e.Student)
+                .Include(e => e.Activity);
+        
+        query = query.Where(e => e.StudentId == studentId);
+        
+        var entities = await query.ToListAsync();
+        return modelMapper.MapToListModel(entities);
+    }
+
     public override async Task<EvaluationDetailModel?> GetAsync(Guid id)
     {
         await using var uow = unitOfWorkFactory.Create();

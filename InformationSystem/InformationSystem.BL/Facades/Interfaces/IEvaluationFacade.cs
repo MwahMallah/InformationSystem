@@ -7,4 +7,8 @@ public interface IEvaluationFacade : IFacade<EvaluationEntity, EvaluationDetailM
 {
     public Task<IEnumerable<EvaluationListModel>> GetAsync(
         string? searchQuery = null, string? orderQuery = null, bool isAscending = true);
+    
+    public Task<IEnumerable<EvaluationListModel>> GetStudentEvaluationsAsync(
+        Guid studentId);
+
 }

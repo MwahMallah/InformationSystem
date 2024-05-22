@@ -8,6 +8,9 @@ using InformationSystem.BL.Models;
 
 namespace InformationSystem.App.ViewModels.Evaluation;
 
+[QueryProperty(nameof(CourseFromQuery), nameof(CourseFromQuery))]
+[QueryProperty(nameof(StudentFromQuery), nameof(StudentFromQuery))]
+[QueryProperty(nameof(ActivityFromQuery), nameof(ActivityFromQuery))]
 [QueryProperty(nameof(Evaluation), nameof(Evaluation))]
 public partial class EvaluationEditViewModel(
     IActivityFacade activityFacade,
@@ -26,25 +29,31 @@ public partial class EvaluationEditViewModel(
     
     [ObservableProperty]
     private CourseListModel? selectedCourse = null;
-
+    [ObservableProperty]
+    private CourseListModel? courseFromQuery = null;
+    
     [ObservableProperty] 
     private ObservableCollection<ActivityListModel> activities = [];
 
     [ObservableProperty]
     private ActivityListModel? selectedActivity = null;
+    [ObservableProperty]
+    private ActivityListModel? activityFromQuery = null;
     
     [ObservableProperty] 
     private ObservableCollection<StudentListModel> students = [];
     
     [ObservableProperty]
     private StudentListModel? selectedStudent = null;
+    [ObservableProperty]
+    private StudentListModel? studentFromQuery = null;
     
-    public CourseListModel? CourseFromQuery {get; set; } = null;
-
     public bool ArePickersEnabled { get; set; }
 
     partial void OnSelectedCourseChanged(CourseListModel? value)
     {
+        if (CourseFromQuery != null) return;
+        
         ChangeAvailableActivities();
         ChangeAvailableStudents();
         SaveCommand.NotifyCanExecuteChanged();
@@ -65,39 +74,46 @@ public partial class EvaluationEditViewModel(
         }
 
         ArePickersEnabled = Evaluation.Id == Guid.Empty;
+        SelectedCourse = CourseFromQuery ?? SelectedCourse;
+        SelectedActivity = ActivityFromQuery ?? SelectedActivity;
+        SelectedStudent = StudentFromQuery ?? SelectedStudent;
     }
 
     private async void ChangeAvailableActivities()
     {
-        Activities = new ObservableCollection<ActivityListModel>
-            (await activityFacade.GetFromCourseAsync(selectedCourse.Id));
+        if (SelectedCourse != null)
+        {
+            Activities = new ObservableCollection<ActivityListModel>
+                (await activityFacade.GetFromCourseAsync(SelectedCourse.Id));
+        }
     }
     
     private async void ChangeAvailableStudents()
     {
-        Students = new ObservableCollection<StudentListModel>
-            (await studentFacade.GetCourseStudentsAsync(selectedCourse.Id));
+        if (SelectedCourse != null)
+        {
+            Students = new ObservableCollection<StudentListModel>
+                (await studentFacade.GetCourseStudentsAsync(SelectedCourse.Id));
+        }
     }
     
     [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
-        if (SelectedCourse != null && SelectedStudent != null && SelectedActivity != null)
-        {
-            Evaluation.StudentId  = SelectedStudent.Id;
-            Evaluation.ActivityId = SelectedActivity.Id;
-            
-            await evaluationFacade.SaveAsync(Evaluation);
-            
-            MessengerService.Send(new MessageAddEvaluation() {EvaluationId = Evaluation.Id});
-            navigationService.SendBackButtonPressed();
-        }
+        Evaluation.StudentId  = SelectedStudent?.Id ?? Evaluation.StudentId;
+        Evaluation.ActivityId = SelectedActivity?.Id ?? Evaluation.ActivityId;
+        
+        await evaluationFacade.SaveAsync(Evaluation);
+        
+        MessengerService.Send(new MessageAddEvaluation() {EvaluationId = Evaluation.Id});
+        navigationService.SendBackButtonPressed();
     }
     
     private bool CanSave()
     {
-        return SelectedCourse != null 
+        return Evaluation.Id != Guid.Empty ||  
+            (SelectedCourse != null 
                && SelectedActivity != null 
-               && SelectedStudent  != null;
+               && SelectedStudent  != null);
     }
 }

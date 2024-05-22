@@ -18,7 +18,8 @@ public partial class EvaluationListViewModel(
     IMessengerService messengerService
 ) : ViewModelBase(messengerService), 
     IRecipient<MessageAddEvaluation>,
-    IRecipient<MessageDeleteEvaluation>
+    IRecipient<MessageDeleteEvaluation>,
+    IRecipient<MessageDeleteActivity>
 {
     private string? _filterText = null;
 
@@ -90,6 +91,11 @@ public partial class EvaluationListViewModel(
     }
 
     public async void Receive(MessageDeleteEvaluation message)
+    {
+        await LoadDataAsync();
+    }
+
+    public async void Receive(MessageDeleteActivity message)
     {
         await LoadDataAsync();
     }
