@@ -3,6 +3,7 @@ using System;
 using InformationSystem.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InformationSystem.DAL.Migrations
 {
     [DbContext(typeof(InformationSystemDbContext))]
-    partial class InformationSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240521233901_AddCascadeDeleteToEvaluations")]
+    partial class AddCascadeDeleteToEvaluations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.2");

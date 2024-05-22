@@ -15,7 +15,9 @@ namespace InformationSystem.DAL
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<ActivityEntity>()
-                .HasMany(a => a.Evaluations);
+                .HasMany(a => a.Evaluations)
+                .WithOne(e => e.Activity)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<CourseEntity>()
                 .HasMany(c => c.Activities)
