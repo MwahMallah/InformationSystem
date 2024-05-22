@@ -11,5 +11,6 @@ public class StudentEntityMapper : IEntityMapper<StudentEntity>
         existingEntity.Group = newEntity.Group;
         existingEntity.StartYear = newEntity.StartYear;
         existingEntity.Courses = newEntity.Courses;
+        existingEntity.ImageUrl = newEntity.ImageUrl;
     }
 }

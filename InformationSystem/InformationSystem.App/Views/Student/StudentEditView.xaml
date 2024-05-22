@@ -11,7 +11,8 @@
               RowDefinitions="4*,1*">
             <Grid ColumnDefinitions="1*,3*">
                 <Grid RowDefinitions="*,60">
-                    <Image Source="{Binding Image}"></Image>
+                    <Image Source="{Binding Image}"
+                           Aspect="AspectFill"></Image>
                     <Entry Text="{Binding ImageText}" 
                            Margin="5" WidthRequest="200" Grid.Row="1"/>
                 </Grid>

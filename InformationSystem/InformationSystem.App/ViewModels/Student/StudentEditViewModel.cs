@@ -55,6 +55,10 @@ public partial class StudentEditViewModel(
         CurrentYear = Student.CurrentYear;
         ImageText = Student?.ImageUrl != null ? Student.ImageUrl.ToString() 
             : "https://upload.wikimedia.org/wikipedia/commons/e/ec/Raphael-bostic-300x400.jpg";
+        if (Uri.TryCreate(ImageText, UriKind.Absolute, out var uri))
+        {
+            Image = uri;
+        }
         
         return base.LoadDataAsync();
     }
