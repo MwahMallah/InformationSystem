@@ -6,4 +6,4 @@ Welcome to the University Information System,project developed using Entity Fram
 ## Demo
 Check out how UI looks in action! 👀✨
 
-![Demo of the project](docs/demo.gif)
+![Demo of the project](docs/ics.mp4)
